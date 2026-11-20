@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8"> <!-- Encodage UTF-8 pour les caractères spéciaux -->
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Permet une mise en page responsive sur mobiles et tablettes -->
-  <title>Lucas Catusse — Portfolio</title> <!-- Titre affiché dans l’onglet du navigateur -->
-  <link rel="stylesheet" href="style.css"> <!-- Lien vers le fichier CSS externe -->
+  <title>Tom Fournier — Portfolio Ingénieur Mécanique</title>
+  <link rel="stylesheet" href="style.css">
 
   <style>
     /* Effet de défilement fluide lors du clic sur les boutons */
@@ -15,7 +14,7 @@
 
     /* Style du menu de navigation (bandeau de boutons) */
     .nav-container {
-      margin-top: 20px;
+      margin-top: 22px;
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
@@ -23,18 +22,21 @@
 
     .nav-btn {
       display: inline-block;
-      padding: 8px 16px;
-      background-color: #e2efff; /* Bleu doux accordé à ton style */
-      color: #2c3e50;
+      padding: 8px 15px;
+      background-color: #1e293b;
+      color: #e2e8f0;
+      border: 1px solid #475569;
       text-decoration: none;
-      border-radius: 5px;
-      font-size: 0.9rem;
+      border-radius: 6px;
+      font-size: 0.88rem;
       font-weight: 600;
-      transition: background-color 0.2s ease, transform 0.1s ease;
+      transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.1s ease;
     }
 
     .nav-btn:hover {
-      background-color: #bcdbff; /* Teinte plus foncée au survol */
+      background-color: #2563eb;
+      border-color: #60a5fa;
+      color: #ffffff;
       transform: translateY(-1px);
     }
 
@@ -50,24 +52,24 @@
   <!-- ===================== -->
   <header>
     <div class="header-left">
-      <h1>Lucas Catusse</h1> <!-- Nom principal du portfolio -->
+      <h1>Tom Fournier</h1>
       
-      <!-- Coordonnées de contact -->
+      <!-- Coordonnées de contact (à personnaliser avec tes infos) -->
       <p>
-        Email : <a href="mailto:lucas6catusse6@gmail.com">lucas6catusse6@gmail.com</a> | 
-        Mobile : <a href="tel:+33640489482">06 40 48 94 82</a> | 
-        <a href="https://www.linkedin.com/in/lucas-catusse-9b38662bb">LinkedIn</a>
+        Email : <a href="mailto:tom.fournier@email.com">tom.fournier@email.com</a> | 
+        Mobile : <a href="tel:+33600000000">06 00 00 00 00</a> | 
+        <a href="https://www.linkedin.com">LinkedIn</a>
       </p>
 
       <!-- Info sur la recherche de travail -->
-      <p><strong>Futur ingénieur, disponible à partir de septembre 2026</strong></p>
+      <p><strong>Futur ingénieur en génie mécanique, disponible à partir de septembre / octobre 2026</strong></p>
 
-      <!-- BANDEAU DE NAVIGATION DEVENU BOUTONS -->
+      <!-- BANDEAU DE NAVIGATION -->
       <nav class="nav-container">
         <a href="#intro" class="nav-btn">Introduction</a>
         <a href="#profile" class="nav-btn">Profil</a>
         <a href="#stage-florence" class="nav-btn">Stage R&D (Florence)</a>
-        <a href="#stage-upgrades" class="nav-btn">Analyses Upgrades</a>
+        <a href="#stage-upgrades" class="nav-btn">Stage Dedienne Aerospace</a>
         <a href="#projects" class="nav-btn">Projets</a>
         <a href="#skills" class="nav-btn">Compétences</a>
         <a href="#languages-interests" class="nav-btn">Langues & Intérêts</a>
@@ -75,7 +77,7 @@
     </div>
 
     <div class="header-right">
-      <img src="photolucas.jpeg" alt="Lucas Catusse"> <!-- Photo du portfolio -->
+      <img src="phototom.jpeg" alt="Tom Fournier" onerror="this.src='https://placehold.co/300x300/1e293b/ffffff?text=Tom+Fournier';">
     </div>
   </header>
 
@@ -83,15 +85,13 @@
   <!--        INTRO          -->
   <!-- ===================== -->
   <section id="intro">
-    <h2>Introduction</h2> <!-- Titre de section -->
+    <h2>Introduction</h2>
     
-    <!-- Présentation personnelle -->
     <section>
-      <p>Bonjour et bienvenue ! Je m'appelle Lucas, j'ai 22 ans et je suis actuellement en dernière année de cycle ingénieur en génie mécanique à Polytech Lyon.</p>
-      <p>Passionné par la mécanique, j'ai développé une réelle affinité pour le calcul mécanique, les simulations numériques et les transferts thermiques. Je prends plaisir à décortiquer les problématiques techniques pour transformer des défis complexes en solutions robustes, concrètes et efficaces.</p>
-      <p>Ce portfolio est une fenêtre sur mon univers professionnel et académique. Vous y trouverez une sélection de mes projets les plus aboutis, ainsi qu'un retour sur mes deux expériences de stage qui m'ont permis d'affiner ma rigueur et mon agilité en bureau d'études.</p>
-      <p>Que ce soit pour optimiser des structures thermomécaniques, modéliser des écoulements ou anticiper le comportement de systèmes mécaniques, j'ai à cœur d'allier théorie et réalité industrielle. En septembre 2026, je clôturerai mon cursus et serai prêt à relever de nouveaux défis en tant qu'ingénieur.</p>
-      <p>Je suis toujours ravi d'échanger sur des projets innovants ou des opportunités de collaboration. N'hésitez pas à parcourir mon travail, et si vous souhaitez en savoir plus sur mon parcours ou discuter technique, contactez-moi via la section dédiée. Au plaisir de faire votre connaissance !</p>
+      <p>Bonjour et bienvenue ! Je m'appelle Tom Fournier et je suis actuellement en dernière année de cycle ingénieur en génie mécanique.</p>
+      <p>Passionné par la mécanique des structures, le calcul éléments finis, la dynamique des fluides et la thermomécanique, j'aime analyser des systèmes complexes pour concevoir et dimensionner des solutions techniques fiables.</p>
+      <p>Ce portfolio présente une sélection de mes projets académiques et industriels (modélisations 1D, calcul de structure, simulations numériques) ainsi que mes expériences de stage en R&D et en ingénierie aéronautique.</p>
+      <p>À l'issue de mon cursus en septembre 2026, je serai prêt à intégrer un bureau d'études ou un service calcul/R&D. N'hésitez pas à parcourir mes réalisations ou à me contacter pour échanger.</p>
     </section>
   </section>
 
@@ -101,7 +101,7 @@
   <section id="profile">
     <h2>Profil</h2>
     <p>
-      Futur ingénieur en génie mécanique fraîchement diplômé et doté d'un solide bagage scientifique, je suis activement à la recherche de mon premier poste en bureau d'études ou en département R&D à compter du 1er octobre 2026. Je cible en priorité les régions Occitanie et Nouvelle-Aquitaine pour mettre mes compétences en calcul mécanique, simulation numérique (CFD) et transferts thermiques au service de vos projets industriels.
+      Futur ingénieur en génie mécanique diplômé en septembre 2026, je recherche un premier poste en calcul de structure, simulation numérique ou conception mécanique à compter de septembre/octobre 2026. Fort d'expériences en R&D internationale et en bureau d'études aéronautique, je souhaite mettre mes compétences en modélisation éléments finis (1D/3D), thermomécanique et analyse de systèmes complexes au service de vos projets industriels.
     </p>
   </section>
 
@@ -109,80 +109,64 @@
   <!--    WORK EXPERIENCE    -->
   <!-- ===================== -->
 
-  <!-- ID UNIQUE POUR LE PREMIER STAGE -->
+  <!-- STAGE 1 -->
   <section id="stage-florence">
-    <h2>Etude du refroidissement d'un moteur à détonation rotative (RDE)</h2>
-    <!-- STAGE FIN D'ÉTUDES - FLORENCE -->
-    <div class="job-container" style="margin-top: 30px; border-top: 1px solid #e2efff; padding-top: 25px;">
+    <h2>Stage Ingénieur R&D — Université de Florence</h2>
+    <div class="job-container" style="margin-top: 20px; border-top: 1px solid #e2e8f0; padding-top: 20px;">
       
-      <!-- En-tête de l'expérience (Titre à gauche, Bouton à droite) -->
       <div class="job-header">
-        <h3>Stage Ingénieur R&D au sein de Università degli Studi di Firenze (ITA)</h3>
+        <h3>Stage R&D au sein de l'Università degli Studi di Firenze (Italie) — Moteurs à détonation rotative</h3>
         <a href="stage_florence.html" class="details-btn">Détails</a>
       </div>
 
-      <!-- Nouvelle partie : Objectif du projet -->
-      <p class="job-objective" style="margin: 15px 0; font-size: 0.95rem; color: #555; line-height: 1.5;">
-        <strong>Objectif du projet :</strong> Concevoir et optimiser un échangeur thermique innovant à structures cellulaires TPMS (Schwarz Diamond) pour assurer le refroidissement critique des chambres de combustion de moteurs à détonation rotative (RDE) soumis à des flux thermiques extrêmes.
+      <p class="job-objective">
+        <strong>Objectif du projet :</strong> Participation aux travaux de recherche sur les moteurs à détonation rotative (RDE) et l'analyse des phénomènes thermomécaniques et fluidiques associés.
       </p>
       
-           <!-- Liste des réalisations techniques et scientifiques -->
-    <ul class="job-tasks" style="padding-left: 20px; margin: 0; color: #333;">
-      <li style="margin-bottom: 8px;">
-        <strong>Conception R&D :</strong> Conception d'un système de refroidissement innovant par structures poreuses (TPMS Diamond) pour une chambre de combustion à détonation rotative (RDE/RDC).
-      </li>
-      <li style="margin-bottom: 8px;">
-        <strong>Modélisation Analytique :</strong> Développement d'un solveur thermo-hydraulique sous Python intégrant de multiples corrélations pour lier la géométrie aux performances thermiques et aérodynamiques.
-      </li>
-      <li style="margin-bottom: 8px;">
-        <strong>Exploration & Optimisation :</strong> Implémentation d'une exploration d'espace par méthode de Monte-Carlo (200 000 tirages) couplée à un algorithme de Brent pour identifier les points de fonctionnement physiquement viables (Front de Pareto).
-      </li>
-      <li style="margin-bottom: 8px;">
-        <strong>Validation CFD :</strong> Paramétrage et réalisation de simulations numériques 3D (Ansys Fluent) en Transfert Thermique Conjugué (CHT) basées sur les points de fonctionnement optimaux extraits du modèle.
-      </li>
-    </ul>
+      <ul class="job-tasks">
+        <li>
+          <strong>Analyse & Modélisation :</strong> Étude du comportement thermique et mécanique des composants soumis à des sollicitations sévères.
+        </li>
+        <li>
+          <strong>Simulation & Calcul :</strong> Mise en place de modèles numériques et exploitation de scripts de calcul pour évaluer les performances du système.
+        </li>
+        <li>
+          <strong>Travail en environnement international :</strong> Collaboration quotidienne en anglais et en italien au sein d'une équipe de recherche universitaire.
+        </li>
+      </ul>
     </div>
   </section>
 
-
-   <!-- ID UNIQUE POUR LE DEUXIÈME STAGE -->
+  <!-- STAGE 2 -->
   <section id="stage-upgrades">
-    <h2>Ingénieur d'analyses d'upgrades</h2>
+    <h2>Stage Ingénieur — Dedienne Aerospace</h2>
 
     <div class="job-container">
       <div class="job-header" style="display: flex; align-items: center; justify-content: space-between; gap: 15px; flex-wrap: wrap; margin-bottom: 12px;">
-        <!-- Groupe Alignement Logo + Titre de stage -->
-        <div class="logo-title-group" style="display: flex; align-items: center; gap: 15px; flex: 1; min-width: 280px;">
-          <!-- Conteneur du Logo -->
-          <div class="company-logo" style="width: 55px; height: 55px; min-width: 55px; background: #ffffff; border: 1.5px solid #e2efff; border-radius: 8px; display: flex; align-items: center; justify-content: center; padding: 4px; box-shadow: 0 3px 10px rgba(0, 119, 204, 0.06); overflow: hidden;">
+        <div class="logo-title-group">
+          <div class="company-logo">
             <img src="dediennelogo.jpg" 
                  alt="Logo Dedienne Aerospace" 
-                 style="max-width: 100%; max-height: 100%; object-fit: contain;" 
-                 onerror="this.onerror=null; this.src='https://placehold.co/150x150/ffffff/1b365d?text=DEDIENNE';">
+                 onerror="this.onerror=null; this.src='https://placehold.co/150x150/ffffff/1e3a5f?text=DEDIENNE';">
           </div>
-          <!-- Titre du stage -->
-          <h3 style="margin: 0; font-size: 1.15rem; color: #003f88; line-height: 1.4;">Stage Ingénieur d'Analyses d'Upgrades réalisé chez Dedienne Aerospace, Toulouse</h3>
+          <h3>Stage Ingénieur Outillages & Upgrades chez Dedienne Aerospace (Toulouse)</h3>
         </div>
-        <!-- Bouton Détails -->
-        <a href="stage_dedienne.html" class="details-btn" style="margin-top: auto; margin-bottom: auto;">Détails</a>
+        <a href="stage_dedienne.html" class="details-btn">Détails</a>
       </div>
 
-      <p class="job-objective" style="margin: 15px 0; font-size: 0.95rem; color: #555; line-height: 1.5;">
-        <strong>Objectif du projet :</strong> Analyser la conformité technique des outillages aéronautiques pour structurer et déployer l'offre commerciale de modernisation (upgrades), tout en optimisant le suivi de la sous-traitance industrielle.
+      <p class="job-objective">
+        <strong>Objectif du projet :</strong> Analyser la conformité technique des outillages aéronautiques et accompagner le déploiement des solutions de modernisation (upgrades) et le suivi industriel.
       </p>
       
-      <ul class="job-tasks" style="padding-left: 20px; margin: 0; color: #333;">
-        <li style="margin-bottom: 8px;">
-          Analyse de plus de 100 plans techniques et comparaison de 54 versions d'outillages, avec proposition de solutions de mise en conformité ayant permis la validation et la réalisation de 34 upgrades.
+      <ul class="job-tasks">
+        <li>
+          Analyse technique de plans et comparaison de configurations d'outillages aéronautiques pour définir les opérations de mise en conformité et d'upgrade.
         </li>
-        <li style="margin-bottom: 8px;">
-          Conception d'outils de pilotage et d'indicateurs de performance pour mesurer l'efficacité des sous-traitants (usinage, contrôle, fabrication).
+        <li>
+          Suivi technique et mise à jour des données d'ingénierie pour structurer l'offre de modernisation auprès des clients.
         </li>
-        <li style="margin-bottom: 8px;">
-          Maintenance et mise à jour de bases de données complexes sur Excel pour structurer l'offre technique d'upgrades et élargir le portefeuille clients.
-        </li>
-        <li style="margin-bottom: 8px;">
-          Prise en charge et suivi opérationnel de la gestion des achats techniques liés aux projets.
+        <li>
+          Participation au suivi de fabrication, de sous-traitance et aux approvisionnements techniques associés aux projets.
         </li>
       </ul>
     </div>
@@ -194,59 +178,57 @@
   <section id="projects">
     <h2>Projets</h2>
 
-    <!-- CONTAINER QUI DEVIENT UNE GRILLE -->
     <div class="projects-grid">
-      <!-- Exemple de projet avec texte et image -->
+      <!-- Projet 1 -->
       <div class="project-card">
         <div class="project-info">
-          <h3>Projet MFEI</h3>
-          <p>Modélisation et étude de panaches Boussinesq et Non-Boussinesq</p>
-          <a href="projetMFEI.html" class="details-btn">Détails</a>
+          <h3>Calcul de structure — Moteur marin & Réseaux 1D</h3>
+          <p>Modélisation par éléments finis 1D et analyse mécanique d'ensembles complexes intégrant des réseaux de tuyauteries et supports.</p>
+          <a href="projet1.html" class="details-btn">Détails</a>
         </div>
         <div class="project-image">
-          <img src="plumes.jpg" alt="image projet 1">
+          <img src="projet1.jpg" alt="Projet structure 1D" onerror="this.src='https://placehold.co/400x220/eff6ff/1e3a5f?text=Calcul+1D+%26+Structure';">
         </div>
       </div>
       
-      <!-- Deuxième projet -->
+      <!-- Projet 2 -->
       <div class="project-card">
         <div class="project-info">
-          <h3>Projet industriel</h3>
-          <p>Réalisation et étude des performances d'un modèle réduit d'une éolienne à axe vertical</p>
-          <a href="projet_indus.html" class="details-btn">Détails</a>
+          <h3>Projet Industriel — Conception & Simulation</h3>
+          <p>Dimensionnement mécanique, modélisation CAO et validation numérique des performances d'un système mécanique.</p>
+          <a href="projet2.html" class="details-btn">Détails</a>
         </div>
         <div class="project-image">
-          <img src="Screen_eolienne_hybride.png" alt="image projet 2">
+          <img src="projet2.jpg" alt="Projet industriel" onerror="this.src='https://placehold.co/400x220/eff6ff/1e3a5f?text=Projet+Industriel';">
         </div>
       </div>
 
-      <!-- Quatrième projet -->
+      <!-- Projet 3 -->
       <div class="project-card">
         <div class="project-info">
-          <h3>Etude du flambement</h3>
-          <p>Etude du risque de flambement sur une cuve à vin</p>
-          <a href="tp_flambement.html" class="details-btn">Détails</a>
+          <h3>Étude de flambement & Résistance des matériaux</h3>
+          <p>Analyse de stabilité linéaire et non-linéaire d'une structure mince sous chargement critique.</p>
+          <a href="projet3.html" class="details-btn">Détails</a>
         </div>
         <div class="project-image">
-          <img src="cylindre_flambement.png" alt="image projet 5">
+          <img src="projet3.jpg" alt="Étude de flambement" onerror="this.src='https://placehold.co/400x220/eff6ff/1e3a5f?text=Analyse+Flambement';">
         </div>
       </div>
 
-      <!-- 5eme projet -->
+      <!-- Projet 4 -->
       <div class="project-card">
         <div class="project-info">
-          <h3>Projet Dynamique Rapide des Chocs</h3>
-          <p>Simulation d'un essai en traction/compression</p>
-          <a href="tp_dynamique_choc.html" class="details-btn">Détails</a>
+          <h3>Simulation Thermomécanique & Dynamique</h3>
+          <p>Modélisation numérique des contraintes thermiques et du comportement dynamique sous sollicitations transitoires.</p>
+          <a href="projet4.html" class="details-btn">Détails</a>
         </div>
         <div class="project-image">
-          <img src="altair.png" alt="image projet 9">
+          <img src="projet4.jpg" alt="Simulation thermomécanique" onerror="this.src='https://placehold.co/400x220/eff6ff/1e3a5f?text=Thermom%C3%A9canique';">
         </div>
       </div>
 
-    </div> <!-- FIN `.projects-grid` -->
+    </div>
   </section>
-
 
   <!-- ===================== -->
   <!--      COMPÉTENCES      -->
@@ -263,26 +245,26 @@
         
         <div class="card">
           <div class="card-header">
-            <h4 class="card-title">Ansys Fluent / Mechanical</h4>
+            <h4 class="card-title">Calcul Éléments Finis (1D / 3D)</h4>
             <span class="badge badge-advanced">Avancé</span>
           </div>
-          <p class="card-desc">Utilisé pour la mécanique des fluides (CFD) lors de mon projet de fin d'études et de mes projets scolaires.</p>
+          <p class="card-desc">Modélisation poutre/tuyauterie (1D), coques et volumes, analyse statique, modale et flambement (Ansys Mechanical, Nastran/Patran, Femap).</p>
         </div>
 
         <div class="card">
           <div class="card-header">
-            <h4 class="card-title">HyperMesh / RADIOSS</h4>
-            <span class="badge badge-intermediate">Intermédiaire</span>
+            <h4 class="card-title">Mécanique des Fluides & Thermique</h4>
+            <span class="badge badge-advanced">Avancé</span>
           </div>
-          <p class="card-desc">Exploité pour la simulation de dynamique rapide et de choc.</p>
+          <p class="card-desc">Simulations CFD et transferts thermiques (Ansys Fluent) appliqués aux systèmes énergétiques et industriels.</p>
         </div>
 
         <div class="card">
           <div class="card-header">
-            <h4 class="card-title">Patran / Nastran</h4>
+            <h4 class="card-title">Dynamique Rapide & Chocs</h4>
             <span class="badge badge-intermediate">Intermédiaire</span>
           </div>
-          <p class="card-desc">Analyse par éléments finis utilisée lors de divers projets.</p>
+          <p class="card-desc">Maillage et simulation explicite sous HyperMesh / RADIOSS.</p>
         </div>
       </div>
 
@@ -292,26 +274,26 @@
         
         <div class="card">
           <div class="card-header">
-            <h4 class="card-title">Creo Parametric & Catia V5</h4>
+            <h4 class="card-title">Catia V5 & Creo Parametric</h4>
             <span class="badge badge-advanced">Avancé</span>
           </div>
-          <p class="card-desc">Modélisation de pièces mécaniques, utilisée dans de nombreux projets universitaires.</p>
+          <p class="card-desc">Conception de pièces mécaniques, assemblages complexes et mise en plan industrielle.</p>
         </div>
 
         <div class="card">
           <div class="card-header">
-            <h4 class="card-title">C++ & Python</h4>
+            <h4 class="card-title">Python & C++</h4>
             <span class="badge badge-advanced">Avancé</span>
           </div>
-          <p class="card-desc">Création de scripts d'automatisation de calculs dans le cadre de projets.</p>
+          <p class="card-desc">Développement de scripts de calcul scientifique, post-traitement et automatisation.</p>
         </div>
         
         <div class="card">
           <div class="card-header">
-            <h4 class="card-title">Gestion de données (ERP / Excel)</h4>
+            <h4 class="card-title">Outils Industriels (Excel / ERP)</h4>
             <span class="badge badge-intermediate">Intermédiaire</span>
           </div>
-          <p class="card-desc">Mise en place de tableaux de suivi de performances avec MS Excel avancé et utilisation de Sage pour la gestion de production lors de mon stage chez Dedienne Aerospace.</p>
+          <p class="card-desc">Analyse de données techniques, suivi d'indicateurs et gestion de configuration en bureau d'études.</p>
         </div>
       </div>
 
@@ -321,28 +303,27 @@
         
         <div class="card">
           <div class="card-header">
-            <h4 class="card-title">Rigueur & Esprit Critique</h4>
+            <h4 class="card-title">Rigueur & Esprit d'Analyse</h4>
           </div>
-          <p class="card-desc">Développé lors de mon cursus universitaire exigeant scientifiquement ainsi que dans mes activités personnelles telles que les échecs.</p>
+          <p class="card-desc">Approche méthodique de la validation des modèles numériques et de la vérification physique des résultats.</p>
         </div>
 
         <div class="card">
           <div class="card-header">
-            <h4 class="card-title">Esprit d'Équipe & Leadership</h4>
+            <h4 class="card-title">Travail en Équipe & Engagement</h4>
           </div>
-          <p class="card-desc">Développé activement lors de ma pratique du basket-ball de haut niveau ainsi que lors de la coordination de mes projets d'ingénierie en équipe.</p>
+          <p class="card-desc">Habitué au travail collaboratif sur des projets techniques pluridisciplinaires et en environnement international.</p>
         </div>
 
         <div class="card">
           <div class="card-header">
-            <h4 class="card-title">Adaptabilité & Curiosité</h4>
+            <h4 class="card-title">Adaptabilité & Autonomie</h4>
           </div>
-          <p class="card-desc"> Capacité démontrée à m'auto-former rapidement sur de nouveaux outils de simulation (ex: ce site fait en HTML).</p>
+          <p class="card-desc">Montée en compétence rapide sur de nouveaux logiciels de simulation et normes de dimensionnement.</p>
         </div>
       </div>
     </div>
   </section>
-
 
   <!-- ===================== -->
   <!--   LANGUES & INTÉRÊTS  -->
@@ -357,85 +338,67 @@
       <div class="category-block">
         <h3 class="category-title">Langues</h3>
         
-        <!-- Français -->
         <div class="card">
           <div class="card-header">
-            <h4 class="card-title">Francais</h4>
+            <h4 class="card-title">Français</h4>
             <span class="badge badge-advanced">Langue Maternelle</span>
           </div>
-          <p class="card-desc">Excellente capacité de synthèse et de vulgarisation technique, à l'oral comme à l'écrit.</p>
+          <p class="card-desc">Rédaction de rapports techniques, notes de calcul et synthèse de projets.</p>
         </div>
 
-        <!-- Anglais -->
         <div class="card">
           <div class="card-header">
             <h4 class="card-title">Anglais</h4>
-            <span class="badge badge-advanced">C1 (TOEIC: 920)</span>
+            <span class="badge badge-advanced">Courant / Professionnel</span>
           </div>
-          <p class="card-desc">Pratique fluide au quotidien. Maîtrise parfaite du vocabulaire technique en ingénierie mécanique, fluidique et logicielle. Capacité à rédiger des rapports scientifiques et collaborer dans un environnement international.</p>
+          <p class="card-desc">Pratique courante en contexte scientifique et technique international.</p>
         </div>
 
-        <!-- Espagnol -->
-        <div class="card">
-          <div class="card-header">
-            <h4 class="card-title">Espagnol</h4>
-            <span class="badge badge-intermediate">Niveau A2</span>
-          </div>
-          <p class="card-desc">Compréhension des bases conversationnelles et écrites, développé lors de mes cursus académiques.</p>
-        </div>
-        
-        <!-- Italien -->
         <div class="card">
           <div class="card-header">
             <h4 class="card-title">Italien</h4>
-            <span class="badge badge-intermediate">Niveau A2</span>
+            <span class="badge badge-intermediate">Notions / Intermédiaire</span>
           </div>
-          <p class="card-desc">Bases conversationnelles, compréhension écrite et maîtrise de la vie quotidienne développées lors de mon immersion de 6 mois à Florence pour mon projet de fin d'études.</p>
+          <p class="card-desc">Pratique acquise lors de mon stage R&D de 6 mois à l'Université de Florence.</p>
         </div>
-        </div>
+      </div>
 
-      
-
-      <!-- Colonnes : Intérêts (Prend plus de place sur l'écran) -->
+      <!-- Colonnes : Intérêts -->
       <div class="category-block" style="grid-column: span 2;">
         <h3 class="category-title">Centres d'Intérêt</h3>
         
         <div class="grid-container" style="grid-template-columns: 1fr 1fr;">
 
-          <!-- Intérêt 2 -->
           <div class="card">
             <div class="interest-image">
-              <img src="images/chess.jpg" alt="Echecs" onerror="this.style.display='none';">
+              <img src="images/musique.jpg" alt="Piano" onerror="this.style.display='none';">
             </div>
-            <h4 class="card-title">Échecs en Compétition (Elo 1698)</h4>
-            <p class="card-desc" style="margin-top: 10px;">Pratique des échecs à un niveau compétitif au LOE (Lyon Olympique échecs).</p>
+            <h4 class="card-title">Musique & Piano</h4>
+            <p class="card-desc" style="margin-top: 8px;">Pratique régulière du piano, alliant discipline, précision et créativité.</p>
           </div>
 
-          <!-- Intérêt 3 -->
           <div class="card">
             <div class="interest-image">
-              <img src="imagesbasket.jpg" alt="Echecs" onerror="this.style.display='none';">
+              <img src="images/course.jpg" alt="Course à pied" onerror="this.style.display='none';">
             </div>
-            <h4 class="card-title">Basket-ball</h4>
-            <p class="card-desc" style="margin-top: 10px;">Pratique du basket ball compétitif à niveau régionnal pendant 12 ans, champion régionnal en U17 lors de la saison 2018/2019</p>
+            <h4 class="card-title">Course à pied & Engagement caritatif</h4>
+            <p class="card-desc" style="margin-top: 8px;">Participation à des courses à pied et événements sportifs solidaires.</p>
           </div>
 
-          <!-- Intérêt 4 -->
           <div class="card">
             <div class="interest-image">
-              <img src="imagesvoyage.jpg" alt="Echecs" onerror="this.style.display='none';">
+              <img src="images/sport.jpg" alt="Sports" onerror="this.style.display='none';">
             </div>
-            <h4 class="card-title">Voyage et decouverte du monde</h4>
-            <p class="card-desc" style="margin-top: 10px;">J'ai eu la chance de beaucoup voyagé ce qui m'as permis de développer des compétences linguistiques ainsi que de m'ouvrir plus facilement au monde extérieur.</p>
+            <h4 class="card-title">Sports d'endurance & Raquette</h4>
+            <p class="card-desc" style="margin-top: 8px;">Pratique de la natation, du tennis et de la musculation.</p>
           </div>
 
-          <!-- Intérêt 5 -->
           <div class="card">
             <div class="interest-image">
-              <img src="imagesski.jpg" alt="Echecs" onerror="this.style.display='none';">
+              <img src="images/rando.jpg" alt="Randonnée" onerror="this.style.display='none';">
             </div>
-            <h4 class="card-title">Ski</h4>
-            <p class="card-desc" style="margin-top: 10px;">Pratique en école de ski pendant 7 ans</p>
+            <h4 class="card-title">Randonnée & Montagne</h4>
+            <p class="card-desc" style="margin-top: 8px;">Randonnées en pleine nature et découverte de nouveaux itinéraires.</p>
           </div>
 
         </div>
@@ -447,7 +410,7 @@
   <!--        FOOTER         -->
   <!-- ===================== -->
   <footer>
-    <p>© Lucas Catusse 2025</p>
+    <p>© Tom Fournier 2026</p>
   </footer>
 
 </body>
