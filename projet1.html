@@ -3,11 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Étude de Performance Éolienne — Projet Industriel — Lucas Catusse</title>
+  <title>Étude de Performance Éolienne — Projet Industriel — Tom Fournier</title>
   
   <!-- Chargement des bibliothèques externes -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   
   <style>
@@ -22,7 +21,7 @@
 </head>
 <body class="bg-slate-50 text-slate-800 leading-relaxed min-h-screen">
 
-  <!-- HEADER & HER O -->
+  <!-- HEADER & HERO -->
   <header class="relative bg-slate-900 text-white overflow-hidden py-16 px-6 sm:px-12">
     <!-- Motif géométrique en arrière-plan -->
     <div class="absolute inset-0 opacity-10 bg-[linear-gradient(to_right,#0f172a_1px,transparent_1px),linear-gradient(to_bottom,#0f172a_1px,transparent_1px)] bg-[size:4rem_4rem]"></div>
@@ -47,7 +46,7 @@
           <span class="flex items-center gap-1">Polytech Lyon</span>
         </div>
       </div>
-      <a href="index.html" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700/50 hover:text-white transition px-5 py-2.5 rounded-lg font-semibold flex items-center gap-2 shadow-lg">
+      <a href="index.html#projects" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700/50 hover:text-white transition px-5 py-2.5 rounded-lg font-semibold flex items-center gap-2 shadow-lg">
         ← Retour au Portfolio
       </a>
     </div>
@@ -456,7 +455,7 @@
   <!-- FOOTER -->
   <footer class="bg-slate-900 text-slate-400 text-center py-12 border-t border-slate-800">
     <div class="max-w-6xl mx-auto px-6 space-y-4">
-      <p class="font-semibold text-slate-300"> © Lucas Catusse — Portfolio Ingénieur Mécanique</p>
+      <p class="font-semibold text-slate-300"> © Tom Fournier — Portfolio Ingénieur Mécanique</p>
     </div>
   </footer>
 
@@ -789,324 +788,3 @@
   </script>
 </body>
 </html>
-
-CATUSSE LUCAS p2311712
-mar. 28/07, 14:43
-/* ======================= */
-/*        GLOBAL           */
-/* ======================= */
-body {
-    margin: 0;                  /* Supprime les marges par défaut du navigateur */
-    padding: 0;                 /* Supprime le padding par défaut */
-    font-family: Arial, Helvetica, sans-serif; /* Police globale du site */
-    background: #f5f7fa;        /* Couleur de fond globale */
-    color: #333;                /* Couleur du texte par défaut */
-    line-height: 1.6;           /* Hauteur de ligne pour améliorer la lisibilité */
-}
-
-h2 {
-    color: #0077cc;             /* Couleur bleue pour tous les titres de niveau 2 */
-}
-
-/* ======================= */
-/*        HEADER           */
-/* ======================= */
-header {
-    display: flex;              /* Utilisation de Flexbox pour aligner le contenu */
-    align-items: center;        /* Centre verticalement les éléments */
-    justify-content: space-between; /* Espace entre les blocs gauche et droite */
-    background: #1e1e1e;        /* Fond sombre pour l’en-tête */
-    color: white;               /* Couleur du texte dans l’en-tête */
-    padding: 40px 30px;         /* Espacement interne */
-    flex-wrap: wrap;            /* Permet aux éléments de passer à la ligne si l’écran est petit */
-}
-
-header h1 {
-    margin: 0;                  /* Supprime la marge par défaut */
-    font-size: 2.3rem;          /* Taille du titre principal */
-}
-
-header h2 {
-    margin: 5px 0 15px;         /* Marge spécifique autour du sous-titre */
-    font-size: 1.2rem;          /* Taille plus petite que le h1 */
-    font-weight: 300;           /* Police fine */
-}
-
-.header-left {
-    flex: 1 1 60%;              /* Prend 60% de la largeur disponible */
-}
-
-.header-left a {
-    color: #4db8ff;             /* Couleur des liens dans la partie gauche */
-    text-decoration: none;      /* Supprime le soulignement */
-}
-
-.header-right {
-    flex: 1 1 30%;              /* Prend 30% de la largeur disponible */
-    text-align: right;          /* Aligne le contenu à droite */
-}
-
-.header-right img {
-    width: 150px;               /* Largeur fixe */
-    height: 150px;              /* Hauteur fixe identique pour créer un carré parfait */
-    object-fit: cover;          /* Centre et recadre la photo automatiquement sans la déformer */
-    border-radius: 50%;         /* Rend le carré parfaitement circulaire */
-    border: 3px solid #4db8ff;  /* Ta bordure bleue */
-}
-
-/* ======================= */
-/*        SECTIONS         */
-/* ======================= */
-section {
-    background: white;          /* Fond blanc pour chaque section */
-    max-width: 1000px;          /* Largeur maximale */
-    margin: 25px auto;          /* Centre horizontalement et ajoute un espace vertical */
-    padding: 25px 30px;         /* Padding interne de la section */
-    border-radius: 12px;        /* Coins arrondis */
-    box-shadow: 0 2px 12px rgba(0,0,0,0.08); /* Ombre légère */
-}
-
-section h2 {
-    border-bottom: 2px solid #4db8ff; /* Ligne bleue sous le titre */
-    padding-bottom: 8px;              /* Espace entre la ligne et le texte */
-    margin-bottom: 25px;              /* Espace sous le titre */
-}
-
-/* ======================= */
-/*        INTRO            */
-/* ======================= */
-#intro {
-    background: #e8f4ff;               /* Fond légèrement bleu pour l’intro */
-    box-shadow: 0 2px 12px rgba(0,0,0,0.1); /* Ombre un peu plus marquée */
-}
-
-/* ======================= */
-/*       JOB HEADER        */
-/* ======================= */
-.job-header {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 15px;
-    flex-wrap: wrap;
-    margin-bottom: 12px;
-}
-
-.job-header h3 {
-    margin: 0;
-    flex: 1;
-}
-
-/* ======================= */
-/*      PROJECT CARD       */
-/* ======================= */
-#projects h3 {
-    margin-left: 5px;                  /* Petit décalage à gauche */
-}
-
-.project-card {
-    display: flex;                     /* Flexbox pour aligner image et texte */
-    justify-content: space-between;    /* Espace entre les blocs */
-    align-items: center;               /* Centre verticalement */
-    background: #eef6ff;               /* Fond légèrement bleu */
-    padding: 25px;                     /* Espacement interne */
-    border-radius: 15px;               /* Coins arrondis */
-    margin: 0;                         /* pas d'espacement individuel */
-    border: 1px solid #d2e6ff;         /* Bordure légère */
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05); /* Ombre légère */
-}
-
-.project-info {
-    flex: 1 1 50%;                     /* Prend environ 50% de la largeur */
-}
-
-.project-info h3 {
-    margin-top: 0;                     /* Supprime la marge par défaut */
-    text-align: center;                /* Centre le titre */
-    color: #003f88;                    /* Couleur du titre */
-}
-
-.project-info p {
-    text-align: center;                /* Centre le texte */
-    margin-bottom: 20px;               /* Espace sous le paragraphe */
-}
-
-.details-btn {
-    display: inline-block;              /* Bloc inline qui peut avoir padding */
-    padding: 10px 20px;                 /* Espacement interne */
-    background: #4d9dff;                /* Fond bleu */
-    color: white;                       /* Texte blanc */
-    text-decoration: none;              /* Supprime le soulignement */
-    border-radius: 8px;                 /* Coins arrondis */
-    font-weight: bold;                  /* Texte gras */
-    text-align: center;                 /* Centre le texte */
-    transition: 0.2s;                   /* Transition douce pour l’effet hover */
-}
-
-.details-btn:hover {
-    background: #1c74e9;                /* Change la couleur au survol */
-}
-
-.project-image {
-    flex: 1 1 45%;                      /* Prend environ 45% de la largeur */
-    text-align: right;                  /* Image alignée à droite */
-}
-
-.project-image img {
-    width: 100%;                        /* Occupe toute la largeur du bloc */
-    max-width: 450px;                   /* Taille maximale */
-    border-radius: 10px;                /* Coins arrondis */
-}
-
-/* Responsive pour Project Card */
-@media (max-width: 900px) {
-    .project-card {
-        flex-direction: column;          /* Les éléments passent en colonne sur petit écran */
-        text-align: center;
-    }
-
-    .project-image {
-        text-align: center;
-        margin-top: 15px;
-    }
-
-    .project-image img {
-        max-width: 80%;                  /* Image plus petite sur petit écran */
-    }
-}
-
-/* ======================= */
-/*   GRID ORGANISATION     */
-/* ======================= */
-.projects-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); /* 2 colonnes */
-    gap: 25px; /* espace horizontal et vertical */
-    margin-top: 20px;
-}
-
-/* Responsive : 1 seule colonne sur mobile */
-@media (max-width: 900px) {
-    .projects-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-/* ========================================= */
-/*   NOUVELLES SECTIONS SKILLS & INTÉRÊTS    */
-/* ========================================= */
-
-/* Grille principale des compétences et intérêts */
-.grid-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 25px;
-}
-
-.grid-container-2col {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 25px;
-}
-
-/* Bloc de catégories (Sous-titres) */
-.category-block {
-    background: transparent;
-}
-
-.category-title {
-    font-size: 1.2rem;
-    color: #0077cc;
-    margin-top: 0;
-    margin-bottom: 15px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    border-bottom: 1px solid #d2e6ff;
-    padding-bottom: 8px;
-}
-
-/* Design des Cartes (Cards) */
-.card {
-    background: #ffffff;
-    border: 1px solid #e2efff;
-    border-radius: 10px;
-    padding: 20px;
-    margin-bottom: 20px;
-    box-shadow: 0 3px 10px rgba(0, 119, 204, 0.05); /* Ombre bleutée très discrète */
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 20px rgba(0, 119, 204, 0.12); /* Accentuation de l'ombre au survol */
-}
-
-/* En-tête de la carte (Titre + Badge) */
-.card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 12px;
-    gap: 10px;
-}
-
-.card-title {
-    font-weight: bold;
-    font-size: 1.05rem;
-    color: #003f88;
-    margin: 0;
-}
-
-/* Texte justificatif de la carte */
-.card-desc {
-    font-size: 0.95rem;
-    line-height: 1.5;
-    color: #555;
-    margin: 0;
-}
-
-/* Badges de niveau */
-.badge {
-    padding: 5px 12px;
-    border-radius: 20px;
-    font-size: 0.75rem;
-    font-weight: bold;
-    color: white;
-    white-space: nowrap; /* Empêche le texte du badge de passer à la ligne */
-}
-
-.badge-advanced { background-color: #27ae60; }     /* Vert pour Avancé */
-.badge-intermediate { background-color: #f39c12; } /* Orange pour Intermédiaire */
-.badge-beginner { background-color: #95a5a6; }     /* Gris pour Débutant */
-
-/* Section spécifique aux images des centres d'intérêt */
-.interest-image img {
-    width: calc(100% + 40px); /* Compense le padding de 20px de la carte (20 + 20) */
-    height: 180px;
-    object-fit: cover;
-    border-radius: 10px 10px 0 0; /* Arrondis uniquement en haut */
-    margin: -20px -20px 15px -20px; /* Colle l'image aux bords de la carte */
-    display: block;
-}
-
-/* Responsive pour les cartes d'intérêts sur petits écrans */
-@media (max-width: 768px) {
-    .grid-container-2col {
-        grid-template-columns: 1fr;
-    }
-    .span-2-cols {
-        grid-column: span 1 !important;
-    }
-}
-
-/* ======================= */
-/*        FOOTER           */
-/* ======================= */
-footer {
-    background: #1e1e1e;            /* Fond sombre */
-    color: white;                    /* Texte blanc */
-    text-align: center;              /* Centre le texte */
-    padding: 15px;                   /* Espacement interne */
-    margin-top: 40px;                /* Espace au-dessus du footer */
-}
