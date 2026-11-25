@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Étude de Performance Éolienne — Projet Industriel — Lucas Catusse</title>
+  
+  <!-- Chargement des bibliothèques externes -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    .code-font {
+      font-family: 'JetBrains Mono', monospace;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 leading-relaxed min-h-screen">
+
+  <!-- HEADER & HER O -->
+  <header class="relative bg-slate-900 text-white overflow-hidden py-16 px-6 sm:px-12">
+    <!-- Motif géométrique en arrière-plan -->
+    <div class="absolute inset-0 opacity-10 bg-[linear-gradient(to_right,#0f172a_1px,transparent_1px),linear-gradient(to_bottom,#0f172a_1px,transparent_1px)] bg-[size:4rem_4rem]"></div>
+    <div class="absolute -top-40 -right-40 w-96 h-96 bg-emerald-500 rounded-full filter blur-3xl opacity-20"></div>
+    <div class="absolute -bottom-40 -left-40 w-96 h-96 bg-teal-600 rounded-full filter blur-3xl opacity-15"></div>
+    
+    <div class="relative max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+      <div class="max-w-3xl">
+        <div class="flex flex-wrap gap-2 mb-4">
+          <span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">Projet Industriel</span>
+          <span class="bg-teal-500/10 text-teal-400 border border-teal-500/20 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">Aérodynamique et CFD</span>
+          <span class="bg-teal-500/10 text-teal-400 border border-teal-500/20 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">Ansys Fluent</span>
+          <span class="bg-teal-500/10 text-teal-400 border border-teal-500/20 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">Creo Parametric</span>
+        </div>
+        <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight">
+          Design & Performance d'une <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-400">Éolienne Hybride</span> à Axe Vertical
+        </h1>
+        <p class="mt-4 text-slate-300 text-lg max-w-2xl">
+          Analyse d'écoulements transitoires sous Ansys Fluent et conception d'un rotor hybride Darrieus-Savonius optimisé pour l'auto-démarrage.
+        </p>
+        <div class="flex flex-wrap gap-4 mt-6 text-sm text-slate-400">
+          <span class="flex items-center gap-1">Polytech Lyon</span>
+        </div>
+      </div>
+      <a href="index.html" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700/50 hover:text-white transition px-5 py-2.5 rounded-lg font-semibold flex items-center gap-2 shadow-lg">
+        ← Retour au Portfolio
+      </a>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 py-12 space-y-16">
+
+    <!-- EXECUTIVE SUMMARY & DETAILED INTRO -->
+    <section class="grid grid-cols-1 lg:grid-cols-12 gap-8 bg-white border border-slate-200 rounded-2xl p-8 shadow-sm">
+      <div class="lg:col-span-8 space-y-5">
+        <h2 class="text-2xl font-bold text-slate-900 border-b border-slate-100 pb-3 flex items-center gap-2">
+          Concept, Fonctionnement & Problématique Industrielle
+        </h2>
+        <p class="text-slate-600 text-justify">
+          Les éoliennes à axe vertical (<strong>VAWT</strong> — <em>Vertical Axis Wind Turbines</em>) représentent une alternative technologique clé face aux structures horizontales classiques (HAWT). Elles se distinguent par leur capacité d'indépendance vis-à-vis de la direction du vent incident, éliminant ainsi les systèmes lourds d'orientation de la nacelle (systèmes de lacet ou <em>yaw</em>). De plus, l'implantation au sol de la génératrice et des composants de transmission facilite drastiquement les opérations de maintenance et allège la contrainte structurelle du mât.
+        </p>
+        <p class="text-slate-600 text-justify">
+          Toutefois, la captation cinétique du vent repose sur deux principes aérodynamiques distincts, chacun porté par des topologies de rotors bien spécifiques aux performances complémentaires :
+        </p>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 my-4">
+          <div class="bg-slate-50 border border-slate-200/60 p-4 rounded-xl">
+            <h4 class="font-bold text-emerald-600 text-sm flex items-center gap-1.5">Type Savonius (Rotor à Traînée)</h4>
+            <p class="text-xs text-slate-500 mt-1.5 leading-relaxed text-justify">
+              Fonctionne principalement par <strong>traînée différentielle</strong>. Les demi-godets opposés présentent des coefficients de traînée asymétriques face à l'écoulement. Cette topologie offre un <strong>excellent couple à l'arrêt</strong> et démarre sous de très faibles vitesses de vent, mais présente un rendement aérodynamique maximal (\(C_p \approx 0.15\)) limité et ne peut pas dépasser un rapport de vitesse périphérique supérieur à 1 (\(\lambda < 1\)).
+            </p>
+          </div>
+          <div class="bg-slate-50 border border-slate-200/60 p-4 rounded-xl">
+            <h4 class="font-bold text-teal-600 text-sm flex items-center gap-1.5">Type Darrieus (Rotor à Portance)</h4>
+            <p class="text-xs text-slate-500 mt-1.5 leading-relaxed text-justify">
+              Fonctionne par <strong>portance aérodynamique</strong> grâce à l'utilisation de pales au profil aéronautique profilé (ici de type NACA symétrique). Cette configuration offre des rendements exceptionnels (\(C_p > 0.35\)) à haute vitesse de rotation (\(\lambda > 2\)). Néanmoins, le couple au démarrage est quasi-nul à basse vitesse, rendant l'<strong>auto-démarrage physiquement impossible</strong> sans assistance.
+            </p>
+          </div>
+        </div>
+        
+        <p class="text-slate-600 text-justify">
+          Pour s'affranchir de ce compromis historique, ce projet étudie un <strong>concept hybride coaxial</strong>. Au centre du système, un petit rotor Savonius à deux godets capte les brises initiales pour initier instantanément la rotation de l'arbre commun. Une fois que la turbine acquiert une vitesse de rotation suffisante, la portance s'établit sur les trois pales Darrieus périphériques, qui prennent alors le relais pour exploiter pleinement l'énergie cinétique du vent à haut rendement.
+        </p>
+      </div>
+      
+      <!-- Visual CAD / Creo Annotation Block -->
+      <div class="lg:col-span-4 bg-slate-900 text-white rounded-xl p-6 flex flex-col justify-between relative overflow-hidden shadow-inner border border-slate-800">
+        <div class="absolute inset-0 opacity-5 bg-[radial-gradient(#fff_1px,transparent_1px)] bg-[size:1rem_1rem]"></div>
+        <div>
+          <span class="text-xs text-emerald-400 font-bold uppercase tracking-widest code-font">Modélisation CAO Creo</span>
+          <h3 class="text-xl font-bold mt-1 text-slate-100">Vue CAO Creo Parametric</h3>
+          <p class="text-[11px] text-slate-400 mt-1">Conception mécanique tridimensionnelle du modèle hybride et de ses composants.</p>
+        </div>
+        
+        <!-- SVG Isometric Technical Drawing representing the Creo model -->
+        <div class="my-4 bg-slate-950/80 rounded-lg p-3 border border-slate-800 flex justify-center items-center h-56 relative">
+          <svg class="w-full h-full" viewBox="0 0 200 220">
+            <!-- Grid lines simulating CAD screen -->
+            <path d="M 0,55 L 200,55 M 0,110 L 200,110 M 0,165 L 200,165 M 50,0 L 50,220 M 100,0 L 100,220 M 150,0 L 150,220" stroke="#1e293b" stroke-width="0.5" stroke-dasharray="2" />
+            
+            <!-- Axis lines -->
+            <line x1="100" y1="10" x2="100" y2="210" stroke="#f59e0b" stroke-width="1" stroke-dasharray="5,2" />
+            
+            <!-- Outer Darrieus Blades (Isometric projection styling) -->
+            <!-- Blade 1 (Left) -->
+            <path d="M 50,40 Q 30,110 50,180" fill="none" stroke="#0ea5e9" stroke-width="3" />
+            <!-- Connection strut 1 -->
+            <line x1="100" y1="40" x2="50" y2="40" stroke="#64748b" stroke-width="1.5" />
+            <line x1="100" y1="180" x2="50" y2="180" stroke="#64748b" stroke-width="1.5" />
+            
+            <!-- Blade 2 (Right) -->
+            <path d="M 150,40 Q 170,110 150,180" fill="none" stroke="#0ea5e9" stroke-width="3" />
+            <!-- Connection strut 2 -->
+            <line x1="100" y1="40" x2="150" y2="40" stroke="#64748b" stroke-width="1.5" />
+            <line x1="100" y1="180" x2="150" y2="180" stroke="#64748b" stroke-width="1.5" />
+            
+            <!-- Central shaft -->
+            <rect x="96" y="25" width="8" height="170" fill="#94a3b8" rx="2" />
+            
+            <!-- Inner Savonius Buckets -->
+            <!-- Bucket 1 (Left offset) -->
+            <path d="M 100,85 C 75,85 75,115 100,115" fill="none" stroke="#10b981" stroke-width="2.5" />
+            <line x1="100" y1="85" x2="80" y2="85" stroke="#64748b" stroke-width="1" />
+            <line x1="100" y1="115" x2="80" y2="115" stroke="#64748b" stroke-width="1" />
+            
+            <!-- Bucket 2 (Right offset) -->
+            <path d="M 100,115 C 125,115 125,145 100,145" fill="none" stroke="#10b981" stroke-width="2.5" />
+            <line x1="100" y1="115" x2="120" y2="115" stroke="#64748b" stroke-width="1" />
+            <line x1="100" y1="145" x2="120" y2="145" stroke="#64748b" stroke-width="1" />
+            
+            <!-- Dimensional lines & markers -->
+            <line x1="165" y1="40" x2="185" y2="40" stroke="#e2e8f0" stroke-width="0.5" />
+            <line x1="165" y1="180" x2="185" y2="180" stroke="#e2e8f0" stroke-width="0.5" />
+            <line x1="180" y1="40" x2="180" y2="180" stroke="#34d399" stroke-width="0.75" />
+            <polygon points="180,38 178,44 182,44" fill="#34d399" />
+            <polygon points="180,182 178,176 182,176" fill="#34d399" />
+            
+            <!-- Annotation Text -->
+            <text x="186" y="115" fill="#34d399" font-size="7" font-family="monospace" writing-mode="vertical-lr">H = 400 mm</text>
+            <text x="100" y="212" fill="#38bdf8" font-size="8" font-family="monospace" text-anchor="middle">Ø 500 mm (Darrieus)</text>
+          </svg>
+        </div>
+        
+        <div class="bg-emerald-950/40 text-emerald-300 text-[11px] p-3 rounded border border-emerald-900/30">
+          <strong>Rigueur Géométrique :</strong> Les pales aérodynamiques externes adoptent un profil symétrique de type <strong>NACA 0018</strong>, idéal pour stabiliser la portance sur des angles d'attaque oscillants.
+        </div>
+      </div>
+    </section>
+
+    <!-- INTERACTIVE WIND TUNNEL & CFD SIMULATOR -->
+    <section class="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-md space-y-6">
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-slate-100 pb-4">
+        <div>
+          <span class="text-xs text-emerald-600 font-bold uppercase tracking-widest">Soufflerie Numérique Virtuelle</span>
+          <h2 class="text-2xl font-bold text-slate-900">Simulateur Aérodynamique Intéractive</h2>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <!-- Commandes de Contrôle de la Soufflerie -->
+        <div class="lg:col-span-4 bg-slate-50 border border-slate-200/60 rounded-xl p-5 space-y-6 flex flex-col justify-between">
+          <div class="space-y-5 text-sm">
+            <h3 class="font-bold text-slate-800 flex items-center gap-2 border-b border-slate-200 pb-2">Paramètres d'Écoulement</h3>
+            
+            <!-- Type de Profil de Vent -->
+            <div>
+              <label class="block font-medium text-slate-700 mb-1.5 text-xs uppercase tracking-wider">Type de Vent Incident</label>
+              <select id="wind-profile" class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-xs">
+                <option value="uniform" selected>Uniforme (Laminaire standard)</option>
+                <option value="oscillating">Cas 1 : Vent Oscillant (Fluctuant périodique)</option>
+                <option value="shear">Cas 2 : Vent Cisaillant (Gradient de hauteur)</option>
+              </select>
+            </div>
+
+            <!-- Vitesse du Vent -->
+            <div>
+              <div class="flex justify-between mb-1 text-xs">
+                <label class="font-medium text-slate-700">Vitesse du vent (\(V_{\infty}\))</label>
+                <span id="val-wind-speed" class="font-bold text-emerald-600">8.0 m/s</span>
+              </div>
+              <input type="range" id="param-wind-speed" min="2.0" max="15.0" step="0.5" value="8.0" class="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-600">
+            </div>
+
+            <!-- TSR / Tip Speed Ratio (Lambda) -->
+            <div>
+              <div class="flex justify-between mb-1 text-xs">
+                <label class="font-medium text-slate-700">Tip Speed Ratio (\(\lambda\))</label>
+                <span id="val-tsr" class="font-bold text-emerald-600">1.50</span>
+              </div>
+              <input type="range" id="param-tsr" min="0.0" max="5.0" step="0.10" value="1.50" class="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-600">
+              <div class="flex justify-between text-[9px] text-slate-400 mt-1 font-semibold">
+                <span>Démarrage</span>
+                <span>Optimal (2.0 - 2.5)</span>
+                <span>Bouchon (\(\lambda > 3.5\))</span>
+              </div>
+            </div>
+
+            <!-- Type d'affichage du fluide -->
+            <div>
+              <label class="block font-medium text-slate-700 mb-1.5 text-xs uppercase tracking-wider">Mode de Visualisation</label>
+              <div class="grid grid-cols-2 gap-2">
+                <button id="btn-show-stream" class="bg-emerald-600 text-white border border-emerald-600 rounded-lg px-2 py-1.5 text-xs font-semibold focus:outline-none shadow-sm">Particules</button>
+                <button id="btn-show-wake" class="bg-white text-slate-600 border border-slate-300 hover:bg-slate-50 rounded-lg px-2 py-1.5 text-xs font-semibold focus:outline-none transition">Contour Vitesse</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Panneau d'état aérodynamique dynamique -->
+          <div id="solver-status" class="bg-emerald-50 text-emerald-800 text-xs p-3.5 rounded-lg border border-emerald-100 flex gap-2">
+            <div>
+              <p class="font-bold text-emerald-900" id="status-title">Régime de production optimal</p>
+              <p class="text-[11px] text-slate-600 mt-0.5" id="status-desc">L'écoulement s'écoule proprement. Le Darrieus et le Savonius contribuent positivement au couple.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Visualisation Canvas -->
+        <div class="lg:col-span-8 flex flex-col justify-between">
+          <div class="relative bg-slate-950 border border-slate-800 rounded-xl overflow-hidden h-96 shadow-inner">
+            <canvas id="aeroTunnel" class="w-full h-full block"></canvas>
+            
+            <!-- Incrustation de type HUD d'ingénierie -->
+            <div class="absolute top-4 left-4 bg-slate-900/95 border border-slate-800/80 rounded-lg p-3 text-[10px] code-font space-y-1 select-none backdrop-blur-sm pointer-events-none text-slate-300">
+              <div class="text-slate-500 font-bold uppercase tracking-wider">Fluent Real-Time Solve</div>
+              <div class="flex justify-between gap-6"><span>Wind Velocity Profile:</span> <span id="hud-profile" class="text-emerald-400">UNIFORM</span></div>
+              <div class="flex justify-between gap-6"><span>Rotation Speed:</span> <span id="hud-rpm" class="text-emerald-400">0 RPM</span></div>
+              <div class="flex justify-between gap-6"><span>Grid Status:</span> <span class="text-teal-400">OK (665 420 cells)</span></div>
+              <div class="flex justify-between gap-6"><span>Target \(y^+\):</span> <span class="text-teal-400">&lt; 1.0 (Inflation Active)</span></div>
+            </div>
+          </div>
+          
+          <!-- Tableau de bord des performances en direct -->
+          <div class="grid grid-cols-3 gap-4 mt-4 text-center">
+            <div class="bg-slate-50 border border-slate-200 rounded-lg p-3">
+              <div class="text-[10px] text-slate-500 uppercase font-bold">Coeff. de Puissance (\(C_p\))</div>
+              <div id="metric-cp" class="text-lg font-extrabold text-emerald-600">0.32</div>
+            </div>
+            <div class="bg-slate-50 border border-slate-200 rounded-lg p-3">
+              <div class="text-[10px] text-slate-500 uppercase font-bold">Couple Instantané (\(T\))</div>
+              <div id="metric-torque" class="text-lg font-extrabold text-emerald-600">1.45 N.m</div>
+            </div>
+            <div class="bg-slate-50 border border-slate-200 rounded-lg p-3">
+              <div class="text-[10px] text-slate-500 uppercase font-bold">Statut Énergétique</div>
+              <div id="metric-status" class="text-lg font-extrabold text-emerald-600 font-mono">GÉNÉRATEUR</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- AERODYNAMIC CHOKING SPOTLIGHT -->
+    <section class="bg-white border border-slate-200 rounded-2xl p-8 space-y-6 shadow-sm">
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <div>
+          <span class="text-xs text-rose-600 font-bold uppercase tracking-widest">Analyse Critique & Découverte R&D</span>
+          <h2 class="text-2xl font-bold text-slate-900 mt-1">Le Phénomène de "Bouchon Aérodynamique"</h2>
+        </div>
+      </div>
+      
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+        <div class="space-y-4">
+          <p class="text-slate-600 text-justify">
+            Lors de nos simulations transitoires sous Fluent, un phénomène hautement pénalisant est apparu à mesure que la vitesse de rotation de l'éolienne augmentait par rapport à la vitesse du vent incident (Tip Speed Ratio \(\lambda > 3\)).
+          </p>
+          <div class="bg-slate-50 border border-slate-200 p-5 rounded-xl space-y-3">
+            <h4 class="font-bold text-rose-600 text-sm">Mécanisme physique du blocage :</h4>
+            <p class="text-xs text-slate-600 leading-relaxed text-justify">
+              En tournant à très haute vitesse, le rotor central <strong>Savonius</strong> n'arrive plus à évacuer le flux d'air incident qui le traverse. Par force centrifuge et accumulation massique, il se comporte comme un <strong>cylindre plein en rotation rapide</strong> (effet Magnus parasite). 
+            </p>
+            <p class="text-xs text-slate-600 leading-relaxed text-justify">
+              Ce "bouchon" dévie les filets d'air vers l'extérieur de la turbine avant qu'ils ne puissent frapper efficacement les pales du Darrieus situé en aval. Il en résulte un sillage massif caractérisé par un déficit de vitesse de près de 80%, étouffant le fonctionnement du Darrieus périphérique.
+            </p>
+          </div>
+          <p class="text-xs text-slate-500 font-medium italic">
+            Pour observer ce phénomène, réglez le curseur "Tip Speed Ratio" à une valeur supérieure à 3.5 dans la soufflerie interactive ci-dessus.
+          </p>
+        </div>
+
+        <!-- Schéma SVG explicatif du Bouchon -->
+        <div class="bg-slate-50 border border-slate-200 rounded-xl p-6 flex flex-col justify-center items-center h-80 relative overflow-hidden">
+          <svg class="w-full h-full" viewBox="0 0 400 240">
+            <!-- Arrière-plan grille -->
+            <path d="M 0,40 L 400,40 M 0,120 L 400,120 M 0,200 L 400,200" stroke="#e2e8f0" stroke-dasharray="4" />
+            <path d="M 100,0 L 100,240 M 200,0 L 200,240 M 300,0 L 300,240" stroke="#e2e8f0" stroke-dasharray="4" />
+
+            <!-- Légende de la vitesse du vent (Échelle) -->
+            <rect x="10" y="10" width="80" height="8" rx="4" fill="url(#grad-speed)" />
+            <text x="10" y="30" fill="#64748b" font-size="8" font-family="monospace">VITESSE : BLEU (0) -> ROUGE (V_max)</text>
+
+            <!-- Déviation des filets d'air laminaires (Bouchon) -->
+            <path d="M 10,50 Q 150,50 170,10 Q 190,0 260,10 T 390,30" fill="none" stroke="#ef4444" stroke-width="2" />
+            <path d="M 10,190 Q 150,190 170,230 Q 190,240 260,230 T 390,210" fill="none" stroke="#ef4444" stroke-width="2" />
+            
+            <!-- Lignes obstruées qui contournent -->
+            <path d="M 10,100 C 100,100 130,80 160,50 C 230,20 280,30 390,60" fill="none" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="3" />
+            <path d="M 10,140 C 100,140 130,160 160,190 C 230,220 280,210 390,180" fill="none" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="3" />
+
+            <!-- Zone de sillage stagnante (Morte) -->
+            <path d="M 200,120 C 240,60 380,60 390,120 C 380,180 240,180 200,120 Z" fill="rgba(59, 130, 246, 0.15)" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="2" />
+            <text x="235" y="125" fill="#2563eb" font-size="9" font-weight="bold" font-family="sans-serif">Sillage Mort (Déficit de vitesse)</text>
+
+            <!-- Pales Darrieus -->
+            <g transform="translate(200,120)">
+              <!-- Cercle de rotation théorique -->
+              <circle cx="0" cy="0" r="70" fill="none" stroke="#cbd5e1" stroke-dasharray="3" />
+              
+              <!-- Pales périphériques Darrieus -->
+              <path d="M-65,-15 C-75,0 -70,5 -65,0 Z" fill="#94a3b8" stroke="#475569" />
+              <path d="M65,-15 C75,0 70,5 65,0 Z" fill="#94a3b8" stroke="#475569" />
+              
+              <!-- Le Savonius Central "Bouchon" -->
+              <circle cx="0" cy="0" r="22" fill="#ef4444" opacity="0.15" />
+              <circle cx="0" cy="0" r="18" fill="none" stroke="#ef4444" stroke-width="2" />
+              
+              <!-- Flèches de rotation rapide -->
+              <path d="M -22,-5 A 22,22 0 0,1 -5,-22" fill="none" stroke="#ef4444" stroke-width="1.5" marker-end="url(#arrow)" />
+              <path d="M 22,5 A 22,22 0 0,1 5,22" fill="none" stroke="#ef4444" stroke-width="1.5" marker-end="url(#arrow)" />
+
+              <text x="-32" y="4" fill="#dc2626" font-size="7" font-weight="bold" font-family="sans-serif">SAVONIUS SATURÉ</text>
+            </g>
+
+            <!-- Gradients et définitions SVG -->
+            <defs>
+              <linearGradient id="grad-speed" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+                <stop offset="50%" style="stop-color:#f59e0b;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#ef4444;stop-opacity:1" />
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- MATHEMATICAL FORMULATIONS -->
+    <section class="space-y-6">
+      <h2 class="text-2xl font-bold text-slate-900 border-b border-slate-100 pb-3">Formulations Physique & Équations Fondamentales</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Performance Globale -->
+        <div class="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 space-y-4 shadow-sm">
+          <h3 class="font-bold text-emerald-600 text-lg flex items-center gap-2">Grandeurs Caractéristiques de Performance</h3>
+          <p class="text-sm text-slate-500">
+            Définitions normalisées utilisées pour évaluer l'efficacité de captation aérodynamique.
+          </p>
+          <div class="space-y-3">
+            <div class="bg-slate-50 border border-slate-200 rounded-lg p-3.5">
+              <span class="text-xs text-slate-500 block mb-1 font-semibold">Tip Speed Ratio (\(\lambda\)) :</span>
+              <div class="text-sm font-medium text-slate-800">
+                $$\lambda = \frac{\omega \cdot R}{V_{\infty}}$$
+              </div>
+            </div>
+            <div class="bg-slate-50 border border-slate-200 rounded-lg p-3.5">
+              <span class="text-xs text-slate-500 block mb-1 font-semibold">Coefficient de Puissance (\(C_p\)) :</span>
+              <div class="text-sm font-medium text-slate-800">
+                $$C_p = \frac{P_{arbre}}{\frac{1}{2} \rho A V_{\infty}^3}$$
+              </div>
+            </div>
+            <div class="bg-slate-50 border border-slate-200 rounded-lg p-3.5">
+              <span class="text-xs text-slate-500 block mb-1 font-semibold">Coefficient de Couple (\(C_m\)) :</span>
+              <div class="text-sm font-medium text-slate-800">
+                $$C_m = \frac{T_{arbre}}{\frac{1}{2} \rho A R V_{\infty}^2} = \frac{C_p}{\lambda}$$
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Scénarios Atmosphériques et CFD -->
+        <div class="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 space-y-4 shadow-sm">
+          <h3 class="font-bold text-teal-600 text-lg flex items-center gap-2">Modélisation des Conditions d'Entrée (CFD)</h3>
+          <p class="text-sm text-slate-500">
+            Formulations implémentées via les fonctions UDF (User Defined Functions) d'Ansys Fluent pour reproduire des conditions réalistes.
+          </p>
+          <div class="space-y-3">
+            <div class="bg-slate-50 border border-slate-200 rounded-lg p-3.5">
+              <span class="text-xs text-slate-500 block mb-1 font-semibold">Cas 1 — Profil de Vent Oscillant :</span>
+              <div class="text-sm font-medium text-slate-800">
+                $$V(t) = V_0 \cdot \left[1 + A \cdot \sin(2\pi f \cdot t)\right]$$
+              </div>
+            </div>
+            <div class="bg-slate-50 border border-slate-200 rounded-lg p-3.5">
+              <span class="text-xs text-slate-500 block mb-1 font-semibold">Cas 2 — Profil de Vent Cisaillant (Loi en Puissance) :</span>
+              <div class="text-sm font-medium text-slate-800">
+                $$V(z) = V_{ref} \cdot \left(\frac{z}{z_{ref}}\right)^{\alpha}$$
+              </div>
+            </div>
+            <div class="bg-slate-50 border border-slate-200 rounded-lg p-3.5">
+              <span class="text-xs text-slate-500 block mb-1 font-semibold">Résolution Visqueuse en Paroi (Maillage \(y^+\)) :</span>
+              <div class="text-sm font-medium text-slate-800">
+                $$y^+ = \frac{\rho \cdot u_\tau \cdot y_p}{\mu} \le 1.0$$
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MESHING & CFD NUMERICAL SOLUTION -->
+    <section class="bg-white border border-slate-200 rounded-2xl p-8 shadow-sm space-y-6">
+      <div class="space-y-4">
+        <h2 class="text-2xl font-bold text-slate-900">Optimisation et Robustesse de Maillage</h2>
+        <p class="text-slate-600 text-sm text-justify">
+          La simulation transitoire à maillage tournant (<strong>Sliding Mesh</strong>) est particulièrement exigeante en ressources de calcul, car elle nécessite d'actualiser les coordonnées nodales de la zone tournante fluide-solide à chaque pas de temps. Le modèle CAO initial issu de Creo Parametric générait originellement un maillage non structuré de plus de <strong>3 000 000 d'éléments</strong>, rendant les calculs physiques incompatibles avec des contraintes de temps industrielles.
+        </p>
+        <p class="text-slate-600 text-sm text-justify">
+          En appliquant des techniques de raffinement sélectif de l'interface glissante fluide-fluide et en configurant des éléments tétraédriques linéaires optimisés, nous avons réussi à diviser par près de 5 la taille du modèle, la ramenant à seulement <strong>665 420 éléments</strong>. Ce gain colossal de performance n'introduit aucune perte de précision sur la captation du sillage et des détachements tourbillonnaires (vortex shedding). Des couches d'inflation d'épaisseur géométrique ont par ailleurs été conservées localement pour maintenir le \(y^+ < 1.0\) aux parois clés.
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6 text-center">
+          <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl">
+            <span class="text-[10px] text-slate-500 uppercase font-semibold">Taille Initiale</span>
+            <div class="text-lg font-bold text-rose-600 mt-1">> 3.0M Éléments</div>
+          </div>
+          <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl">
+            <span class="text-[10px] text-slate-500 uppercase font-semibold">Taille Optimisée</span>
+            <div class="text-lg font-bold text-emerald-600 mt-1">665 420 Éléments</div>
+          </div>
+          <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl">
+            <span class="text-[10px] text-slate-500 uppercase font-semibold">Gain de Temps</span>
+            <div class="text-lg font-bold text-teal-600 mt-1">-82% CPU Time</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DEVELOPED SKILLS -->
+    <section class="space-y-6">
+      <h2 class="text-2xl font-bold text-slate-900 border-b border-slate-100 pb-3">Compétences Acquises</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="bg-white border border-slate-200/80 p-6 rounded-xl space-y-3 shadow-sm">
+          <h3 class="font-bold text-slate-900">Modélisation CAO</h3>
+          <p class="text-xs text-slate-600">Conception sous Creo Parametric de rotors hybrides complexes imbriqués et gestion des assemblages cinématiques associés.</p>
+        </div>
+        <div class="bg-white border border-slate-200/80 p-6 rounded-xl space-y-3 shadow-sm">
+          <h3 class="font-bold text-slate-900">CFD Transitoire</h3>
+          <p class="text-xs text-slate-600">Paramétrage d'analyses instationnaires d'écoulements visqueux turbulents SST k-omega sous Ansys Fluent.</p>
+        </div>
+        <div class="bg-white border border-slate-200/80 p-6 rounded-xl space-y-3 shadow-sm">
+          <h3 class="font-bold text-slate-900">Maillage Avancé</h3>
+          <p class="text-xs text-slate-600">Maîtrise des critères de réduction de maillage et paramétrage de couches limites prismatiques (Inflation).</p>
+        </div>
+        <div class="bg-white border border-slate-200/80 p-6 rounded-xl space-y-3 shadow-sm">
+          <h3 class="font-bold text-slate-900">Analyse Physique</h3>
+          <p class="text-xs text-slate-600">Diagnostic scientifique des pertes de rendement et formulation de préconisations de géométries améliorées.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-slate-900 text-slate-400 text-center py-12 border-t border-slate-800">
+    <div class="max-w-6xl mx-auto px-6 space-y-4">
+      <p class="font-semibold text-slate-300"> © Lucas Catusse — Portfolio Ingénieur Mécanique</p>
+    </div>
+  </footer>
+
+  <!-- IN-FILE JAVASCRIPT SOLVER & CANVA SIMULATOR -->
+  <script>
+    const canvas = document.getElementById('aeroTunnel');
+    const ctx = canvas.getContext('2d');
+
+    // Variables de contrôle des entrées
+    const windProfileSelect = document.getElementById('wind-profile');
+    const windSpeedSlider = document.getElementById('param-wind-speed');
+    const tsrSlider = document.getElementById('param-tsr');
+
+    // Libellés à mettre à jour
+    const valWindSpeed = document.getElementById('val-wind-speed');
+    const valTsr = document.getElementById('val-tsr');
+    const hudProfile = document.getElementById('hud-profile');
+    const hudRpm = document.getElementById('hud-rpm');
+    const metricCp = document.getElementById('metric-cp');
+    const metricTorque = document.getElementById('metric-torque');
+    const metricStatus = document.getElementById('metric-status');
+
+    // Panneau de diagnostic
+    const solverStatus = document.getElementById('solver-status');
+    const statusTitle = document.getElementById('status-title');
+    const statusDesc = document.getElementById('status-desc');
+
+    const btnShowStream = document.getElementById('btn-show-stream');
+    const btnShowWake = document.getElementById('btn-show-wake');
+
+    // État d'affichage
+    let showWakeContour = false;
+    let particles = [];
+    let angle = 0;
+    let time = 0;
+
+    // Dimensionnement de la zone d'affichage
+    function resizeCanvas() {
+      canvas.width = canvas.parentElement.clientWidth;
+      canvas.height = canvas.parentElement.clientHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    // Initialisation des particules pour représenter le flux d'air
+    const maxParticles = 180;
+    for (let i = 0; i < maxParticles; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        vX: 0,
+        vY: 0,
+        color: '#38bdf8'
+      });
+    }
+
+    // Boucle d'animation physique
+    function animate() {
+      time += 0.02;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Récupération des valeurs d'entrées
+      const windProfile = windProfileSelect.value;
+      const baseWindSpeed = parseFloat(windSpeedSlider.value);
+      const tsr = parseFloat(tsrSlider.value);
+
+      // 1. Calcul du vent incident selon le cas d'étude
+      let currentWindSpeed = baseWindSpeed;
+      if (windProfile === 'oscillating') {
+        // Vent oscillant périodique : amplitude de +/- 25%
+        currentWindSpeed = baseWindSpeed * (1.0 + 0.3 * Math.sin(time * 2.5));
+        hudProfile.innerText = "CAS 1 : OSCILLATING";
+      } else if (windProfile === 'shear') {
+        hudProfile.innerText = "CAS 2 : SHEAR FLOW";
+      } else {
+        hudProfile.innerText = "UNIFORM FLOW";
+      }
+
+      valWindSpeed.innerText = currentWindSpeed.toFixed(1) + " m/s";
+      valTsr.innerText = tsr.toFixed(2);
+
+      // Calcul des RPM de l'éolienne à partir de la vitesse du vent et du TSR (Rotor R=0.25m)
+      const radius = 0.25;
+      const tipSpeed = tsr * currentWindSpeed;
+      const omega = tipSpeed / radius; // rad/s
+      const rpm = (omega * 60) / (2 * Math.PI);
+      hudRpm.innerText = Math.round(rpm) + " RPM";
+
+      // 2. Calcul des performances physiques théoriques (Cp, Cm)
+      let cp = 0;
+      let torque = 0;
+
+      // Courbe de Cp simulée pour l'éolienne hybride
+      if (tsr < 1.0) {
+        // Phase de démarrage dominée par le Savonius
+        cp = 0.15 + tsr * 0.12; 
+      } else if (tsr >= 1.0 && tsr <= 2.8) {
+        // Phase nominale dominée par le Darrieus
+        cp = 0.27 + (tsr - 1.0) * 0.10 - Math.pow(tsr - 2.0, 2) * 0.08;
+      } else {
+        // Zone de "bouchon aérodynamique" : la rotation rapide bloque le vent
+        cp = 0.30 - Math.pow(tsr - 2.8, 1.4) * 0.22;
+      }
+
+      // Limiteur de Cp minimum
+      if (cp < -0.15) cp = -0.15;
+
+      // Couple T = (1/2 * rho * A * V^3 * Cp) / omega
+      const rho = 1.225;
+      const A = 0.5 * 0.4; // Diamètre * Hauteur
+      const powerAvailable = 0.5 * rho * A * Math.pow(currentWindSpeed, 3);
+      const powerExtracted = powerAvailable * cp;
+      
+      if (omega > 0.1) {
+        torque = powerExtracted / omega;
+      } else {
+        // Couple statique au démarrage
+        torque = 0.05 * rho * A * Math.pow(currentWindSpeed, 2) * radius * 1.5;
+      }
+
+      // Mise à jour de l'affichage des métriques
+      metricCp.innerText = cp.toFixed(3);
+      metricTorque.innerText = torque.toFixed(2) + " N.m";
+
+      if (cp > 0) {
+        metricStatus.innerText = "GÉNÉRATEUR";
+        metricStatus.className = "text-lg font-extrabold text-emerald-500 font-mono";
+      } else {
+        metricStatus.innerText = "MOTEUR (PERTES)";
+        metricStatus.className = "text-lg font-extrabold text-rose-500 font-mono";
+      }
+
+      // Mise à jour dynamique du panneau d'état
+      if (tsr > 3.2) {
+        solverStatus.className = "bg-rose-50 text-rose-800 text-xs p-3.5 rounded-lg border border-rose-100 flex gap-2";
+        statusTitle.className = "font-bold text-rose-900";
+        statusTitle.innerText = "Bouchon Aérodynamique Actif";
+        statusDesc.innerText = "La rotation du Savonius central est trop rapide. L'éolienne dévie le vent et consomme de l'énergie (Cp < 0).";
+      } else if (tsr < 0.6) {
+        solverStatus.className = "bg-amber-50 text-amber-800 text-xs p-3.5 rounded-lg border border-amber-100 flex gap-2";
+        statusTitle.className = "font-bold text-amber-900";
+        statusTitle.innerText = "Régime Savonius Dominant";
+        statusDesc.innerText = "Couple de démarrage élevé. Idéal pour s'affranchir de l'inertie initiale des pales Darrieus.";
+      } else {
+        solverStatus.className = "bg-emerald-50 text-emerald-800 text-xs p-3.5 rounded-lg border border-emerald-100 flex gap-2";
+        statusTitle.className = "font-bold text-emerald-900";
+        statusTitle.innerText = "Régime Darrieus Dominant";
+        statusDesc.innerText = "Rendement maximal atteint. Les pales profilées convertissent efficacement la portance en couple.";
+      }
+
+      // Vitesse de rotation physique de l'illustration
+      angle += omega * 0.01;
+
+      // 3. Tracé du contour du sillage de vitesse (si l'option est active)
+      const centerX = canvas.width / 2;
+      const centerY = canvas.height / 2;
+      const maxRotorRadius = 90;
+
+      if (showWakeContour) {
+        // Dessin des contours de vitesse (bleu = sillage lent, vert/orange = vent rapide)
+        const wakeLength = 280;
+        const wakeExpansion = tsr > 3.0 ? 130 : 60; // Sillage beaucoup plus large lors du bouchon aérodynamique
+
+        const grad = ctx.createRadialGradient(centerX, centerY, 20, centerX + wakeLength/2, centerY, wakeExpansion * 1.5);
+        if (tsr > 3.0) {
+          // Bouchon important : sillage bleu massif (vitesse nulle)
+          grad.addColorStop(0, 'rgba(15, 23, 42, 0.95)');
+          grad.addColorStop(0.3, 'rgba(30, 58, 138, 0.7)');
+          grad.addColorStop(0.6, 'rgba(16, 185, 129, 0.15)');
+          grad.addColorStop(1, 'rgba(15, 23, 42, 0)');
+        } else {
+          // Écoulement normal : sillage mince
+          grad.addColorStop(0, 'rgba(30, 58, 138, 0.5)');
+          grad.addColorStop(0.4, 'rgba(16, 185, 129, 0.1)');
+          grad.addColorStop(1, 'rgba(15, 23, 42, 0)');
+        }
+
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.moveTo(centerX, centerY - maxRotorRadius);
+        ctx.bezierCurveTo(centerX + wakeLength * 0.5, centerY - wakeExpansion, centerX + wakeLength, centerY - wakeExpansion * 0.5, centerX + wakeLength, centerY);
+        ctx.bezierCurveTo(centerX + wakeLength, centerY + wakeExpansion * 0.5, centerX + wakeLength * 0.5, centerY + wakeExpansion, centerX, centerY + maxRotorRadius);
+        ctx.closePath();
+        ctx.fill();
+      }
+
+      // 4. Mise à jour de la physique et tracé des particules d'écoulement
+      for (let i = 0; i < particles.length; i++) {
+        let p = particles[i];
+
+        // Profil de vitesse selon la hauteur pour le vent cisaillant
+        let speedMultiplier = 1.0;
+        if (windProfile === 'shear') {
+          // Gradient vertical de vitesse : vent plus fort en hauteur
+          speedMultiplier = Math.pow(p.y / canvas.height, 0.25) * 1.3;
+        }
+
+        const vxLocal = currentWindSpeed * 0.8 * speedMultiplier;
+        
+        // Interaction avec l'éolienne
+        const dX = p.x - centerX;
+        const dY = p.y - centerY;
+        const dist = Math.sqrt(dX * dX + dY * dY);
+
+        if (dist < maxRotorRadius + 10) {
+          if (tsr > 3.0) {
+            // Effet bouchon : déviation importante des particules vers le haut et le bas
+            const force = (maxRotorRadius + 20 - dist) / 10;
+            p.vX = vxLocal * 0.2; // Très forte décélération horizontale
+            p.vY = (dY > 0 ? 1 : -1) * force * 1.5;
+            p.color = '#3b82f6'; // Le fluide ralentit (devient bleu)
+          } else {
+            // Écoulement normal : sillage aérodynamique classique
+            p.vX = vxLocal * 0.55; 
+            p.vY = Math.sin(angle) * 1.0;
+            p.color = '#10b981'; // Sillage sain
+          }
+        } else {
+          // Filet libre
+          p.vX = vxLocal;
+          p.vY = 0;
+          p.color = '#38bdf8'; // Vent incident sain (cyan)
+        }
+
+        // Application du mouvement
+        p.x += p.vX * 0.6;
+        p.y += p.vY * 0.6;
+
+        // Réinjection des particules en amont
+        if (p.x > canvas.width) {
+          p.x = 0;
+          p.y = Math.random() * canvas.height;
+        }
+
+        // Rendu graphique de la particule
+        ctx.fillStyle = p.color;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, 1.5, 0, 2 * Math.PI);
+        ctx.fill();
+      }
+
+      // 5. Tracé de la géométrie de l'éolienne hybride (Vue de dessus)
+      ctx.save();
+      ctx.translate(centerX, centerY);
+      ctx.rotate(angle);
+
+      // A. Rotor darrieus (Anneau extérieur)
+      ctx.strokeStyle = 'rgba(148, 163, 184, 0.2)';
+      ctx.lineWidth = 1;
+      ctx.setLineDash([4, 4]);
+      ctx.beginPath();
+      ctx.arc(0, 0, 75, 0, 2 * Math.PI);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Bras de liaison physiques (Tripodes)
+      ctx.strokeStyle = 'rgba(71, 85, 105, 0.5)';
+      ctx.lineWidth = 2.5;
+      for (let j = 0; j < 3; j++) {
+        ctx.rotate((2 * Math.PI) / 3);
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(0, 75);
+        ctx.stroke();
+      }
+
+      // Les 3 pales Darrieus (Profil NACA symétrique simplifié)
+      ctx.fillStyle = '#94a3b8';
+      ctx.strokeStyle = '#cbd5e1';
+      ctx.lineWidth = 1.5;
+      for (let j = 0; j < 3; j++) {
+        ctx.rotate((2 * Math.PI) / 3);
+        ctx.save();
+        ctx.translate(0, 75);
+        
+        // Tracé d'un profil aérodynamique vectoriel
+        ctx.beginPath();
+        ctx.moveTo(-15, 0);
+        ctx.bezierCurveTo(-5, -7, 10, -5, 12, 0);
+        ctx.bezierCurveTo(10, 5, -5, 7, -15, 0);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+        ctx.restore();
+      }
+
+      // B. Rotor central Savonius (Deux godets imbriqués)
+      const sRadius = 18;
+      ctx.strokeStyle = tsr > 3.0 ? '#ef4444' : '#10b981';
+      ctx.lineWidth = 3;
+
+      // Godet 1 (Demi-cercle supérieur décalé)
+      ctx.beginPath();
+      ctx.arc(-sRadius/2, 0, sRadius, Math.PI, 0, false);
+      ctx.stroke();
+
+      // Godet 2 (Demi-cercle inférieur décalé)
+      ctx.beginPath();
+      ctx.arc(sRadius/2, 0, sRadius, 0, Math.PI, false);
+      ctx.stroke();
+
+      // Moyeu de l'arbre central
+      ctx.fillStyle = '#475569';
+      ctx.beginPath();
+      ctx.arc(0, 0, 6, 0, 2 * Math.PI);
+      ctx.fill();
+
+      ctx.restore();
+
+      requestAnimationFrame(animate);
+    }
+
+    // Gestion du basculement d'affichage des particules / contours
+    btnShowStream.addEventListener('click', () => {
+      showWakeContour = false;
+      btnShowStream.className = "bg-emerald-600 text-white border border-emerald-600 rounded-lg px-2 py-1.5 text-xs font-semibold focus:outline-none shadow-sm";
+      btnShowWake.className = "bg-white text-slate-600 border border-slate-300 hover:bg-slate-50 rounded-lg px-2 py-1.5 text-xs font-semibold focus:outline-none transition shadow-sm";
+    });
+
+    btnShowWake.addEventListener('click', () => {
+      showWakeContour = true;
+      btnShowWake.className = "bg-emerald-600 text-white border border-emerald-600 rounded-lg px-2 py-1.5 text-xs font-semibold focus:outline-none shadow-sm";
+      btnShowStream.className = "bg-white text-slate-600 border border-slate-300 hover:bg-slate-50 rounded-lg px-2 py-1.5 text-xs font-semibold focus:outline-none transition shadow-sm";
+    });
+
+    // Lancement de l'animation au chargement de la page
+    window.onload = function() {
+      animate();
+    }
+  </script>
+</body>
+</html>
+
+CATUSSE LUCAS p2311712
+mar. 28/07, 14:43
+/* ======================= */
+/*        GLOBAL           */
+/* ======================= */
+body {
+    margin: 0;                  /* Supprime les marges par défaut du navigateur */
+    padding: 0;                 /* Supprime le padding par défaut */
+    font-family: Arial, Helvetica, sans-serif; /* Police globale du site */
+    background: #f5f7fa;        /* Couleur de fond globale */
+    color: #333;                /* Couleur du texte par défaut */
+    line-height: 1.6;           /* Hauteur de ligne pour améliorer la lisibilité */
+}
+
+h2 {
+    color: #0077cc;             /* Couleur bleue pour tous les titres de niveau 2 */
+}
+
+/* ======================= */
+/*        HEADER           */
+/* ======================= */
+header {
+    display: flex;              /* Utilisation de Flexbox pour aligner le contenu */
+    align-items: center;        /* Centre verticalement les éléments */
+    justify-content: space-between; /* Espace entre les blocs gauche et droite */
+    background: #1e1e1e;        /* Fond sombre pour l’en-tête */
+    color: white;               /* Couleur du texte dans l’en-tête */
+    padding: 40px 30px;         /* Espacement interne */
+    flex-wrap: wrap;            /* Permet aux éléments de passer à la ligne si l’écran est petit */
+}
+
+header h1 {
+    margin: 0;                  /* Supprime la marge par défaut */
+    font-size: 2.3rem;          /* Taille du titre principal */
+}
+
+header h2 {
+    margin: 5px 0 15px;         /* Marge spécifique autour du sous-titre */
+    font-size: 1.2rem;          /* Taille plus petite que le h1 */
+    font-weight: 300;           /* Police fine */
+}
+
+.header-left {
+    flex: 1 1 60%;              /* Prend 60% de la largeur disponible */
+}
+
+.header-left a {
+    color: #4db8ff;             /* Couleur des liens dans la partie gauche */
+    text-decoration: none;      /* Supprime le soulignement */
+}
+
+.header-right {
+    flex: 1 1 30%;              /* Prend 30% de la largeur disponible */
+    text-align: right;          /* Aligne le contenu à droite */
+}
+
+.header-right img {
+    width: 150px;               /* Largeur fixe */
+    height: 150px;              /* Hauteur fixe identique pour créer un carré parfait */
+    object-fit: cover;          /* Centre et recadre la photo automatiquement sans la déformer */
+    border-radius: 50%;         /* Rend le carré parfaitement circulaire */
+    border: 3px solid #4db8ff;  /* Ta bordure bleue */
+}
+
+/* ======================= */
+/*        SECTIONS         */
+/* ======================= */
+section {
+    background: white;          /* Fond blanc pour chaque section */
+    max-width: 1000px;          /* Largeur maximale */
+    margin: 25px auto;          /* Centre horizontalement et ajoute un espace vertical */
+    padding: 25px 30px;         /* Padding interne de la section */
+    border-radius: 12px;        /* Coins arrondis */
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08); /* Ombre légère */
+}
+
+section h2 {
+    border-bottom: 2px solid #4db8ff; /* Ligne bleue sous le titre */
+    padding-bottom: 8px;              /* Espace entre la ligne et le texte */
+    margin-bottom: 25px;              /* Espace sous le titre */
+}
+
+/* ======================= */
+/*        INTRO            */
+/* ======================= */
+#intro {
+    background: #e8f4ff;               /* Fond légèrement bleu pour l’intro */
+    box-shadow: 0 2px 12px rgba(0,0,0,0.1); /* Ombre un peu plus marquée */
+}
+
+/* ======================= */
+/*       JOB HEADER        */
+/* ======================= */
+.job-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+}
+
+.job-header h3 {
+    margin: 0;
+    flex: 1;
+}
+
+/* ======================= */
+/*      PROJECT CARD       */
+/* ======================= */
+#projects h3 {
+    margin-left: 5px;                  /* Petit décalage à gauche */
+}
+
+.project-card {
+    display: flex;                     /* Flexbox pour aligner image et texte */
+    justify-content: space-between;    /* Espace entre les blocs */
+    align-items: center;               /* Centre verticalement */
+    background: #eef6ff;               /* Fond légèrement bleu */
+    padding: 25px;                     /* Espacement interne */
+    border-radius: 15px;               /* Coins arrondis */
+    margin: 0;                         /* pas d'espacement individuel */
+    border: 1px solid #d2e6ff;         /* Bordure légère */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05); /* Ombre légère */
+}
+
+.project-info {
+    flex: 1 1 50%;                     /* Prend environ 50% de la largeur */
+}
+
+.project-info h3 {
+    margin-top: 0;                     /* Supprime la marge par défaut */
+    text-align: center;                /* Centre le titre */
+    color: #003f88;                    /* Couleur du titre */
+}
+
+.project-info p {
+    text-align: center;                /* Centre le texte */
+    margin-bottom: 20px;               /* Espace sous le paragraphe */
+}
+
+.details-btn {
+    display: inline-block;              /* Bloc inline qui peut avoir padding */
+    padding: 10px 20px;                 /* Espacement interne */
+    background: #4d9dff;                /* Fond bleu */
+    color: white;                       /* Texte blanc */
+    text-decoration: none;              /* Supprime le soulignement */
+    border-radius: 8px;                 /* Coins arrondis */
+    font-weight: bold;                  /* Texte gras */
+    text-align: center;                 /* Centre le texte */
+    transition: 0.2s;                   /* Transition douce pour l’effet hover */
+}
+
+.details-btn:hover {
+    background: #1c74e9;                /* Change la couleur au survol */
+}
+
+.project-image {
+    flex: 1 1 45%;                      /* Prend environ 45% de la largeur */
+    text-align: right;                  /* Image alignée à droite */
+}
+
+.project-image img {
+    width: 100%;                        /* Occupe toute la largeur du bloc */
+    max-width: 450px;                   /* Taille maximale */
+    border-radius: 10px;                /* Coins arrondis */
+}
+
+/* Responsive pour Project Card */
+@media (max-width: 900px) {
+    .project-card {
+        flex-direction: column;          /* Les éléments passent en colonne sur petit écran */
+        text-align: center;
+    }
+
+    .project-image {
+        text-align: center;
+        margin-top: 15px;
+    }
+
+    .project-image img {
+        max-width: 80%;                  /* Image plus petite sur petit écran */
+    }
+}
+
+/* ======================= */
+/*   GRID ORGANISATION     */
+/* ======================= */
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 colonnes */
+    gap: 25px; /* espace horizontal et vertical */
+    margin-top: 20px;
+}
+
+/* Responsive : 1 seule colonne sur mobile */
+@media (max-width: 900px) {
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ========================================= */
+/*   NOUVELLES SECTIONS SKILLS & INTÉRÊTS    */
+/* ========================================= */
+
+/* Grille principale des compétences et intérêts */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+.grid-container-2col {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+}
+
+/* Bloc de catégories (Sous-titres) */
+.category-block {
+    background: transparent;
+}
+
+.category-title {
+    font-size: 1.2rem;
+    color: #0077cc;
+    margin-top: 0;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid #d2e6ff;
+    padding-bottom: 8px;
+}
+
+/* Design des Cartes (Cards) */
+.card {
+    background: #ffffff;
+    border: 1px solid #e2efff;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 3px 10px rgba(0, 119, 204, 0.05); /* Ombre bleutée très discrète */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 119, 204, 0.12); /* Accentuation de l'ombre au survol */
+}
+
+/* En-tête de la carte (Titre + Badge) */
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+    gap: 10px;
+}
+
+.card-title {
+    font-weight: bold;
+    font-size: 1.05rem;
+    color: #003f88;
+    margin: 0;
+}
+
+/* Texte justificatif de la carte */
+.card-desc {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: #555;
+    margin: 0;
+}
+
+/* Badges de niveau */
+.badge {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    color: white;
+    white-space: nowrap; /* Empêche le texte du badge de passer à la ligne */
+}
+
+.badge-advanced { background-color: #27ae60; }     /* Vert pour Avancé */
+.badge-intermediate { background-color: #f39c12; } /* Orange pour Intermédiaire */
+.badge-beginner { background-color: #95a5a6; }     /* Gris pour Débutant */
+
+/* Section spécifique aux images des centres d'intérêt */
+.interest-image img {
+    width: calc(100% + 40px); /* Compense le padding de 20px de la carte (20 + 20) */
+    height: 180px;
+    object-fit: cover;
+    border-radius: 10px 10px 0 0; /* Arrondis uniquement en haut */
+    margin: -20px -20px 15px -20px; /* Colle l'image aux bords de la carte */
+    display: block;
+}
+
+/* Responsive pour les cartes d'intérêts sur petits écrans */
+@media (max-width: 768px) {
+    .grid-container-2col {
+        grid-template-columns: 1fr;
+    }
+    .span-2-cols {
+        grid-column: span 1 !important;
+    }
+}
+
+/* ======================= */
+/*        FOOTER           */
+/* ======================= */
+footer {
+    background: #1e1e1e;            /* Fond sombre */
+    color: white;                    /* Texte blanc */
+    text-align: center;              /* Centre le texte */
+    padding: 15px;                   /* Espacement interne */
+    margin-top: 40px;                /* Espace au-dessus du footer */
+}
