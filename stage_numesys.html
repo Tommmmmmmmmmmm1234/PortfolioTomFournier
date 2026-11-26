@@ -45,24 +45,15 @@
   <main class="max-w-6xl mx-auto px-4 sm:px-6 py-12 space-y-16">
 
     <!-- RÉSUMÉ -->
-    <section class="grid grid-cols-1 lg:grid-cols-3 gap-8 bg-white border border-slate-200 rounded-2xl p-8 shadow-sm">
-      <div class="lg:col-span-2 space-y-4">
+    <section class="bg-white border border-slate-200 rounded-2xl p-8 shadow-sm">
+      <div class="space-y-4">
         <h2 class="text-2xl font-bold text-slate-900 border-b border-slate-100 pb-3">Contexte & Objectifs du Stage</h2>
         <p class="text-slate-600 text-justify">
           <strong>Numesys</strong> est un bureau d'études spécialisé en calcul mécanique. Mes missions couvraient deux approches : la <strong>phase de conception</strong>, où la simulation valide des concepts avant fabrication (donc sans prototype inutile), et la <strong>phase de vérification</strong>, où il faut démontrer qu'un design figé respecte les normes et, sinon, proposer des renforcements.
         </p>
         <p class="text-slate-600 text-justify">
-          La question de fond : comment modéliser un système assez finement pour que le résultat soit fiable, tout en le simplifiant assez pour tenir les délais industriels ? J'ai suivi des affaires de bout en bout, de la préparation de la géométrie à la <strong>note de calcul</strong> remise au client, avec deux cas marquants détaillés ci-dessous.
+          La question de fond : comment modéliser un système assez finement pour que le résultat soit fiable, tout en le simplifiant assez pour tenir les délais industriels ? J'ai suivi des affaires de bout en bout, de la préparation de la géométrie à la <strong>note de calcul</strong> remise au client, avec deux affaires détaillées ci-dessous.
         </p>
-      </div>
-      <div class="bg-slate-900 text-white rounded-xl p-6 relative overflow-hidden shadow-inner">
-        <span class="text-xs text-cyan-400 font-bold uppercase tracking-widest">Chiffres clés</span>
-        <div class="grid grid-cols-2 gap-4 mt-4 text-center">
-          <div class="bg-slate-800/80 border border-slate-700 rounded-lg p-3"><div class="text-2xl font-extrabold text-cyan-300">15 947 kg</div><div class="text-[10px] text-slate-400 uppercase">masse de calcul du conteneur</div></div>
-          <div class="bg-slate-800/80 border border-slate-700 rounded-lg p-3"><div class="text-2xl font-extrabold text-cyan-300">11</div><div class="text-[10px] text-slate-400 uppercase">situations de calcul</div></div>
-          <div class="bg-slate-800/80 border border-slate-700 rounded-lg p-3"><div class="text-2xl font-extrabold text-cyan-300">24</div><div class="text-[10px] text-slate-400 uppercase">combinaisons sismiques</div></div>
-          <div class="bg-slate-800/80 border border-slate-700 rounded-lg p-3"><div class="text-2xl font-extrabold text-cyan-300">12 %</div><div class="text-[10px] text-slate-400 uppercase">marge min. (séisme)</div></div>
-        </div>
       </div>
     </section>
 
@@ -119,23 +110,28 @@
           <p class="text-xs text-slate-500 text-justify">Un séisme est multidirectionnel : la méthode de Newmark combine 100 % de l'accélération dans une direction avec ±30 % dans les deux autres (S<sub>x</sub> ± 0,3S<sub>y</sub> ± 0,3S<sub>z</sub>…), soit 3 × 2 × 2 × 2 = 24 cas, pour couvrir le plus défavorable de chaque profilé.</p>
         </div>
       </div>
-    </section>
-
-    <!-- RÉSULTATS INTERACTIFS -->
-    <section class="space-y-6">
-      <h2 class="text-2xl font-bold text-slate-900 border-b border-slate-100 pb-3">Analyse en Résistance : Contraintes vs Admissible</h2>
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-        <div class="lg:col-span-4 space-y-3 text-sm">
-          <div id="studies" class="space-y-2"></div>
-          <label id="peakbox" class="hidden items-start gap-2 text-xs bg-amber-50 border border-amber-200 rounded-lg p-3 text-amber-900 cursor-pointer">
-            <input id="peak" type="checkbox" class="mt-0.5">
-            <span><strong>Afficher les pics bruts du solveur.</strong> Ces valeurs (*) sont des singularités numériques ponctuelles (angles vifs, jonctions de profilés), analysées puis écartées.</span>
-          </label>
-          <div class="bg-cyan-50/50 border border-cyan-100 rounded-lg p-3 text-xs text-slate-600 text-justify" id="study-note"></div>
+      <div class="border-t border-slate-100 pt-6 space-y-4">
+        <div>
+          <h3 class="text-xl font-bold text-slate-900">Déformée du conteneur selon le cas de charge</h3>
+          <p class="text-sm text-slate-500 mt-1">Choisis l'une des 11 situations de calcul : le conteneur (ossature poutres, parois coques, équipements en masses) se déforme et se colore selon le déplacement. Pour la situation 10, la combinaison de Newmark sélectionnée plus haut est appliquée. Fais glisser pour tourner la vue.</p>
         </div>
-        <div class="lg:col-span-8 bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
-          <div class="relative h-80"><canvas id="chart"></canvas></div>
-          <div id="margins" class="flex flex-wrap gap-2 mt-4 text-xs"></div>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <div class="lg:col-span-4 space-y-4 text-sm">
+            <div><label class="block text-xs font-semibold text-slate-700 mb-1.5 uppercase tracking-wider">Situation de calcul</label>
+              <select id="c-case" class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-cyan-500"></select></div>
+            <div><div class="flex justify-between text-xs"><label class="font-medium">Amplification de la déformée</label><span id="v-amp" class="font-bold text-cyan-600"></span></div>
+              <input id="c-amp" type="range" min="0" max="2" step="0.1" value="0.9" class="w-full"></div>
+            <div class="bg-slate-50 border border-slate-200 rounded-lg p-3 space-y-1">
+              <div class="flex justify-between text-xs"><span class="text-slate-500">Contrainte max. de l'enveloppe</span><span id="c-st" class="font-bold text-cyan-600"></span></div>
+              <div class="flex justify-between text-xs"><span class="text-slate-500">Marge / 275 MPa (S275JR)</span><span id="c-mg" class="font-bold text-emerald-600"></span></div>
+            </div>
+            <p id="c-desc" class="text-xs text-slate-600 text-justify bg-cyan-50/50 border border-cyan-100 rounded-lg p-3"></p>
+          </div>
+          <div class="lg:col-span-8 space-y-2">
+            <div class="bg-slate-950 border border-slate-800 rounded-xl overflow-hidden"><canvas id="cvs" class="w-full block cursor-grab active:cursor-grabbing" style="touch-action:none;height:420px"></canvas></div>
+            <div class="flex items-center gap-3 text-[10px] text-slate-500"><span>Déplacement : 0</span><div class="flex-1 h-2 rounded" style="background:linear-gradient(90deg,hsl(240,85%,50%),hsl(180,85%,50%),hsl(120,85%,50%),hsl(60,85%,50%),hsl(0,85%,50%))"></div><span>max (normalisé)</span></div>
+            <p class="text-[11px] text-slate-400 text-justify">Représentation schématique d'un conteneur 10 × 3,5 × 3,2 m inspirée du modèle du mémoire (ossature, parois, équipements). Les formes de déformée sont qualitatives, ce ne sont pas les résultats FEMAP.</p>
+          </div>
         </div>
       </div>
     </section>
@@ -180,8 +176,56 @@
           <p class="text-xs text-slate-600 text-justify">Le premier calcul révélait un sous-dimensionnement (fonds de 6 mm). Solution validée : fond du panier à <strong>10 mm</strong>, fond du caisson à <strong>15 mm</strong>, goussets aux jonctions critiques et renforts sur les montants. Marge finale minimale : <strong>19 %</strong>.</p>
         </div>
       </div>
+      <div class="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-md space-y-5">
+        <div class="border-b border-slate-100 pb-3">
+          <span class="text-xs text-cyan-600 font-bold uppercase tracking-widest">Cartographie de contraintes interactive</span>
+          <h3 class="text-xl font-bold text-slate-900">Plaque de fond : fais varier l'épaisseur et la charge</h3>
+          <p class="text-sm text-slate-500 mt-1">Vue de dessus de la plaque de fond (plots d'appui du caisson, empreintes hexagonales des briques du panier). Les zones hachurées en rouge dépassent la contrainte admissible de 236 MPa.</p>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          <div class="lg:col-span-5 space-y-4 text-sm">
+            <div class="grid grid-cols-1 gap-2" id="map-modes"></div>
+            <div><div class="flex justify-between text-xs"><label class="font-medium">Épaisseur de la tôle de fond</label><span id="v-mt" class="font-bold text-cyan-600"></span></div>
+              <input id="m-t" type="range" min="4" max="20" step="1" value="15" class="w-full"></div>
+            <div><div class="flex justify-between text-xs"><label class="font-medium">Charge appliquée</label><span id="v-ml" class="font-bold text-cyan-600"></span></div>
+              <input id="m-l" type="range" min="50" max="150" step="5" value="100" class="w-full"></div>
+            <div class="flex gap-2 text-xs"><button id="m-init" class="px-3 py-1 rounded border bg-white">Conception initiale (6 mm)</button><button id="m-final" class="px-3 py-1 rounded border bg-white">Version validée</button></div>
+            <div class="grid grid-cols-3 gap-2 text-center">
+              <div class="bg-slate-50 border border-slate-200 rounded-lg p-2"><div class="text-[10px] text-slate-500 uppercase font-bold">σ max local</div><div id="m-max" class="text-lg font-extrabold text-cyan-600"></div></div>
+              <div class="bg-slate-50 border border-slate-200 rounded-lg p-2"><div class="text-[10px] text-slate-500 uppercase font-bold">σ courante</div><div id="m-cur" class="text-lg font-extrabold text-slate-700"></div></div>
+              <div class="bg-slate-50 border border-slate-200 rounded-lg p-2"><div class="text-[10px] text-slate-500 uppercase font-bold">σ admissible</div><div class="text-lg font-extrabold text-slate-700">236 MPa</div></div>
+            </div>
+            <div id="m-verdict" class="text-xs font-semibold rounded-lg p-3 border"></div>
+          </div>
+          <div class="lg:col-span-7 space-y-2">
+            <div class="bg-slate-950 border border-slate-800 rounded-xl p-3 flex justify-center"><canvas id="mapc" style="max-width:100%"></canvas></div>
+            <div class="relative"><div class="h-2 rounded" style="background:linear-gradient(90deg,hsl(240,85%,50%),hsl(180,85%,50%),hsl(120,85%,50%),hsl(60,85%,50%),hsl(0,85%,50%))"></div><div class="absolute -top-1 h-4 border-l-2 border-slate-900" style="left:80%"></div></div>
+            <div class="flex justify-between text-[10px] text-slate-500"><span>0 MPa</span><span style="margin-left:55%">σ adm</span><span>1,25 σ adm</span></div>
+            <p class="text-[11px] text-slate-400 text-justify">Estimation indicative : champ de contraintes calé sur les valeurs du mémoire à l'épaisseur validée (caisson 15 mm, panier 10 mm), puis mis à l'échelle en charge / épaisseur² (flexion de plaque). La cartographie FEMAP réelle est celle du mémoire.</p>
+          </div>
+        </div>
+      </div>
       <div class="bg-amber-50 border border-amber-200 rounded-2xl p-5 text-sm text-amber-900 text-justify">
         <strong>Réflexe acquis : lire la déformée avant les contraintes.</strong> Sur le premier modèle, une déformée de 0,259 m et un système quasi entièrement sur-contraint ont immédiatement trahi un défaut de conception, avant toute exploitation fine des résultats. Elle sert aussi à vérifier la continuité du maillage, la pertinence des appuis et la validité de l'hypothèse de petits déplacements.
+      </div>
+    </section>
+
+    <!-- RÉSULTATS INTERACTIFS -->
+    <section class="space-y-6">
+      <h2 class="text-2xl font-bold text-slate-900 border-b border-slate-100 pb-3">Analyse en Résistance — Cas 1 (Conteneur) et Cas 2 (Caisson &amp; Panier)</h2>
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <div class="lg:col-span-4 space-y-3 text-sm">
+          <div id="studies" class="space-y-2"></div>
+          <label id="peakbox" class="hidden items-start gap-2 text-xs bg-amber-50 border border-amber-200 rounded-lg p-3 text-amber-900 cursor-pointer">
+            <input id="peak" type="checkbox" class="mt-0.5">
+            <span><strong>Afficher les pics bruts du solveur.</strong> Ces valeurs (*) sont des singularités numériques ponctuelles (angles vifs, jonctions de profilés), analysées puis écartées.</span>
+          </label>
+          <div class="bg-cyan-50/50 border border-cyan-100 rounded-lg p-3 text-xs text-slate-600 text-justify" id="study-note"></div>
+        </div>
+        <div class="lg:col-span-8 bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+          <div class="relative h-80"><canvas id="chart"></canvas></div>
+          <div id="margins" class="flex flex-wrap gap-2 mt-4 text-xs"></div>
+        </div>
       </div>
     </section>
 
@@ -204,6 +248,17 @@
       </div>
       <a href="rapport_numesys.pdf" target="_blank" class="bg-emerald-600 hover:bg-emerald-500 text-white font-semibold transition px-6 py-3 rounded-lg shadow-lg whitespace-nowrap">Consulter le PDF</a>
     </section>
+    <!-- AUTRES AFFAIRES : décommente et complète pour présenter brièvement les autres projets
+    <section class="space-y-6">
+      <h2 class="text-2xl font-bold text-slate-900 border-b border-slate-100 pb-3">Autres Affaires Traitées</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-2">
+          <h3 class="font-bold text-slate-900">Titre de l'affaire</h3>
+          <p class="text-xs text-slate-600 text-justify">Description courte : objectif, type d'analyse, résultat.</p>
+        </div>
+      </div>
+    </section>
+    -->
   </main>
 
   <footer class="bg-slate-900 text-slate-400 text-center py-12 border-t border-slate-800">
@@ -244,12 +299,13 @@ function seismic() {
   $('o-fh').textContent = (M * ac_h / 1000).toFixed(1) + " kN"; $('o-fv').textContent = (M * ac_v / 1000).toFixed(1) + " kN";
   drawNewmark();
 }
-let pri = 0, sg = [1, 1], psg = 1, timer = null;
+let pri = 0, sg = [1, 1], psg = 1, timer = null, curA = [0, 0, 0];
 function others() { return [0, 1, 2].filter(a => a !== pri); }
 function drawNewmark() {
   const mag = [ac_h, ac_h, ac_v], col = ["#f87171", "#4ade80", "#60a5fa"], nm = ["X", "Y", "Z"];
   const a = [0, 0, 0]; a[pri] = mag[pri] * psg;
   others().forEach((ax, k) => a[ax] = 0.3 * mag[ax] * sg[k]);
+  curA = a.slice();
   const cx = 200, cy = 170, k = 28;
   const P = v => [cx + (v[0] - v[1]) * 0.87 * k, cy + (v[0] + v[1]) * 0.5 * k - v[2] * k];
   let s = '<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#fbbf24"/></marker></defs>';
@@ -268,6 +324,7 @@ function drawNewmark() {
   if (!timer) $('h-n').textContent = "3 axes × 2 × 2 × 2 = 24 cas";
   document.querySelectorAll('.axb').forEach(b => b.className = "axb px-3 py-1 rounded border " + (+b.dataset.ax === pri ? "bg-cyan-600 text-white border-cyan-600" : "bg-white"));
   $('sg1').textContent = (sg[0] > 0 ? "+" : "−") + "0,3 " + nm[o[0]]; $('sg2').textContent = (sg[1] > 0 ? "+" : "−") + "0,3 " + nm[o[1]];
+  if (window.cvReady) renderContainer();
 }
 document.querySelectorAll('.axb').forEach(b => b.onclick = () => { pri = +b.dataset.ax; drawNewmark(); });
 $('sg1').onclick = () => { sg[0] *= -1; drawNewmark(); }; $('sg2').onclick = () => { sg[1] *= -1; drawNewmark(); };
@@ -277,15 +334,14 @@ $('play').onclick = () => {
   let i = 0; $('play').textContent = "■ Arrêter";
   timer = setInterval(() => { pri = Math.floor(i / 8) % 3; sg = [(i & 1) ? -1 : 1, (i & 2) ? -1 : 1]; psg = (i & 4) ? -1 : 1; drawNewmark(); $('h-n').textContent = "cas " + (i % 24 + 1) + " / 24"; i++; }, 650);
 };
-seismic();
 
 /* ---------- 3. Graphique résultats ---------- */
 const STUDIES = {
-  cont: { label: "Conteneur : enveloppes de situations", note: "Admissible : 275 MPa (S275JR). Marges : 23 % en service, 25 % en vent exceptionnel, 12 % en séisme (cas dimensionnant), 28 % en levage.", labels: ["Service normal", "Vent exceptionnel", "Séisme", "Levage"], calc: [211, 205, 242, 198], adm: [275, 275, 275, 275] },
-  seis: { label: "Conteneur : séisme par zone", note: "Enveloppe sismique (situation 10). Semelle : pic brut de 279 MPa écarté après analyse locale (singularité).", labels: ["Semelle", "Parois", "Intérieur", "Toit", "Ouverture"], calc: [242, 39, 241, 84, 29], adm: [275, 275, 275, 275, 275], raw: [279, null, null, null, null] },
-  pan: { label: "Panier — situation 1", note: "Zones locales. Admissible 236 MPa (fond S355) et 156 MPa (profilés S235). Les pics bruts dépassaient la limite sur 3 jonctions : singularités numériques écartées.", labels: ["Plaque de fond", "Cornières de bord", "U 80", "U 50 (goussets)"], calc: [166, 109, 126, 125], adm: [236, 156, 156, 156], raw: [null, 246, 285, 256] },
-  c2: { label: "Caisson — situation 2 (sans mortier)", note: "Zones locales. Marge minimale : 53 % (parois).", labels: ["Plaque de fond", "Tôles pliées", "Tôles parois"], calc: [107, 70, 74], adm: [236, 236, 156] },
-  c3: { label: "Caisson — situation 3 (avec mortier)", note: "Zones locales, cas le plus sévère : marge minimale de 19 % sur les parois latérales.", labels: ["Plaque de fond", "Tôles pliées", "Tôles parois"], calc: [148, 85, 126], adm: [236, 236, 156] }
+  cont: { label: "Cas 1 · Conteneur : enveloppes de situations", note: "Admissible : 275 MPa (S275JR). Marges : 23 % en service, 25 % en vent exceptionnel, 12 % en séisme (cas dimensionnant), 28 % en levage.", labels: ["Service normal", "Vent exceptionnel", "Séisme", "Levage"], calc: [211, 205, 242, 198], adm: [275, 275, 275, 275] },
+  seis: { label: "Cas 1 · Conteneur : séisme par zone", note: "Enveloppe sismique (situation 10). Semelle : pic brut de 279 MPa écarté après analyse locale (singularité).", labels: ["Semelle", "Parois", "Intérieur", "Toit", "Ouverture"], calc: [242, 39, 241, 84, 29], adm: [275, 275, 275, 275, 275], raw: [279, null, null, null, null] },
+  pan: { label: "Cas 2 · Panier — situation 1", note: "Zones locales. Admissible 236 MPa (fond S355) et 156 MPa (profilés S235). Les pics bruts dépassaient la limite sur 3 jonctions : singularités numériques écartées.", labels: ["Plaque de fond", "Cornières de bord", "U 80", "U 50 (goussets)"], calc: [166, 109, 126, 125], adm: [236, 156, 156, 156], raw: [null, 246, 285, 256] },
+  c2: { label: "Cas 2 · Caisson — situation 2 (sans mortier)", note: "Zones locales. Marge minimale : 53 % (parois).", labels: ["Plaque de fond", "Tôles pliées", "Tôles parois"], calc: [107, 70, 74], adm: [236, 236, 156] },
+  c3: { label: "Cas 2 · Caisson — situation 3 (avec mortier)", note: "Zones locales, cas le plus sévère : marge minimale de 19 % sur les parois latérales.", labels: ["Plaque de fond", "Tôles pliées", "Tôles parois"], calc: [148, 85, 126], adm: [236, 236, 156] }
 };
 let sel = "cont", chart;
 function drawChart() {
@@ -296,7 +352,7 @@ function drawChart() {
   if (showRaw) ds.push({ label: "Pic brut du solveur (singularité)", data: d.raw, backgroundColor: "#f59e0b" });
   ds.push({ label: "Contrainte admissible (MPa)", data: d.adm, backgroundColor: "#cbd5e1" });
   if (chart) chart.destroy();
-  chart = new Chart($('chart'), { type: "bar", data: { labels: d.labels, datasets: ds }, options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true, title: { display: true, text: "MPa" } } }, plugins: { legend: { position: "bottom" } } } });
+  chart = new Chart($('chart'), { type: "bar", data: { labels: d.labels, datasets: ds }, options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true, title: { display: true, text: "MPa" } } }, plugins: { legend: { position: "bottom" }, title: { display: true, text: ["Contraintes de Von Mises vs admissible — Cas 1 (conteneur) et Cas 2 (caisson & panier)", d.label] } } } });
   $('margins').innerHTML = d.labels.map((l, i) => { const m = Math.round((d.adm[i] - d.calc[i]) / d.adm[i] * 100); return `<span class="px-3 py-1 rounded-full border ${m < 15 ? "bg-amber-50 border-amber-200 text-amber-800" : "bg-emerald-50 border-emerald-200 text-emerald-800"}">${l} : marge ${m} %</span>`; }).join("");
   document.querySelectorAll('#studies button').forEach(b => b.className = "w-full text-left px-4 py-2.5 rounded-lg border transition text-xs font-semibold " + (b.dataset.k === sel ? "bg-cyan-600 text-white border-cyan-600" : "bg-white border-slate-200 hover:bg-slate-100"));
 }
@@ -321,6 +377,132 @@ function lift() {
 $('s-vh').oninput = lift;
 document.querySelectorAll('.vhb').forEach(b => b.onclick = () => { $('s-vh').value = b.dataset.vh; lift(); });
 lift();
+
+/* ---------- 5. Conteneur 3D déformé ---------- */
+const CL = 10, CW = 3.5, CH = 3.2;
+const CASES = [
+  ["S1 · 1,35 P + 1,5 Q (service)", "svc", 0, 211],
+  ["S2 · service + vent +X", "wx", .7, 211], ["S3 · service + vent −X", "wx", -.7, 211],
+  ["S4 · service + vent +Y", "wy", .7, 211], ["S5 · service + vent −Y", "wy", -.7, 211],
+  ["S6 · vent exceptionnel +X", "wx", 1, 205], ["S7 · vent exceptionnel −X", "wx", -1, 205],
+  ["S8 · vent exceptionnel +Y", "wy", 1, 205], ["S9 · vent exceptionnel −Y", "wy", -1, 205],
+  ["S10 · poids ± séisme (combinaison de Newmark choisie ci-dessus)", "eq", 0, 242],
+  ["S11 · levage 1,5·φ₂·P", "lift", 0, 198]
+];
+const DESC = {
+  svc: "Poids propre et surcharge de plancher (250 kg/m², soit 2 452 Pa) : flexion du plancher entre les appuis des coins ISO.",
+  wx: "Pressions et succions de l'Eurocode 1-1-4 sur les parois et la toiture : le conteneur ploie dans le sens du vent, les profilés de toiture et de semelle sont les plus sollicités.",
+  wy: "Vent sur la grande face (pression au vent, succion sous le vent) : déplacement d'ensemble selon Y et bombement des parois, avec appui d'un seul côté sur les taquets.",
+  eq: "Accélérations statiques équivalentes (NCSE-02) combinées selon Newmark, cabine ancrée sur ses 4 coins ISO : cas le plus sévère pour la structure.",
+  lift: "Cabine suspendue par 4 élingues aux coins ISO, effort max de 78 186 N dans le brin le plus chargé : flexion globale du plancher."
+};
+function disp(k, f, x, y, z) {
+  const u = x / CL, v = y / CW, w = z / CH, sag = 4 * u * (1 - u);
+  if (k === "svc") return [0, 0, -0.5 * sag * (1 - 0.4 * w)];
+  if (k === "wx") return [f * w * w, 0, -0.1 * sag];
+  if (k === "wy") return [0, f * (w * w + 0.3 * Math.sin(Math.PI * u) * Math.sin(Math.PI * w)), -0.1 * sag];
+  if (k === "eq") { const q = ac_h || 1; return [curA[0] / q * w * w, curA[1] / q * w * w, -curA[2] / q * 0.4 * sag]; }
+  return [0, 0, -0.9 * sag * (1 - 0.5 * w)];
+}
+const lerp = (p, q, t) => [p[0] + (q[0] - p[0]) * t, p[1] + (q[1] - p[1]) * t, p[2] + (q[2] - p[2]) * t];
+const QUADS = [], BEAMS = [], BOXQ = [];
+function face(fn, n1, n2) { for (let i = 0; i < n1; i++) for (let j = 0; j < n2; j++) QUADS.push([fn(i / n1, j / n2), fn((i + 1) / n1, j / n2), fn((i + 1) / n1, (j + 1) / n2), fn(i / n1, (j + 1) / n2)]); }
+face((a, b) => [a * CL, 0, b * CH], 20, 6); face((a, b) => [a * CL, CW, b * CH], 20, 6);
+face((a, b) => [0, a * CW, b * CH], 7, 6); face((a, b) => [CL, a * CW, b * CH], 7, 6);
+face((a, b) => [a * CL, b * CW, CH], 20, 7); face((a, b) => [a * CL, b * CW, 0], 20, 7);
+function beam(p, q, n = 8) { for (let i = 0; i < n; i++) BEAMS.push([lerp(p, q, i / n), lerp(p, q, (i + 1) / n)]); }
+[[0, 0], [0, CW]].forEach(() => 0);
+beam([0, 0, 0], [CL, 0, 0], 20); beam([0, CW, 0], [CL, CW, 0], 20); beam([0, 0, 0], [0, CW, 0]); beam([CL, 0, 0], [CL, CW, 0]);
+beam([0, 0, CH], [CL, 0, CH], 20); beam([0, CW, CH], [CL, CW, CH], 20); beam([0, 0, CH], [0, CW, CH]); beam([CL, 0, CH], [CL, CW, CH]);
+beam([0, CW / 3, 0], [CL, CW / 3, 0], 20); beam([0, 2 * CW / 3, 0], [CL, 2 * CW / 3, 0], 20);
+for (let i = 1; i < 20; i++) beam([i * .5, 0, 0], [i * .5, CW, 0], 4);
+[2.5, 5, 7.5].forEach(x => beam([x, 0, CH], [x, CW, CH], 4));
+[0, 2.5, 5, 7.5, 10].forEach(x => { beam([x, 0, 0], [x, 0, CH], 5); beam([x, CW, 0], [x, CW, CH], 5); });
+[[0, 2.5], [7.5, 10]].forEach(([a, b]) => [0, CW].forEach(y => { beam([a, y, 0], [b, y, CH], 8); beam([b, y, 0], [a, y, CH], 8); }));
+[0, CL].forEach(x => { beam([x, 0, 0], [x, CW, CH], 8); beam([x, CW, 0], [x, 0, CH], 8); });
+[[.4, 1.6, .3, 1.1, 2.0, "#a855f7"], [2.2, 3.2, .3, 1.0, 2.0, "#f97316"], [3.4, 4.4, .3, 1.0, 2.0, "#f97316"], [5, 6, .3, 1.0, 1.8, "#22c55e"], [6.3, 7, .3, 1.0, 1.5, "#eab308"], [7.4, 8.6, .3, 1.2, 1.0, "#ec4899"], [8.8, 9.6, 2.2, 3.2, 1.2, "#38bdf8"], [1, 2.5, 2.4, 3.2, .8, "#14b8a6"]].forEach(([x0, x1, y0, y1, h, col]) => {
+  const V = (x, y, z) => [x, y, z];
+  [[V(x0, y0, h), V(x1, y0, h), V(x1, y1, h), V(x0, y1, h)], [V(x0, y0, 0), V(x1, y0, 0), V(x1, y0, h), V(x0, y0, h)], [V(x0, y1, 0), V(x1, y1, 0), V(x1, y1, h), V(x0, y1, h)], [V(x0, y0, 0), V(x0, y1, 0), V(x0, y1, h), V(x0, y0, h)], [V(x1, y0, 0), V(x1, y1, 0), V(x1, y1, h), V(x1, y0, h)]].forEach(q => BOXQ.push({ q, col }));
+});
+const cv = $('cvs'), cx = cv.getContext('2d');
+let yaw = -0.6, pit = 0.5, drag = null;
+function renderContainer() {
+  const W = cv.width = cv.clientWidth, H = cv.height = 420;
+  const [, kind, f, st] = CASES[+$('c-case').value], amp = +$('c-amp').value;
+  $('v-amp').textContent = "×" + amp.toFixed(1);
+  const sc = Math.min(W / 13.2, 34), co = Math.cos(yaw), si = Math.sin(yaw), sp = Math.sin(pit), cp = Math.cos(pit);
+  const pr = (p, d) => { const x = p[0] + d[0] * amp - CL / 2, y = p[1] + d[1] * amp - CW / 2, z = p[2] + d[2] * amp - CH / 2, xr = x * co - y * si, yr = x * si + y * co; return [W / 2 + xr * sc, H / 2 + 20 + (-yr * sp - z * cp) * sc, yr * cp - z * sp]; };
+  const Z = [0, 0, 0]; let mx = 1e-6;
+  const qd = QUADS.map(q => q.map(p => { const d = disp(kind, f, p[0], p[1], p[2]); mx = Math.max(mx, Math.hypot(d[0], d[1], d[2])); return d; }));
+  const polys = QUADS.map((q, i) => { const pts = q.map((p, k) => pr(p, qd[i][k])); const m = qd[i].reduce((a, d) => a + Math.hypot(d[0], d[1], d[2]), 0) / 4 / mx; return { pts, z: pts.reduce((a, p) => a + p[2], 0) / 4, col: `hsla(${240 * (1 - m)},85%,50%,.4)` }; }).sort((a, b) => b.z - a.z);
+  cx.clearRect(0, 0, W, H);
+  const path = pts => { cx.beginPath(); pts.forEach((q, k) => k ? cx.lineTo(q[0], q[1]) : cx.moveTo(q[0], q[1])); cx.closePath(); };
+  polys.forEach(p => { path(p.pts); cx.fillStyle = p.col; cx.fill(); cx.strokeStyle = "rgba(255,255,255,.1)"; cx.lineWidth = 1; cx.stroke(); });
+  if (amp > 0) { cx.setLineDash([4, 4]); cx.strokeStyle = "rgba(148,163,184,.5)"; [0, CH].forEach(z => { path([[0, 0, z], [CL, 0, z], [CL, CW, z], [0, CW, z]].map(p => pr(p, Z))); cx.stroke(); }); cx.setLineDash([]); }
+  cx.strokeStyle = "#e2e8f0"; cx.lineWidth = 1.6;
+  BEAMS.forEach(b => { const a = pr(b[0], disp(kind, f, ...b[0])), c = pr(b[1], disp(kind, f, ...b[1])); cx.beginPath(); cx.moveTo(a[0], a[1]); cx.lineTo(c[0], c[1]); cx.stroke(); });
+  const bx = BOXQ.map(o => { const pts = o.q.map(p => pr(p, disp(kind, f, ...p))); return { pts, z: pts.reduce((a, p) => a + p[2], 0) / 4, col: o.col }; }).sort((a, b) => b.z - a.z);
+  cx.globalAlpha = .9; bx.forEach(o => { path(o.pts); cx.fillStyle = o.col; cx.fill(); cx.strokeStyle = "rgba(15,23,42,.6)"; cx.stroke(); }); cx.globalAlpha = 1;
+  $('c-st').textContent = st + " MPa"; $('c-mg').textContent = Math.round((275 - st) / 275 * 100) + " %";
+  $('c-desc').textContent = DESC[kind] + (kind === "eq" ? "  Combinaison : " + $('h-combo').textContent + "." : "");
+}
+$('c-case').innerHTML = CASES.map((c, i) => `<option value="${i}">${c[0]}</option>`).join(""); $('c-case').value = 9;
+$('c-case').onchange = $('c-amp').oninput = renderContainer;
+cv.onpointerdown = e => { drag = [e.clientX, e.clientY, yaw, pit]; cv.setPointerCapture(e.pointerId); };
+cv.onpointermove = e => { if (!drag) return; yaw = drag[2] + (e.clientX - drag[0]) * .008; pit = Math.max(.05, Math.min(1.4, drag[3] + (e.clientY - drag[1]) * .006)); renderContainer(); };
+cv.onpointerup = () => drag = null;
+window.addEventListener('resize', () => { renderContainer(); drawMap(); });
+window.cvReady = true;
+
+/* ---------- 6. Cartographie des contraintes : plaque de fond ---------- */
+const MAPS = { c2: { n: "Caisson · situation 2 (sans mortier)", t0: 15, loc: 107, cur: 71, kind: "cais" }, c3: { n: "Caisson · situation 3 (avec mortier)", t0: 15, loc: 148, cur: 89, kind: "cais" }, pan: { n: "Panier · situation 1 (27 briques)", t0: 10, loc: 166, cur: 96, kind: "pan" } };
+const ADM = 236, NG = 80; let mk = "c3"; const RAW = {};
+function rawField(kind) {
+  if (RAW[kind]) return RAW[kind];
+  const f = [], pl = [];
+  if (kind === "cais") for (let r = 0; r < 4; r++) for (let c = 0; c < 4; c++) pl.push([(c + .5) / 4 + (r % 2 ? .06 : -.06), (r + .5) / 4]);
+  else [5, 6, 5, 6, 5].forEach((n, r) => { for (let k = 0; k < n; k++) pl.push([.5 + (k - (n - 1) / 2) * .15, .5 + (r - 2) * .17]); });
+  let mxv = 0;
+  for (let j = 0; j < NG; j++) for (let i = 0; i < NG; i++) {
+    const u = (i + .5) / NG, v = (j + .5) / NG; let val = null;
+    if (kind === "cais") {
+      let d = 9; pl.forEach(p => { d = Math.min(d, Math.hypot(Math.max(Math.abs(u - p[0]) - .035, 0), Math.max(Math.abs(v - p[1]) - .035, 0))); });
+      if (d > 0) { const lobe = Math.max(...[[0, 0], [1, 0], [0, 1], [1, 1]].map(q => Math.exp(-Math.pow(Math.hypot(u - q[0], v - q[1]) / .2, 2)))); val = .62 * (1 - .45 * lobe) + .55 * Math.exp(-Math.pow(d / .03, 2)); } else val = -1;
+    } else if (u + v > .1 && 1 - u + v > .1 && u + 1 - v > .1 && 2 - u - v > .1) {
+      let d = 9; pl.forEach(p => d = Math.min(d, Math.hypot(u - p[0], v - p[1])));
+      const e = Math.min(u, v, 1 - u, 1 - v);
+      val = .6 * (.6 + .3 * Math.exp(-Math.pow(e / .08, 2))) + .5 * Math.exp(-Math.pow((d - .075) / .03, 2));
+    }
+    f.push(val); if (val !== null && val > mxv) mxv = val;
+  }
+  return RAW[kind] = { f, mx: mxv, pl };
+}
+function drawMap() {
+  const m = MAPS[mk], t = +$('m-t').value, L = +$('m-l').value / 100, k = Math.pow(m.t0 / t, 2) * L;
+  $('v-mt').textContent = t + " mm"; $('v-ml').textContent = Math.round(L * 100) + " %";
+  const R = rawField(m.kind), c2 = $('mapc'), S = c2.width = c2.height = Math.min(c2.parentElement.clientWidth - 24, 420), g = c2.getContext('2d'), cs = S / NG, k0 = m.loc / R.mx;
+  g.clearRect(0, 0, S, S);
+  for (let j = 0; j < NG; j++) for (let i = 0; i < NG; i++) {
+    const v = R.f[j * NG + i]; if (v === null) continue;
+    if (v < 0) g.fillStyle = "#1e293b";
+    else { const sg = v * k0 * k, tt = Math.min(sg / (1.25 * ADM), 1); g.fillStyle = sg > ADM && (i + j) % 6 < 3 ? "#7f1d1d" : `hsl(${240 * (1 - tt)},85%,50%)`; }
+    g.fillRect(i * cs, j * cs, cs + .6, cs + .6);
+  }
+  if (m.kind === "pan") { g.strokeStyle = "rgba(15,23,42,.65)"; g.lineWidth = 1.2; R.pl.forEach(p => { g.beginPath(); for (let a = 0; a < 6; a++) { const an = Math.PI / 6 + a * Math.PI / 3, x = p[0] * S + .075 * S * Math.cos(an), y = p[1] * S + .075 * S * Math.sin(an); a ? g.lineTo(x, y) : g.moveTo(x, y); } g.closePath(); g.stroke(); }); }
+  const smax = m.loc * k, scur = m.cur * k, mg = Math.round((ADM - smax) / ADM * 100);
+  $('m-max').textContent = Math.round(smax) + " MPa"; $('m-cur').textContent = Math.round(scur) + " MPa";
+  const ok = smax <= ADM, vd = $('m-verdict');
+  vd.className = "text-xs font-semibold rounded-lg p-3 border " + (ok ? "bg-emerald-50 border-emerald-200 text-emerald-800" : "bg-rose-50 border-rose-200 text-rose-800");
+  vd.textContent = ok ? "Admissible : marge de " + mg + " % sur la contrainte locale maximale." : "Contrainte admissible dépassée de " + (-mg) + " % : sous-dimensionnement, il faut épaissir ou renforcer.";
+  document.querySelectorAll('#map-modes button').forEach(b => b.className = "text-left px-4 py-2 rounded-lg border text-xs font-semibold transition " + (b.dataset.m === mk ? "bg-cyan-600 text-white border-cyan-600" : "bg-white border-slate-200 hover:bg-slate-100"));
+}
+$('map-modes').innerHTML = Object.entries(MAPS).map(([k, v]) => `<button data-m="${k}">${v.n}</button>`).join("");
+document.querySelectorAll('#map-modes button').forEach(b => b.onclick = () => { mk = b.dataset.m; $('m-t').value = MAPS[mk].t0; $('m-l').value = 100; drawMap(); });
+$('m-t').oninput = $('m-l').oninput = drawMap;
+$('m-init').onclick = () => { $('m-t').value = 6; $('m-l').value = 100; drawMap(); };
+$('m-final').onclick = () => { $('m-t').value = MAPS[mk].t0; $('m-l').value = 100; drawMap(); };
+drawMap();
+seismic();
 </script>
 </body>
 </html>
