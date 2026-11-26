@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stage CFD — CDIF (UPC, Espagne) — Tom Fournier</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
+    body { font-family: 'Inter', sans-serif; }
+    .code-font { font-family: 'JetBrains Mono', monospace; }
+    input[type=range] { accent-color: #0891b2; }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 leading-relaxed min-h-screen">
+
+  <!-- HEADER -->
+  <header class="relative bg-slate-900 text-white overflow-hidden py-16 px-6 sm:px-12">
+    <div class="absolute inset-0 opacity-10 bg-[linear-gradient(to_right,#38bdf8_1px,transparent_1px),linear-gradient(to_bottom,#38bdf8_1px,transparent_1px)] bg-[size:3rem_3rem]"></div>
+    <div class="absolute -top-40 -right-40 w-96 h-96 bg-cyan-500 rounded-full filter blur-3xl opacity-20"></div>
+    <div class="absolute -bottom-40 -left-40 w-96 h-96 bg-blue-600 rounded-full filter blur-3xl opacity-15"></div>
+    <div class="relative max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+      <div class="max-w-3xl">
+        <div class="flex flex-wrap gap-2 mb-4">
+          <span class="bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">Stage 4e année</span>
+          <span class="bg-blue-500/10 text-blue-400 border border-blue-500/20 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">ANSYS Fluent</span>
+          <span class="bg-blue-500/10 text-blue-400 border border-blue-500/20 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">ICEM CFD · Turbogrid</span>
+          <span class="bg-blue-500/10 text-blue-400 border border-blue-500/20 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">CFD-Post</span>
+        </div>
+        <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight">
+          Simulations Numériques sur une <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">Turbine Francis</span>
+        </h1>
+        <p class="mt-4 text-slate-300 text-lg max-w-2xl">
+          Laboratoire CDIF (campus de l'UPC, Espagne) : simulations CFD stationnaires et transitoires de la turbine de la centrale de pompage-turbinage de Sallente, dans le cadre du projet de recherche FLEXHYBAT.
+        </p>
+        <div class="flex flex-wrap gap-4 mt-6 text-sm text-slate-400">
+          <span>CDIF — Mars à Juillet 2025</span><span>·</span><span>Polytech Lyon — Mécanique 4e année</span>
+        </div>
+      </div>
+      <a href="index.html#stage-cdif" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700/50 hover:text-white transition px-5 py-2.5 rounded-lg font-semibold shadow-lg">← Retour au Portfolio</a>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 py-12 space-y-16">
+
+    <!-- CONTEXTE -->
+    <section class="bg-white border border-slate-200 rounded-2xl p-8 shadow-sm space-y-4">
+      <h2 class="text-2xl font-bold text-slate-900 border-b border-slate-100 pb-3">Contexte & Objectifs du Stage</h2>
+      <p class="text-slate-600 text-justify">
+        Le <strong>CDIF</strong> (Centre de Diagnòstic Industrial i Fluidodinàmica) est un laboratoire de recherche appliquée du campus de l'<strong>UPC</strong> (Universitat Politècnica de Catalunya), créé dans les années 1990 et spécialisé dans la mécanique des fluides, les vibrations et les turbomachines (Francis, Pelton, Kaplan). Il travaille avec des industriels de l'énergie (ENDESA, Statkraft, Vattenfall) et sur des projets européens.
+      </p>
+      <p class="text-slate-600 text-justify">
+        Mon stage s'inscrit dans le projet national <strong>FLEXHYBAT</strong>, mené avec l'université d'Oviedo : optimiser l'hybridation hydroélectricité / batteries de seconde vie. Mon volet concerne la <strong>maintenance préventive</strong> : à partir de la centrale de pompage-turbinage de <strong>Sallente–Estany Gento</strong> (Vall Fosca, Catalogne), réaliser des simulations CFD stationnaires et transitoires d'une turbine Francis pour dégager les paramètres clés d'un bon fonctionnement (head, débit, puissance, rendement, pulsations de pression).
+      </p>
+    </section>
+
+    <!-- TURBINE ANIMÉE -->
+    <section class="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-md space-y-6">
+      <div class="border-b border-slate-100 pb-4">
+        <span class="text-xs text-cyan-600 font-bold uppercase tracking-widest">Le système étudié</span>
+        <h2 class="text-2xl font-bold text-slate-900">Au cœur d'une turbine Francis : du passage des pales à la pulsation de pression</h2>
+        <p class="text-sm text-slate-500 mt-1">Vue de dessus schématique : l'eau arrive par la volute, traverse le distributeur (directrices) puis entraîne le runner à 600 tr/min. Règle l'ouverture des directrices et la vitesse, et observe le signal de pression au point de mesure.</p>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <div class="lg:col-span-4 space-y-4 text-sm">
+          <div id="tp-list" class="space-y-2"></div>
+          <div class="bg-slate-50 border border-slate-200 rounded-lg p-3 space-y-1">
+            <h3 id="tp-title" class="font-bold text-slate-800 text-sm"></h3>
+            <p id="tp-text" class="text-xs text-slate-600 text-justify"></p>
+          </div>
+          <div><div class="flex justify-between text-xs"><label class="font-medium">Ouverture des directrices</label><span id="v-open" class="font-bold text-cyan-600"></span></div>
+            <input id="t-open" type="range" min="40" max="100" step="10" value="40" class="w-full"></div>
+          <div><div class="flex justify-between text-xs"><label class="font-medium">Vitesse de rotation</label><span id="v-rpm" class="font-bold text-cyan-600"></span></div>
+            <input id="t-rpm" type="range" min="300" max="900" step="50" value="600" class="w-full"></div>
+        </div>
+        <div class="lg:col-span-8 space-y-3">
+          <div class="bg-slate-950 border border-slate-800 rounded-xl overflow-hidden"><canvas id="tur" class="w-full block" style="height:420px"></canvas></div>
+          <div class="grid grid-cols-3 gap-3 text-center">
+            <div class="bg-slate-50 border border-slate-200 rounded-lg p-2"><div class="text-[10px] text-slate-500 uppercase font-bold">FPP = n × 7 pales</div><div id="o-fpp" class="text-lg font-extrabold text-cyan-600"></div></div>
+            <div class="bg-slate-50 border border-slate-200 rounded-lg p-2"><div class="text-[10px] text-slate-500 uppercase font-bold">Période de pulsation</div><div id="o-per" class="text-lg font-extrabold text-slate-700"></div></div>
+            <div class="bg-slate-50 border border-slate-200 rounded-lg p-2"><div class="text-[10px] text-slate-500 uppercase font-bold">Durée d'un tour</div><div id="o-turn" class="text-lg font-extrabold text-slate-700"></div></div>
+          </div>
+          <div class="bg-slate-950 border border-slate-800 rounded-xl overflow-hidden"><canvas id="scope" class="w-full block" style="height:170px"></canvas></div>
+          <p class="text-[11px] text-slate-400 text-justify">Animation au ralenti (<span id="o-slow"></span>). Directrices en nombre illustratif ; signal de pression schématique calé sur la plage du cas H370 D40 du mémoire (≈ 26,5 à 32 bar). C'est l'<strong>Interaction Stator-Rotor</strong> : chaque pale « coupe » le sillage des directrices, d'où 7 pulsations par tour, soit une fréquence de passage des pales de 70 Hz à 600 tr/min (période 0,0143 s, en accord avec la simulation).</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- BERNOULLI -->
+    <section class="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-md space-y-6">
+      <div class="border-b border-slate-100 pb-4">
+        <span class="text-xs text-cyan-600 font-bold uppercase tracking-widest">Vérification physique</span>
+        <h2 class="text-2xl font-bold text-slate-900">Pourquoi 29 bar au runner alors que l'entrée impose 41,6 bar ?</h2>
+        <p class="text-sm text-slate-500 mt-1">Bernoulli entre l'entrée de la volute et le point de contrôle : P<sub>2</sub> = P<sub>1</sub> + ½ρ(v<sub>1</sub>² − v<sub>2</sub>²), avec ρ = 1000 kg/m³. L'eau accélère, la pression statique se convertit en énergie cinétique.</p>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+        <div class="space-y-4 text-sm">
+          <div><div class="flex justify-between text-xs"><label class="font-medium">Pression d'entrée volute P<sub>1</sub></label><span id="v-p1" class="font-bold text-cyan-600"></span></div><input id="b-p1" type="range" min="30" max="50" step="0.1" value="41.6" class="w-full"></div>
+          <div><div class="flex justify-between text-xs"><label class="font-medium">Vitesse dans la volute v<sub>1</sub></label><span id="v-v1" class="font-bold text-cyan-600"></span></div><input id="b-v1" type="range" min="1" max="10" step="0.5" value="5" class="w-full"></div>
+          <div><div class="flex justify-between text-xs"><label class="font-medium">Vitesse locale au point de contrôle v<sub>2</sub></label><span id="v-v2" class="font-bold text-cyan-600"></span></div><input id="b-v2" type="range" min="10" max="80" step="1" value="50" class="w-full"></div>
+        </div>
+        <div class="space-y-3">
+          <div class="grid grid-cols-2 gap-3 text-center">
+            <div class="bg-slate-50 border border-slate-200 rounded-lg p-3"><div class="text-[10px] text-slate-500 uppercase font-bold">Terme cinétique ½ρ(v₁²−v₂²)</div><div id="o-dyn" class="text-xl font-extrabold text-rose-600"></div></div>
+            <div class="bg-slate-50 border border-slate-200 rounded-lg p-3"><div class="text-[10px] text-slate-500 uppercase font-bold">P₂ calculée</div><div id="o-p2" class="text-xl font-extrabold text-cyan-600"></div></div>
+          </div>
+          <div class="relative h-10 bg-slate-100 rounded-lg border border-slate-200 overflow-hidden">
+            <div class="absolute top-0 h-full bg-emerald-200/70" style="left:25%;width:27.5%"></div>
+            <div id="b-mark" class="absolute top-0 h-full w-1 bg-cyan-600"></div>
+            <div class="absolute bottom-0 left-0 right-0 flex justify-between text-[9px] text-slate-500 px-1"><span>20 bar</span><span>30</span><span>40</span><span>50</span><span>60 bar</span></div>
+          </div>
+          <p id="b-verdict" class="text-xs rounded-lg p-3 border"></p>
+          <p class="text-[11px] text-slate-400">Bande verte : pression relevée dans la simulation au runner (≈ 26,5 à 32 bar). Calcul idéalisé du mémoire : 29,23 bar.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SIMULATIONS -->
+    <section class="space-y-6">
+      <h2 class="text-2xl font-bold text-slate-900 border-b border-slate-100 pb-3">Méthodologie des Simulations</h2>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
+          <div><span class="text-xs text-cyan-600 font-bold uppercase tracking-widest">Stationnaire</span><h3 class="text-lg font-bold text-slate-900">Deux phases de convergence (H = 400 m, ouverture 70 %)</h3></div>
+          <p class="text-xs text-slate-600 text-justify">Runner en référentiel tournant (Moving Reference Frame). Phase 1 : débit massique imposé en entrée (ex. 13 000 kg/s à 40 %, 33 000 kg/s à 100 %) pour stabiliser le calcul. Phase 2 : pression totale imposée (40,6 / 41,6 / 44,6 bar), le head devient une grandeur de sortie et converge vers la valeur attendue.</p>
+          <svg id="head" viewBox="0 0 400 200" class="w-full bg-slate-950 rounded-lg border border-slate-800"></svg>
+          <div class="flex items-center gap-3"><button id="h-play" class="px-3 py-1 rounded bg-cyan-600 text-white text-xs font-semibold">▶ Lancer</button><input id="h-it" type="range" min="0" max="280" step="1" value="0" class="flex-1"><span id="v-it" class="text-xs font-bold text-cyan-600 w-16 text-right"></span></div>
+          <p id="h-phase" class="text-xs rounded-lg p-3 border"></p>
+          <p class="text-[11px] text-slate-400">Tracé schématique inspiré de la figure 14 du mémoire (bascule débit → pression vers l'itération 180).</p>
+        </div>
+        <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
+          <div><span class="text-xs text-cyan-600 font-bold uppercase tracking-widest">Transitoire</span><h3 class="text-lg font-bold text-slate-900">Pas de temps et durée simulée</h3></div>
+          <p class="text-xs text-slate-600 text-justify">Reprise d'un cas stationnaire converti en transitoire : le mode « frame motion » passe en « mesh motion » pour un vrai mouvement du maillage. Deux séries : une première grossière (20 tours, 10°/pas) pour estimer le comportement, puis une fine (2 tours, 1°/pas). Calculs de 1 à 3 jours, contre quelques heures en stationnaire.</p>
+          <div class="flex gap-2 text-xs"><button id="dt10" class="dtb px-3 py-1 rounded border">Série 1 : 10° par pas, 20 tours</button><button id="dt1" class="dtb px-3 py-1 rounded border">Série 2 : 1° par pas, 2 tours</button></div>
+          <div class="grid grid-cols-3 gap-3 text-center">
+            <div class="bg-slate-50 border border-slate-200 rounded-lg p-3"><div class="text-[10px] text-slate-500 uppercase font-bold">Pas de temps</div><div id="o-dt" class="text-base font-extrabold text-cyan-600"></div></div>
+            <div class="bg-slate-50 border border-slate-200 rounded-lg p-3"><div class="text-[10px] text-slate-500 uppercase font-bold">Pas par tour</div><div id="o-spt" class="text-base font-extrabold text-slate-700"></div></div>
+            <div class="bg-slate-50 border border-slate-200 rounded-lg p-3"><div class="text-[10px] text-slate-500 uppercase font-bold">Pas au total</div><div id="o-tot" class="text-base font-extrabold text-slate-700"></div></div>
+          </div>
+          <p class="text-[11px] text-slate-400">Calculé avec la vitesse de rotation réglée dans la section turbine (600 tr/min : un tour toutes les 0,1 s, soit 0,002777 s pour 10°). Les données de pression et de vitesse sont extraites pour CFD-Post.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- MAILLAGE -->
+    <section class="space-y-6">
+      <h2 class="text-2xl font-bold text-slate-900 border-b border-slate-100 pb-3">Maillage & Qualité Numérique</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-2"><h3 class="font-bold text-slate-900">Runner · Turbogrid</h3><p class="text-xs text-slate-600 text-justify">Maillage structuré d'environ <strong>5 M d'éléments</strong> : l'alignement des cellules avec l'écoulement est préférable sur les pales et les zones d'accélération.</p></div>
+        <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-2"><h3 class="font-bold text-slate-900">Distributeur · ICEM CFD</h3><p class="text-xs text-slate-600 text-justify">Environ <strong>2 M d'éléments</strong>, avec le contrôle des blocs, des nœuds et des transitions. Prise en main par des exercices hexaédriques (ailette, coude) et tétraédriques (piston-soupape).</p></div>
+        <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-2"><h3 class="font-bold text-slate-900">Volute · WB Meshing</h3><p class="text-xs text-slate-600 text-justify">Géométrie classique, maillage non structuré automatique. Les sous-domaines sont raccordés par des <strong>interfaces</strong> Fluent (conformes ou non) qui doivent être définies avec rigueur.</p></div>
+      </div>
+      <div class="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-md space-y-5">
+        <div><span class="text-xs text-cyan-600 font-bold uppercase tracking-widest">Critères de qualité</span><h3 class="text-xl font-bold text-slate-900">Skewness et y⁺ : le maillage est-il acceptable ?</h3></div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+          <div class="space-y-4 text-sm">
+            <div><div class="flex justify-between text-xs"><label class="font-medium">Asymétrie maximale (skewness)</label><span id="v-sk" class="font-bold text-cyan-600"></span></div><input id="q-sk" type="range" min="0" max="1" step="0.01" value="0.6" class="w-full"></div>
+            <div><div class="flex justify-between text-xs"><label class="font-medium">y⁺ de la première cellule</label><span id="v-yp" class="font-bold text-cyan-600"></span></div><input id="q-yp" type="range" min="0.1" max="30" step="0.1" value="1" class="w-full"></div>
+            <p id="q-v1" class="text-xs rounded-lg p-3 border"></p><p id="q-v2" class="text-xs rounded-lg p-3 border"></p>
+            <p class="text-[11px] text-slate-400 text-justify">Seuils du mémoire : skewness maintenue sous 0,85, qualité orthogonale la plus proche possible de 1, y⁺ visé proche de 1 avec le modèle de turbulence k–ω SST pour résoudre la sous-couche visqueuse.</p>
+          </div>
+          <div class="bg-slate-950 border border-slate-800 rounded-xl p-3"><svg id="q-svg" viewBox="0 0 400 220" class="w-full h-56"></svg></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RÉSULTATS -->
+    <section class="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-md space-y-6">
+      <div class="border-b border-slate-100 pb-4">
+        <span class="text-xs text-cyan-600 font-bold uppercase tracking-widest">Résultats : 2 × 21 simulations</span>
+        <h2 class="text-2xl font-bold text-slate-900">Stationnaire contre transitoire : ce que le régime permanent ne voit pas</h2>
+        <p class="text-sm text-slate-500 mt-1">Trois niveaux de head (360, 370, 400 m, soit 40,6 / 41,6 / 44,6 bar à l'entrée) et sept ouvertures de directrices, de 40 à 100 %. Rendement η = P<sub>mécanique</sub> / P<sub>hydraulique</sub>, avec P<sub>méca</sub> = −C·ω et P<sub>hydr</sub> = H·ṁ·g.</p>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <div class="lg:col-span-4 space-y-4 text-sm">
+          <div><label class="block text-xs font-semibold text-slate-700 mb-1.5 uppercase tracking-wider">Head</label><div id="cmp-head" class="flex gap-2"></div></div>
+          <div><label class="block text-xs font-semibold text-slate-700 mb-1.5 uppercase tracking-wider">Grandeur</label><div id="cmp-met" class="grid grid-cols-1 gap-2"></div></div>
+          <div class="bg-cyan-50/50 border border-cyan-100 rounded-lg p-3 text-xs text-slate-600 text-justify">Les valeurs de puissance et de rendement sont plus faibles en transitoire, surtout à faible ouverture (effets dynamiques, décollements). Les calculs stationnaires servent surtout d'initialisation aux transitoires.</div>
+        </div>
+        <div class="lg:col-span-8">
+          <div class="relative h-80"><canvas id="cmp"></canvas></div>
+          <div id="cmp-chips" class="flex flex-wrap gap-2 mt-4 text-xs"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HILL CHART -->
+    <section class="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-md space-y-6">
+      <div class="border-b border-slate-100 pb-4">
+        <span class="text-xs text-cyan-600 font-bold uppercase tracking-widest">Carte de performance</span>
+        <h2 class="text-2xl font-bold text-slate-900">Hill chart du rendement (transitoire 1)</h2>
+        <p class="text-sm text-slate-500 mt-1">Head en fonction du débit pour les 21 cas simulés (points rouges). Survole un point pour lire le cas. Le rendement chute à faible ouverture : l'incidence sur les pales n'est plus optimale, d'où décollement sur l'extrados et recirculations dissipatives dans les canaux inter-aubes.</p>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        <div class="lg:col-span-8 space-y-2">
+          <div class="bg-slate-950 border border-slate-800 rounded-xl overflow-hidden"><canvas id="hill" class="w-full block cursor-crosshair" style="height:360px"></canvas></div>
+          <div class="flex items-center gap-3 text-[10px] text-slate-500"><span>≈ 56 %</span><div class="flex-1 h-2 rounded" style="background:linear-gradient(90deg,hsl(240,80%,50%),hsl(145,80%,50%),hsl(50,80%,50%))"></div><span>≈ 83 %</span></div>
+        </div>
+        <div class="lg:col-span-4 space-y-3 text-sm">
+          <div id="hill-info" class="bg-slate-50 border border-slate-200 rounded-lg p-4 text-xs text-slate-600 space-y-1"></div>
+          <p class="text-[11px] text-slate-400 text-justify">Reconstruction interpolée à partir des 21 points du tableau de résultats transitoires 1. Le diagramme du mémoire utilise une autre interpolation, les isovaleurs peuvent donc différer.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- POST-TRAITEMENT + DIFFICULTÉS -->
+    <section class="space-y-6">
+      <h2 class="text-2xl font-bold text-slate-900 border-b border-slate-100 pb-3">Post-traitement, Difficultés & Suite</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-3">
+          <h3 class="font-bold text-slate-900">Du fluide à la structure</h3>
+          <ol class="text-xs text-slate-600 space-y-2 list-decimal pl-5">
+            <li>Simulation convergée dans Fluent, puis chargement dans <strong>CFD-Post</strong> : coupes, isosurfaces, lignes de courant, contours de pression et de vitesse.</li>
+            <li>Export du champ de pression point par point (coordonnées x, y, z et pression locale) sur les surfaces du runner, à tous les pas de temps.</li>
+            <li>Transmission à l'ingénieur en charge de la structure, qui l'applique comme chargement dans <strong>ANSYS Mechanical</strong> pour calculer les contraintes.</li>
+          </ol>
+        </div>
+        <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-3">
+          <h3 class="font-bold text-slate-900">Aléas rencontrés et corrections</h3>
+          <ul class="text-xs text-slate-600 space-y-2 list-disc pl-5">
+            <li><strong>Erreurs de compilation</strong> : le plus souvent résolues en réimportant le maillage.</li>
+            <li><strong>Incompatibilité maillage / CAO</strong> : des congés modifiés sur les pales ont altéré le maillage et produit des résultats aberrants (rendement supérieur à 100 %).</li>
+            <li><strong>Interfaces Fluent</strong> mal paramétrées ou corrompues : blocage ou non-convergence.</li>
+            <li><strong>Suite</strong> : à la date du rapport (juin 2025), les simulations transitoires 2 (1°/pas) étaient en retard à cause de problèmes techniques sur les serveurs de calcul.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMPÉTENCES -->
+    <section class="space-y-6">
+      <h2 class="text-2xl font-bold text-slate-900 border-b border-slate-100 pb-3">Compétences Acquises</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="bg-white border border-slate-200/80 p-6 rounded-xl space-y-2 shadow-sm"><h3 class="font-bold text-slate-900">CFD Fluent</h3><p class="text-xs text-slate-600">Cas stationnaires (référentiel tournant) et transitoires (maillage mobile), conditions aux limites débit puis pression, k–ω SST.</p></div>
+        <div class="bg-white border border-slate-200/80 p-6 rounded-xl space-y-2 shadow-sm"><h3 class="font-bold text-slate-900">Maillage structuré</h3><p class="text-xs text-slate-600">Turbogrid, ICEM CFD, WB Meshing ; critères de skewness, d'orthogonalité et de y⁺ ; interfaces entre sous-domaines.</p></div>
+        <div class="bg-white border border-slate-200/80 p-6 rounded-xl space-y-2 shadow-sm"><h3 class="font-bold text-slate-900">Analyse critique</h3><p class="text-xs text-slate-600">Hill chart, Bernoulli, fréquence de passage des pales et interaction stator-rotor ; repérage de résultats aberrants.</p></div>
+        <div class="bg-white border border-slate-200/80 p-6 rounded-xl space-y-2 shadow-sm"><h3 class="font-bold text-slate-900">Recherche & autonomie</h3><p class="text-xs text-slate-600">Environnement de recherche appliquée en Espagne, dépannage des calculs, prise en main autonome d'ICEM.</p></div>
+      </div>
+    </section>
+
+    <section class="bg-white border border-slate-200 rounded-2xl p-8 shadow-sm flex flex-col md:flex-row justify-between items-center gap-6">
+      <div class="space-y-2">
+        <span class="text-xs text-emerald-600 font-bold uppercase tracking-widest">Document</span>
+        <h3 class="text-xl font-bold text-slate-900">Rapport de stage de 4e année</h3>
+        <p class="text-sm text-slate-500 max-w-xl">Contexte, méthodologie CFD, maillage, post-traitement et analyse complète des résultats.</p>
+      </div>
+      <a href="rapport_cdif.pdf" target="_blank" class="bg-emerald-600 hover:bg-emerald-500 text-white font-semibold transition px-6 py-3 rounded-lg shadow-lg whitespace-nowrap">Consulter le PDF</a>
+    </section>
+  </main>
+
+  <footer class="bg-slate-900 text-slate-400 text-center py-12 border-t border-slate-800">
+    <p class="font-semibold text-slate-300">© Tom Fournier 2026 — Portfolio Ingénieur Mécanique</p>
+  </footer>
+
+<script>
+const $ = id => document.getElementById(id);
+const hsl = (h, s, l, a = 1) => `hsla(${h},${s}%,${l}%,${a})`;
+
+/* ---------- 1. Turbine animée ---------- */
+const COMP = [
+  ["Volute (spirale)", "Cavité en spirale qui distribue uniformément l'eau autour du rotor. Son entrée (volute inlet) est le point de contrôle des conditions aux limites. Maillée avec WB Meshing."],
+  ["Distributeur", "Pales mobiles (directrices) qui règlent le débit et l'orientation du flux : ouvertures étudiées de 40 à 100 %. Maillé avec ICEM (environ 2 M d'éléments)."],
+  ["Runner (roue)", "7 pales, 600 tr/min, entraîne l'arbre couplé à l'alternateur. Zone d'intérêt principale des simulations, maillée avec Turbogrid (environ 5 M d'éléments)."],
+  ["Diffuseur (draft tube)", "Récupère une partie de l'énergie résiduelle du jet. Hors régime nominal, des instabilités comme le vortex rope peuvent s'y développer."]
+];
+let hl = 2;
+function setComp(i) {
+  hl = i; $('tp-title').textContent = COMP[i][0]; $('tp-text').textContent = COMP[i][1];
+  [...$('tp-list').children].forEach((b, j) => b.className = "w-full text-left px-4 py-2 rounded-lg border text-xs font-semibold transition " + (j === i ? "bg-cyan-600 text-white border-cyan-600" : "bg-white border-slate-200 hover:bg-slate-100"));
+}
+$('tp-list').innerHTML = COMP.map((c, i) => `<button onclick="setComp(${i})">${i + 1}. ${c[0]}</button>`).join("");
+const tc = $('tur'), tg = tc.getContext('2d'), sc = $('scope'), sg = sc.getContext('2d');
+let th = 0; const parts = [];
+for (let i = 0; i < 150; i++) parts.push({ r: 25 + Math.random() * 160, a: Math.random() * 6.283 });
+const pol = (cx, cy, r, a) => [cx + r * Math.cos(a), cy + r * Math.sin(a)];
+const pAt = (x, amp) => 29.25 + amp * 2.9 * (Math.cos(6.2832 * x) + 0.25 * Math.sin(12.566 * x + 0.6)) / 1.25;
+function turbine() {
+  const W = tc.width = tc.clientWidth, H = tc.height = 420, cx = W / 2 - 20, cy = H / 2;
+  const open = +$('t-open').value, rpm = +$('t-rpm').value, vf = 0.4 + 0.6 * open / 100, om = 0.04 * rpm / 600;
+  $('v-open').textContent = open + " %"; $('v-rpm').textContent = rpm + " tr/min";
+  const fpp = rpm / 60 * 7; $('o-fpp').textContent = fpp.toFixed(1) + " Hz"; $('o-per').textContent = (1000 / fpp).toFixed(1) + " ms"; $('o-turn').textContent = (60000 / rpm).toFixed(0) + " ms";
+  $('o-slow').textContent = "×" + Math.round(rpm / 60 / (om * 60 / 6.2832)) + " plus lent que la réalité";
+  th += om; tg.clearRect(0, 0, W, H);
+  // volute
+  tg.strokeStyle = hl === 0 ? "#fbbf24" : "#475569"; tg.lineWidth = hl === 0 ? 3 : 2; tg.beginPath();
+  for (let k = 0; k <= 60; k++) { const a = k / 60 * 6.2832, p = pol(cx, cy, 150 + 38 * k / 60, a); k ? tg.lineTo(p[0], p[1]) : tg.moveTo(p[0], p[1]); }
+  tg.lineTo(cx + 188, H); tg.moveTo(cx + 150, cy); tg.lineTo(cx + 150, H); tg.stroke();
+  tg.beginPath(); tg.arc(cx, cy, 140, 0, 6.2832); tg.strokeStyle = "rgba(71,85,105,.5)"; tg.lineWidth = 1; tg.stroke();
+  // particules
+  parts.forEach(p => {
+    p.r -= 0.5 * vf; p.a += 0.04 * vf * 60 / p.r + (p.r < 95 ? om * 0.7 : 0);
+    if (p.r < 22) { p.r = 150 + Math.random() * 36; p.a = Math.random() * 6.283; }
+    const q = pol(cx, cy, p.r, p.a); tg.fillStyle = hsl(200 - (186 - p.r) * 0.5, 85, 60, .85); tg.fillRect(q[0] - 1.2, q[1] - 1.2, 2.4, 2.4);
+  });
+  // directrices
+  const alpha = (80 - 65 * open / 100) * Math.PI / 180;
+  tg.strokeStyle = hl === 1 ? "#fbbf24" : "#94a3b8"; tg.lineWidth = 3.5;
+  for (let i = 0; i < 16; i++) { const f = i * 6.2832 / 16, b = pol(cx, cy, 122, f), d = f + alpha, a1 = [b[0] - 20 * Math.cos(d), b[1] - 20 * Math.sin(d)], a2 = [b[0] + 20 * Math.cos(d), b[1] + 20 * Math.sin(d)]; tg.beginPath(); tg.moveTo(a1[0], a1[1]); tg.lineTo(a2[0], a2[1]); tg.stroke(); }
+  // runner
+  tg.beginPath(); tg.arc(cx, cy, 95, 0, 6.2832); tg.fillStyle = "rgba(14,116,144,.18)"; tg.fill();
+  tg.strokeStyle = hl === 2 ? "#fbbf24" : "#38bdf8"; tg.lineWidth = 3;
+  for (let k = 0; k < 7; k++) { const a = th + k * 6.2832 / 7, p0 = pol(cx, cy, 18, a), c1 = pol(cx, cy, 62, a - 0.25), p2 = pol(cx, cy, 95, a + 0.7); tg.beginPath(); tg.moveTo(p0[0], p0[1]); tg.quadraticCurveTo(c1[0], c1[1], p2[0], p2[1]); tg.stroke(); }
+  tg.beginPath(); tg.arc(cx, cy, 18, 0, 6.2832); tg.fillStyle = "#475569"; tg.fill();
+  // capteur
+  const pr = pol(cx, cy, 105, -1.5708); tg.fillStyle = "#ef4444"; tg.beginPath(); tg.arc(pr[0], pr[1], 5, 0, 6.2832); tg.fill();
+  tg.fillStyle = "#fca5a5"; tg.font = "11px monospace"; tg.textAlign = "right"; tg.fillText("capteur de pression", pr[0] - 10, pr[1] - 4); tg.textAlign = "left";
+  tg.fillStyle = "#94a3b8"; tg.fillText("entrée volute ↑", cx + 195, H - 8);
+  // oscilloscope
+  const SW = sc.width = sc.clientWidth, SH = sc.height = 170, amp = 0.6 + 0.4 * (100 - open) / 60, tt = ((th % 6.2832) + 6.2832) % 6.2832;
+  const X = a => 40 + a / 6.2832 * (SW - 50), Y = p => SH - 22 - (p - 24) / 10 * (SH - 36);
+  sg.clearRect(0, 0, SW, SH); sg.strokeStyle = "#1e293b"; sg.lineWidth = 1; sg.fillStyle = "#64748b"; sg.font = "10px monospace";
+  [26, 29, 32].forEach(v => { sg.beginPath(); sg.moveTo(40, Y(v)); sg.lineTo(SW - 10, Y(v)); sg.stroke(); sg.fillText(v + " bar", 2, Y(v) + 3); });
+  [0, 90, 180, 270, 360].forEach(d => sg.fillText(d + "°", X(d / 360 * 6.2832) - 8, SH - 6));
+  sg.beginPath(); sg.strokeStyle = "#22d3ee"; sg.lineWidth = 2;
+  for (let k = 0; k <= 360; k++) { const a = k / 360 * 6.2832, x = ((a + 1.5708) * 7 / 6.2832) % 1; k ? sg.lineTo(X(a), Y(pAt(x, amp))) : sg.moveTo(X(a), Y(pAt(x, amp))); } sg.stroke();
+  const xc = (((tt + 1.5708) * 7 / 6.2832) % 1), pc = pAt(xc, amp);
+  sg.strokeStyle = "#fbbf24"; sg.beginPath(); sg.moveTo(X(tt), 6); sg.lineTo(X(tt), SH - 22); sg.stroke();
+  sg.fillStyle = "#ef4444"; sg.beginPath(); sg.arc(X(tt), Y(pc), 4, 0, 6.2832); sg.fill();
+  sg.fillStyle = "#e2e8f0"; sg.textAlign = "right"; sg.fillText("p = " + pc.toFixed(1) + " bar — 7 pulsations par tour", SW - 10, 14); sg.textAlign = "left";
+  dtCalc(); requestAnimationFrame(turbine);
+}
+
+/* ---------- 2. Bernoulli ---------- */
+function bern() {
+  const p1 = +$('b-p1').value, v1 = +$('b-v1').value, v2 = +$('b-v2').value, dyn = 0.5 * 1000 * (v1 * v1 - v2 * v2) / 1e5, p2 = p1 + dyn;
+  $('v-p1').textContent = p1.toFixed(1) + " bar"; $('v-v1').textContent = v1 + " m/s"; $('v-v2').textContent = v2 + " m/s";
+  $('o-dyn').textContent = dyn.toFixed(2) + " bar"; $('o-p2').textContent = p2.toFixed(2) + " bar";
+  $('b-mark').style.left = Math.max(0, Math.min(99, (p2 - 20) / 40 * 100)) + "%";
+  const ok = p2 >= 26.5 && p2 <= 32, v = $('b-verdict');
+  v.className = "text-xs rounded-lg p-3 border " + (ok ? "bg-emerald-50 border-emerald-200 text-emerald-800" : "bg-amber-50 border-amber-200 text-amber-800");
+  v.textContent = ok ? "Cohérent avec la pression relevée dans la simulation au niveau du runner." : "Hors de la plage relevée dans la simulation (≈ 26,5 à 32 bar) : l'estimation idéalisée s'en écarte.";
+}
+["b-p1", "b-v1", "b-v2"].forEach(i => $(i).oninput = bern); bern();
+
+/* ---------- 3. Convergence du head ---------- */
+const HP = [[0, 180], [10, 320], [28, 820], [40, 660], [47, 640], [57, 855], [70, 500], [85, 270], [92, 255], [100, 300], [120, 420], [135, 400], [150, 350], [165, 350], [180, 370], [181, 400], [280, 400]];
+function headAt(it) { for (let i = 1; i < HP.length; i++) if (it <= HP[i][0]) { const a = HP[i - 1], b = HP[i], t = (it - a[0]) / (b[0] - a[0] || 1); return a[1] + (b[1] - a[1]) * t; } return 400; }
+let hTimer = null;
+function headDraw() {
+  const it = +$('h-it').value, X = i => 30 + i / 280 * 360, Y = h => 185 - (h - 100) / 800 * 170;
+  let s = `<line x1="30" y1="${Y(400)}" x2="390" y2="${Y(400)}" stroke="#334155" stroke-dasharray="4 3"/><text x="34" y="${Y(400) - 3}" fill="#64748b" font-size="9" font-family="monospace">400 m</text><line x1="${X(180)}" y1="8" x2="${X(180)}" y2="188" stroke="#f59e0b" stroke-dasharray="3 3"/><text x="${X(180) + 3}" y="16" fill="#f59e0b" font-size="9" font-family="monospace">bascule</text>`;
+  let d = ""; for (let i = 0; i <= it; i += 2) d += (i ? "L" : "M") + X(i) + "," + Y(headAt(i));
+  s += `<path d="${d}" fill="none" stroke="#22d3ee" stroke-width="2"/><circle cx="${X(it)}" cy="${Y(headAt(it))}" r="4" fill="#ef4444"/><text x="34" y="196" fill="#64748b" font-size="9" font-family="monospace">itérations</text>`;
+  $('head').innerHTML = s; $('v-it').textContent = "it. " + it;
+  const p = $('h-phase'), a = it < 180;
+  p.className = "text-xs rounded-lg p-3 border " + (a ? "bg-amber-50 border-amber-200 text-amber-800" : "bg-emerald-50 border-emerald-200 text-emerald-800");
+  p.textContent = a ? "Phase 1 : débit massique imposé en entrée. Le head oscille avant de se stabiliser." : "Phase 2 : pression totale d'entrée imposée (head en sortie) : il converge vers la valeur attendue, ici 400 m.";
+}
+$('h-it').oninput = headDraw;
+$('h-play').onclick = () => {
+  if (hTimer) { clearInterval(hTimer); hTimer = null; $('h-play').textContent = "▶ Lancer"; return; }
+  if (+$('h-it').value >= 280) $('h-it').value = 0; $('h-play').textContent = "■ Pause";
+  hTimer = setInterval(() => { const v = +$('h-it').value + 2; $('h-it').value = v; headDraw(); if (v >= 280) { clearInterval(hTimer); hTimer = null; $('h-play').textContent = "▶ Lancer"; } }, 30);
+}; headDraw();
+
+/* ---------- 4. Pas de temps transitoire ---------- */
+let dtStep = 10;
+function dtCalc() {
+  const rpm = +$('t-rpm').value, dt = dtStep / (6 * rpm), spt = 360 / dtStep, tours = dtStep === 10 ? 20 : 2;
+  $('o-dt').textContent = dt.toFixed(6) + " s"; $('o-spt').textContent = spt; $('o-tot').textContent = spt * tours + " (" + tours + " tours)";
+  document.querySelectorAll('.dtb').forEach(b => b.className = "dtb px-3 py-1 rounded border " + ((b.id === "dt10") === (dtStep === 10) ? "bg-cyan-600 text-white border-cyan-600" : "bg-white"));
+}
+$('dt10').onclick = () => { dtStep = 10; dtCalc(); }; $('dt1').onclick = () => { dtStep = 1; dtCalc(); };
+
+/* ---------- 5. Qualité de maillage ---------- */
+function qual() {
+  const sk = +$('q-sk').value, yp = +$('q-yp').value; $('v-sk').textContent = sk.toFixed(2); $('v-yp').textContent = yp.toFixed(1);
+  const a = $('q-v1'), b = $('q-v2'), ok1 = sk < 0.85, ok2 = yp <= 1.5, am = yp <= 5;
+  a.className = "text-xs rounded-lg p-3 border " + (ok1 ? "bg-emerald-50 border-emerald-200 text-emerald-800" : "bg-rose-50 border-rose-200 text-rose-800");
+  a.textContent = ok1 ? "Skewness sous 0,85 : cellules correctement formées." : "Skewness ≥ 0,85 : cellules trop déformées, risque d'instabilité et de résultats imprécis.";
+  b.className = "text-xs rounded-lg p-3 border " + (ok2 ? "bg-emerald-50 border-emerald-200 text-emerald-800" : am ? "bg-amber-50 border-amber-200 text-amber-800" : "bg-rose-50 border-rose-200 text-rose-800");
+  b.textContent = ok2 ? "y⁺ proche de 1 : la sous-couche visqueuse est résolue, gradients de vitesse et frottement bien captés." : am ? "y⁺ au-dessus de la cible : couche limite moins bien résolue pour k–ω SST." : "y⁺ trop élevé : première cellule trop épaisse, maillage à raffiner près des parois.";
+  let s = '<rect x="0" y="196" width="400" height="24" fill="#334155"/><text x="8" y="212" fill="#cbd5e1" font-size="10" font-family="monospace">paroi (pale, volute…)</text>', y = 196, h = Math.max(2, yp * 5), i = 0;
+  while (y - h > 8 && i < 14) { y -= h; s += `<rect x="60" y="${y}" width="280" height="${h}" fill="${i ? "rgba(34,211,238,.12)" : "rgba(239,68,68,.35)"}" stroke="#22d3ee" stroke-width=".6"/>`; h *= 1.3; i++; }
+  $('q-svg').innerHTML = s + '<text x="346" y="190" fill="#f87171" font-size="9" font-family="monospace">1re cellule</text>';
+}
+$('q-sk').oninput = $('q-yp').oninput = qual; qual();
+
+/* ---------- 6. Comparaison stationnaire / transitoire ---------- */
+const OP = [40, 50, 60, 70, 80, 90, 100];
+const ST = { 360: { eff: [74.35, 79.05, 87.97, 87.60, 86.09, 86.75, 89.51], flow: [12.58, 15.54, 22.06, 24.05, 26.64, 30.457, 32.4], pow: [33.27, 43.68, 68.82, 74.64, 81.35, 93.47, 102.72], head: [362.6, 362.45, 361.5, 361.16, 361.59, 360.63, 361.05] },
+  370: { eff: [78.98, 79.89, 81.41, 84.21, 87.56, 86.66, 88.13], flow: [12.95, 16.79, 20.24, 24.015, 28.06, 31.03, 33.55], pow: [37.37, 49.02, 60.19, 73.80, 89.58, 98.13, 107.59], head: [372.46, 372.55, 372.35, 372.00, 371.66, 372.00, 370.93] },
+  400: { eff: [76.44, 78.75, 84.50, 85.48, 82.89, 86.55, 83.68], flow: [13.74, 19.28, 23.58, 25.36, 28.83, 32.63, 33.88], pow: [41.52, 59.71, 78.68, 85.62, 93.81, 111.08, 111.70], head: [402.98, 400.91, 402.54, 402.50, 400.17, 400.96, 401.61] } };
+const TR = { 360: { eff: [55.84, 69.73, 76.91, 79.40, 81.76, 81.60, 81.72], flow: [16.44, 20.02, 23.81, 25.99, 29.27, 31.88, 33.59], pow: [32.58, 49.51, 64.95, 73.07, 84.62, 91.84, 96.85], head: [361.77, 361.53, 361.54, 360.94, 360.44, 359.88, 359.65] },
+  370: { eff: [57.96, 71.59, 78.20, 80.05, 82.05, 81.98, 82.14], flow: [16.67, 20.47, 24.27, 26.46, 29.76, 32.44, 34.17], pow: [35.06, 53.44, 69.21, 77.12, 88.74, 96.54, 101.81], head: [369.89, 371.71, 371.73, 371.16, 370.46, 370.02, 369.76] },
+  400: { eff: [64.56, 74.36, 80.76, 81.79, 82.91, 82.78, 81.02], flow: [17.95, 21.62, 25.58, 27.81, 31.12, 34.04, 35.82], pow: [45.76, 63.14, 81.38, 89.56, 100.90, 110.65, 113.92], head: [402.51, 400.34, 401.56, 401.37, 398.63, 400.26, 400.13] } };
+const MET = { eff: ["Rendement (%)", "pts"], pow: ["Puissance mécanique (MW)", "MW"], flow: ["Débit (m³/s)", "m³/s"], head: ["Head mesuré (m)", "m"] };
+let cH = 370, cM = "eff", cChart;
+function cmp() {
+  const s = ST[cH][cM], t = TR[cH][cM];
+  if (cChart) cChart.destroy();
+  cChart = new Chart($('cmp'), { type: "line", data: { labels: OP.map(o => o + " %"), datasets: [{ label: "Stationnaire", data: s, borderColor: "#0891b2", backgroundColor: "#0891b2", tension: .25 }, { label: "Transitoire 1", data: t, borderColor: "#f59e0b", backgroundColor: "#f59e0b", tension: .25 }] }, options: { responsive: true, maintainAspectRatio: false, scales: { x: { title: { display: true, text: "Ouverture des directrices" } }, y: { title: { display: true, text: MET[cM][0] } } }, plugins: { legend: { position: "bottom" }, title: { display: true, text: ["Stationnaire vs transitoire — " + MET[cM][0], "Head " + cH + " m"] } } } });
+  $('cmp-chips').innerHTML = OP.map((o, i) => { const d = t[i] - s[i]; return `<span class="px-3 py-1 rounded-full border ${Math.abs(d / s[i]) > .1 ? "bg-amber-50 border-amber-200 text-amber-800" : "bg-emerald-50 border-emerald-200 text-emerald-800"}">${o} % : ${d >= 0 ? "+" : "−"}${Math.abs(d).toFixed(cM === "head" ? 1 : 2)} ${MET[cM][1]}</span>`; }).join("");
+  document.querySelectorAll('#cmp-head button').forEach(b => b.className = "px-3 py-1.5 rounded-lg border text-xs font-semibold " + (+b.dataset.h === cH ? "bg-cyan-600 text-white border-cyan-600" : "bg-white border-slate-200 hover:bg-slate-100"));
+  document.querySelectorAll('#cmp-met button').forEach(b => b.className = "text-left px-4 py-2 rounded-lg border text-xs font-semibold " + (b.dataset.m === cM ? "bg-cyan-600 text-white border-cyan-600" : "bg-white border-slate-200 hover:bg-slate-100"));
+}
+$('cmp-head').innerHTML = [360, 370, 400].map(h => `<button data-h="${h}">${h} m</button>`).join("");
+$('cmp-met').innerHTML = Object.entries(MET).map(([k, v]) => `<button data-m="${k}">${v[0]}</button>`).join("");
+document.querySelectorAll('#cmp-head button').forEach(b => b.onclick = () => { cH = +b.dataset.h; cmp(); });
+document.querySelectorAll('#cmp-met button').forEach(b => b.onclick = () => { cM = b.dataset.m; cmp(); });
+cmp();
+
+/* ---------- 7. Hill chart ---------- */
+const PTS = []; [360, 370, 400].forEach((h, hi) => OP.forEach((o, i) => PTS.push({ n: hi * 7 + i + 1, o, h: TR[h].head[i], f: TR[h].flow[i], e: TR[h].eff[i], p: TR[h].pow[i], hn: h })));
+const hc = $('hill'), hg = hc.getContext('2d'), XR = [15, 37], YR = [357, 405], M = { l: 48, b: 32, t: 8, r: 10 };
+let hv = null;
+const hx = f => M.l + (f - XR[0]) / (XR[1] - XR[0]) * (hc.width - M.l - M.r), hy = h => hc.height - M.b - (h - YR[0]) / (YR[1] - YR[0]) * (hc.height - M.b - M.t);
+const eCol = e => { const t = Math.max(0, Math.min(1, (e - 55) / 29)); return hsl(240 - 190 * Math.round(t * 12) / 12, 80, 50); };
+function hill() {
+  hc.width = hc.clientWidth; hc.height = 360; const W = hc.width, H = hc.height, gw = 70, gh = 48;
+  for (let j = 0; j < gh; j++) for (let i = 0; i < gw; i++) {
+    const f = XR[0] + (i + .5) / gw * (XR[1] - XR[0]), h = YR[0] + (1 - (j + .5) / gh) * (YR[1] - YR[0]); let sw = 0, se = 0;
+    PTS.forEach(p => { const d2 = ((p.f - f) / 22) ** 2 + ((p.h - h) / 48) ** 2 + 1e-6, w = 1 / (d2 * d2); sw += w; se += w * p.e; });
+    hg.fillStyle = eCol(se / sw); hg.fillRect(M.l + i * (W - M.l - M.r) / gw, M.t + j * (H - M.b - M.t) / gh, (W - M.l - M.r) / gw + 1, (H - M.b - M.t) / gh + 1);
+  }
+  hg.fillStyle = "#94a3b8"; hg.font = "10px monospace"; hg.strokeStyle = "#475569";
+  [16, 20, 24, 28, 32, 36].forEach(f => hg.fillText(f, hx(f) - 6, H - 16)); [360, 370, 380, 390, 400].forEach(h => hg.fillText(h, 14, hy(h) + 3));
+  hg.fillText("Débit (m³/s)", W / 2 - 30, H - 3); hg.save(); hg.translate(10, H / 2 + 20); hg.rotate(-1.5708); hg.fillText("Head (m)", 0, 0); hg.restore();
+  PTS.forEach(p => { hg.beginPath(); hg.arc(hx(p.f), hy(p.h), p === hv ? 7 : 4, 0, 6.2832); hg.fillStyle = p === hv ? "#fff" : "#ef4444"; hg.fill(); hg.strokeStyle = "#7f1d1d"; hg.stroke(); });
+  const i = $('hill-info');
+  i.innerHTML = hv ? `<div class="font-bold text-slate-800 text-sm">Cas ${hv.n} · head ${hv.hn} m, ouverture ${hv.o} %</div><div>Head mesuré : <strong>${hv.h.toFixed(2)} m</strong></div><div>Débit : <strong>${hv.f.toFixed(2)} m³/s</strong></div><div>Puissance : <strong>${hv.p.toFixed(2)} MW</strong></div><div>Rendement : <strong class="text-cyan-600">${hv.e.toFixed(2)} %</strong></div>` : "Survole un point rouge pour afficher les caractéristiques du cas simulé.";
+}
+hc.onmousemove = e => { const r = hc.getBoundingClientRect(), mx = e.clientX - r.left, my = (e.clientY - r.top) * hc.height / r.height; let b = null, bd = 14; PTS.forEach(p => { const d = Math.hypot(hx(p.f) - mx, hy(p.h) - my); if (d < bd) { bd = d; b = p; } }); if (b !== hv) { hv = b; hill(); } };
+window.addEventListener('resize', hill); hill();
+
+/* ---------- Lancement ---------- */
+setComp(2); dtCalc(); turbine();
+</script>
+</body>
+</html>
