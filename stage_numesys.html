@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stage Calcul de Structures — Numesys — Tom Fournier</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
+    body { font-family: 'Inter', sans-serif; }
+    .code-font { font-family: 'JetBrains Mono', monospace; }
+    input[type=range] { accent-color: #0891b2; }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 leading-relaxed min-h-screen">
+
+  <!-- HEADER -->
+  <header class="relative bg-slate-900 text-white overflow-hidden py-16 px-6 sm:px-12">
+    <div class="absolute inset-0 opacity-10 bg-[linear-gradient(to_right,#38bdf8_1px,transparent_1px),linear-gradient(to_bottom,#38bdf8_1px,transparent_1px)] bg-[size:3rem_3rem]"></div>
+    <div class="absolute -top-40 -right-40 w-96 h-96 bg-cyan-500 rounded-full filter blur-3xl opacity-20"></div>
+    <div class="absolute -bottom-40 -left-40 w-96 h-96 bg-blue-600 rounded-full filter blur-3xl opacity-15"></div>
+    <div class="relative max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+      <div class="max-w-3xl">
+        <div class="flex flex-wrap gap-2 mb-4">
+          <span class="bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">Stage de fin d'études</span>
+          <span class="bg-blue-500/10 text-blue-400 border border-blue-500/20 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">FEMAP</span>
+          <span class="bg-blue-500/10 text-blue-400 border border-blue-500/20 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">NX Nastran</span>
+          <span class="bg-blue-500/10 text-blue-400 border border-blue-500/20 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">Eurocodes · CODAP · FEM</span>
+        </div>
+        <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight">
+          Calculs de Structures par <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">Éléments Finis</span>
+        </h1>
+        <p class="mt-4 text-slate-300 text-lg max-w-2xl">
+          Six mois au bureau d'études Numesys (Sophia Antipolis) : dimensionnement d'un conteneur électrique et validation en levage des fonds d'un caisson, sous FEMAP / NX Nastran.
+        </p>
+        <div class="flex flex-wrap gap-4 mt-6 text-sm text-slate-400">
+          <span>Numesys — Mars 2026 à Août 2026</span><span>·</span><span>Polytech Lyon — Mécanique 5e année</span>
+        </div>
+      </div>
+      <a href="index.html#stage-numesys" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700/50 hover:text-white transition px-5 py-2.5 rounded-lg font-semibold shadow-lg">← Retour au Portfolio</a>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 py-12 space-y-16">
+
+    <!-- RÉSUMÉ -->
+    <section class="grid grid-cols-1 lg:grid-cols-3 gap-8 bg-white border border-slate-200 rounded-2xl p-8 shadow-sm">
+      <div class="lg:col-span-2 space-y-4">
+        <h2 class="text-2xl font-bold text-slate-900 border-b border-slate-100 pb-3">Contexte & Objectifs du Stage</h2>
+        <p class="text-slate-600 text-justify">
+          <strong>Numesys</strong> est un bureau d'études spécialisé en calcul mécanique. Mes missions couvraient deux approches : la <strong>phase de conception</strong>, où la simulation valide des concepts avant fabrication (donc sans prototype inutile), et la <strong>phase de vérification</strong>, où il faut démontrer qu'un design figé respecte les normes et, sinon, proposer des renforcements.
+        </p>
+        <p class="text-slate-600 text-justify">
+          La question de fond : comment modéliser un système assez finement pour que le résultat soit fiable, tout en le simplifiant assez pour tenir les délais industriels ? J'ai suivi des affaires de bout en bout, de la préparation de la géométrie à la <strong>note de calcul</strong> remise au client, avec deux cas marquants détaillés ci-dessous.
+        </p>
+      </div>
+      <div class="bg-slate-900 text-white rounded-xl p-6 relative overflow-hidden shadow-inner">
+        <span class="text-xs text-cyan-400 font-bold uppercase tracking-widest">Chiffres clés</span>
+        <div class="grid grid-cols-2 gap-4 mt-4 text-center">
+          <div class="bg-slate-800/80 border border-slate-700 rounded-lg p-3"><div class="text-2xl font-extrabold text-cyan-300">15 947 kg</div><div class="text-[10px] text-slate-400 uppercase">masse de calcul du conteneur</div></div>
+          <div class="bg-slate-800/80 border border-slate-700 rounded-lg p-3"><div class="text-2xl font-extrabold text-cyan-300">11</div><div class="text-[10px] text-slate-400 uppercase">situations de calcul</div></div>
+          <div class="bg-slate-800/80 border border-slate-700 rounded-lg p-3"><div class="text-2xl font-extrabold text-cyan-300">24</div><div class="text-[10px] text-slate-400 uppercase">combinaisons sismiques</div></div>
+          <div class="bg-slate-800/80 border border-slate-700 rounded-lg p-3"><div class="text-2xl font-extrabold text-cyan-300">12 %</div><div class="text-[10px] text-slate-400 uppercase">marge min. (séisme)</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DÉROULEMENT D'UNE AFFAIRE -->
+    <section class="space-y-6">
+      <h2 class="text-2xl font-bold text-slate-900 border-b border-slate-100 pb-3">Déroulement d'une Affaire</h2>
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <div id="steps" class="lg:col-span-4 space-y-2"></div>
+        <div class="lg:col-span-8 bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-3">
+          <span id="step-tag" class="text-xs text-cyan-600 font-bold uppercase tracking-widest"></span>
+          <h3 id="step-title" class="text-xl font-bold text-slate-900"></h3>
+          <p id="step-text" class="text-sm text-slate-600 text-justify"></p>
+          <ul id="step-list" class="text-sm text-slate-600 space-y-2 list-disc pl-5"></ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ÉTUDE 1 : SÉISME -->
+    <section class="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-md space-y-6">
+      <div class="border-b border-slate-100 pb-4">
+        <span class="text-xs text-cyan-600 font-bold uppercase tracking-widest">Étude de cas 1 — Conteneur électrique</span>
+        <h2 class="text-2xl font-bold text-slate-900">Action sismique : des accélérations aux 24 combinaisons</h2>
+        <p class="text-sm text-slate-500 mt-1">Structure mécano-soudée en S275JR : ossature maillée en poutres, parois/toiture/plancher en coques, équipements en masses ponctuelles reliées par éléments rigides. Site de Cadix (norme NCSE-02), méthode statique équivalente.</p>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <div class="lg:col-span-5 bg-slate-50 border border-slate-200/60 rounded-xl p-5 space-y-4 text-sm">
+          <h3 class="font-bold text-slate-800 border-b border-slate-200 pb-2">Paramètres NCSE-02</h3>
+          <div><div class="flex justify-between text-xs"><label class="font-medium">Accélération de base a<sub>b</sub></label><span id="v-ab" class="font-bold text-cyan-600"></span></div>
+            <input id="s-ab" type="range" min="0.02" max="0.15" step="0.01" value="0.05" class="w-full"></div>
+          <div><div class="flex justify-between text-xs"><label class="font-medium">Coefficient de terrain S</label><span id="v-S" class="font-bold text-cyan-600"></span></div>
+            <input id="s-S" type="range" min="0.8" max="2" step="0.1" value="1.6" class="w-full"></div>
+          <div class="bg-slate-900 rounded-lg p-3 code-font text-[11px] text-slate-300 space-y-1">
+            <div>a<sub>c</sub> = S·ρ·a<sub>b</sub> = <span id="o-ac" class="text-cyan-300"></span></div>
+            <div>a<sub>h</sub> = 2,5 · a<sub>c</sub> = <span id="o-ah" class="text-cyan-300"></span></div>
+            <div>a<sub>v</sub> = 2/3 · a<sub>h</sub> = <span id="o-av" class="text-cyan-300"></span></div>
+            <div>F<sub>h</sub> = m·a<sub>h</sub> = <span id="o-fh" class="text-emerald-300"></span> &nbsp; F<sub>v</sub> = <span id="o-fv" class="text-emerald-300"></span></div>
+          </div>
+          <p class="text-[11px] text-slate-500">Masse m = 15 947 kg, ρ = 1 (importance normale). Valeurs par défaut du rapport : 1,97 et 1,31 m/s² (arrondis de calcul).</p>
+        </div>
+        <div class="lg:col-span-7 space-y-3">
+          <div class="flex flex-wrap items-center gap-2 text-xs">
+            <span class="font-semibold text-slate-700">Direction principale (100 %) :</span>
+            <button data-ax="0" class="axb px-3 py-1 rounded border">X</button><button data-ax="1" class="axb px-3 py-1 rounded border">Y</button><button data-ax="2" class="axb px-3 py-1 rounded border">Z</button>
+            <span class="font-semibold text-slate-700 ml-2">Signes :</span>
+            <button id="sg1" class="px-3 py-1 rounded border bg-white">+0,3</button><button id="sg2" class="px-3 py-1 rounded border bg-white">+0,3</button>
+            <button id="play" class="ml-auto px-3 py-1 rounded bg-cyan-600 text-white font-semibold">▶ Parcourir les 24</button>
+          </div>
+          <div class="bg-slate-950 border border-slate-800 rounded-xl overflow-hidden relative">
+            <svg id="newmark" viewBox="0 0 400 280" class="w-full h-72"></svg>
+            <div class="absolute top-3 left-3 code-font text-[10px] text-slate-300 bg-slate-900/90 border border-slate-800 rounded-lg p-2 space-y-0.5">
+              <div id="h-combo" class="text-cyan-400 font-bold"></div><div id="h-acc"></div><div id="h-f"></div><div id="h-n" class="text-slate-500"></div>
+            </div>
+          </div>
+          <p class="text-xs text-slate-500 text-justify">Un séisme est multidirectionnel : la méthode de Newmark combine 100 % de l'accélération dans une direction avec ±30 % dans les deux autres (S<sub>x</sub> ± 0,3S<sub>y</sub> ± 0,3S<sub>z</sub>…), soit 3 × 2 × 2 × 2 = 24 cas, pour couvrir le plus défavorable de chaque profilé.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- RÉSULTATS INTERACTIFS -->
+    <section class="space-y-6">
+      <h2 class="text-2xl font-bold text-slate-900 border-b border-slate-100 pb-3">Analyse en Résistance : Contraintes vs Admissible</h2>
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <div class="lg:col-span-4 space-y-3 text-sm">
+          <div id="studies" class="space-y-2"></div>
+          <label id="peakbox" class="hidden items-start gap-2 text-xs bg-amber-50 border border-amber-200 rounded-lg p-3 text-amber-900 cursor-pointer">
+            <input id="peak" type="checkbox" class="mt-0.5">
+            <span><strong>Afficher les pics bruts du solveur.</strong> Ces valeurs (*) sont des singularités numériques ponctuelles (angles vifs, jonctions de profilés), analysées puis écartées.</span>
+          </label>
+          <div class="bg-cyan-50/50 border border-cyan-100 rounded-lg p-3 text-xs text-slate-600 text-justify" id="study-note"></div>
+        </div>
+        <div class="lg:col-span-8 bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+          <div class="relative h-80"><canvas id="chart"></canvas></div>
+          <div id="margins" class="flex flex-wrap gap-2 mt-4 text-xs"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ÉTUDE : LEVAGE -->
+    <section class="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-md space-y-6">
+      <div class="border-b border-slate-100 pb-4">
+        <span class="text-xs text-cyan-600 font-bold uppercase tracking-widest">Situation de manutention</span>
+        <h2 class="text-2xl font-bold text-slate-900">Levage : l'à-coup du décollage</h2>
+        <p class="text-sm text-slate-500 mt-1">Quatre élingues (modélisées en ressorts unidirectionnels) sur les coins ISO. Le coefficient dynamique φ₂ de la classe de levage HC2 majore le poids statique : φ₂ = 1,1 + 0,34·v<sub>h</sub>.</p>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+        <div class="space-y-4 text-sm">
+          <div class="flex justify-between text-xs"><label class="font-medium">Vitesse de levage v<sub>h</sub></label><span id="v-vh" class="font-bold text-cyan-600"></span></div>
+          <input id="s-vh" type="range" min="0" max="0.5" step="0.01" value="0.2" class="w-full">
+          <div class="flex gap-2 text-xs"><button data-vh="0.2" class="vhb px-3 py-1 rounded border bg-white">Conteneur (0,20 m/s)</button><button data-vh="0.1" class="vhb px-3 py-1 rounded border bg-white">Caisson (0,10 m/s)</button></div>
+          <div class="grid grid-cols-3 gap-3 text-center">
+            <div class="bg-slate-50 border border-slate-200 rounded-lg p-3"><div class="text-[10px] text-slate-500 uppercase font-bold">φ₂</div><div id="o-phi" class="text-xl font-extrabold text-cyan-600"></div></div>
+            <div class="bg-slate-50 border border-slate-200 rounded-lg p-3"><div class="text-[10px] text-slate-500 uppercase font-bold">Poids statique</div><div class="text-xl font-extrabold text-slate-700">156,4 kN</div></div>
+            <div class="bg-slate-50 border border-slate-200 rounded-lg p-3"><div class="text-[10px] text-slate-500 uppercase font-bold">Charge de calcul 1,5·φ₂·P</div><div id="o-load" class="text-xl font-extrabold text-emerald-600"></div></div>
+          </div>
+          <p class="text-xs text-slate-500">Résultat du calcul éléments finis (v<sub>h</sub> = 0,20 m/s, φ₂ = 1,168) : effort maximal de <strong>78 186 N</strong> dans le brin le plus chargé, transmis au client pour choisir ses élingues. Contrainte max. de la cabine : 198 MPa.</p>
+        </div>
+        <div class="bg-slate-950 rounded-xl border border-slate-800 p-4"><svg id="lift" viewBox="0 0 400 240" class="w-full h-60"></svg></div>
+      </div>
+    </section>
+
+    <!-- ÉTUDE 2 : CAISSON -->
+    <section class="space-y-6">
+      <h2 class="text-2xl font-bold text-slate-900 border-b border-slate-100 pb-3">Étude de cas 2 — Fonds d'un Caisson Nucléaire</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-2">
+          <h3 class="font-bold text-slate-900">Objectif & modèles</h3>
+          <p class="text-xs text-slate-600 text-justify">Valider en levage les fonds d'un caisson externe et de son panier interne (27 briques de graphite, 2 862 kg ; mortier de 7 866 kg). Deux modèles coques distincts ; parois simplifiées uniquement pour placer les points de levage à la bonne hauteur.</p>
+        </div>
+        <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-2">
+          <h3 class="font-bold text-slate-900">Critère FEM</h3>
+          <p class="text-xs text-slate-600 text-justify">σ<sub>adm</sub> = R<sub>e</sub> / 1,5 : <strong>156 MPa</strong> (S235JR) et <strong>236 MPa</strong> (S355JR). φ₂ = 1,1 + 0,34 × 0,1 = <strong>1,134</strong>. Trois situations : panier seul, caisson, caisson + mortier.</p>
+        </div>
+        <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-2">
+          <h3 class="font-bold text-slate-900">Optimisation</h3>
+          <p class="text-xs text-slate-600 text-justify">Le premier calcul révélait un sous-dimensionnement (fonds de 6 mm). Solution validée : fond du panier à <strong>10 mm</strong>, fond du caisson à <strong>15 mm</strong>, goussets aux jonctions critiques et renforts sur les montants. Marge finale minimale : <strong>19 %</strong>.</p>
+        </div>
+      </div>
+      <div class="bg-amber-50 border border-amber-200 rounded-2xl p-5 text-sm text-amber-900 text-justify">
+        <strong>Réflexe acquis : lire la déformée avant les contraintes.</strong> Sur le premier modèle, une déformée de 0,259 m et un système quasi entièrement sur-contraint ont immédiatement trahi un défaut de conception, avant toute exploitation fine des résultats. Elle sert aussi à vérifier la continuité du maillage, la pertinence des appuis et la validité de l'hypothèse de petits déplacements.
+      </div>
+    </section>
+
+    <!-- COMPÉTENCES -->
+    <section class="space-y-6">
+      <h2 class="text-2xl font-bold text-slate-900 border-b border-slate-100 pb-3">Compétences Acquises</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="bg-white border border-slate-200/80 p-6 rounded-xl space-y-2 shadow-sm"><h3 class="font-bold text-slate-900">Modélisation EF</h3><p class="text-xs text-slate-600">Poutres, coques, masses ponctuelles, éléments rigides et ressorts, sous-modèles locaux, calage de masse sous FEMAP / NX Nastran.</p></div>
+        <div class="bg-white border border-slate-200/80 p-6 rounded-xl space-y-2 shadow-sm"><h3 class="font-bold text-slate-900">Normes de dimensionnement</h3><p class="text-xs text-slate-600">Eurocodes 1, 3 et 8, CODAP, règles FEM, NCSE-02 : chargements, combinaisons, contraintes admissibles.</p></div>
+        <div class="bg-white border border-slate-200/80 p-6 rounded-xl space-y-2 shadow-sm"><h3 class="font-bold text-slate-900">Esprit critique</h3><p class="text-xs text-slate-600">Analyse de déformée, traitement des singularités numériques, itérations face aux évolutions du cahier des charges.</p></div>
+        <div class="bg-white border border-slate-200/80 p-6 rounded-xl space-y-2 shadow-sm"><h3 class="font-bold text-slate-900">Relation client</h3><p class="text-xs text-slate-600">Rédaction de notes de calcul claires, vulgarisation des résultats, argumentation des choix de modélisation.</p></div>
+      </div>
+    </section>
+
+    <section class="bg-white border border-slate-200 rounded-2xl p-8 shadow-sm flex flex-col md:flex-row justify-between items-center gap-6">
+      <div class="space-y-2">
+        <span class="text-xs text-emerald-600 font-bold uppercase tracking-widest">Document</span>
+        <h3 class="text-xl font-bold text-slate-900">Mémoire professionnel de 5e année</h3>
+        <p class="text-sm text-slate-500 max-w-xl">Méthodologie complète, cas d'étude détaillés, tableaux de résultats et annexes de calcul (vent, séisme).</p>
+      </div>
+      <a href="rapport_numesys.pdf" target="_blank" class="bg-emerald-600 hover:bg-emerald-500 text-white font-semibold transition px-6 py-3 rounded-lg shadow-lg whitespace-nowrap">Consulter le PDF</a>
+    </section>
+  </main>
+
+  <footer class="bg-slate-900 text-slate-400 text-center py-12 border-t border-slate-800">
+    <p class="font-semibold text-slate-300">© Tom Fournier 2026 — Portfolio Ingénieur Mécanique</p>
+  </footer>
+
+<script>
+const $ = id => document.getElementById(id);
+
+/* ---------- 1. Stepper ---------- */
+const STEPS = [
+  ["Géométrie", "Préparer le modèle CAO", "Un modèle importé dans FEMAP est rarement exploitable tel quel : on le simplifie pour alléger le maillage.", ["Suppression des détails non structurels (congés, chanfreins, perçages taraudés).", "Tôles : extraction de la fibre neutre (plan milieu) pour les modéliser en 2D, puis prolongement des surfaces jusqu'à intersection pour garantir les liaisons.", "Pièces élancées : segment passant par le centre d'inertie de la section."]],
+  ["Maillage", "Discrétiser avec discernement", "Compromis permanent entre qualité des résultats et temps de calcul.", ["1D : poutres (6 ddl/nœud), ressorts, éléments rigides. 2D : coques, quadrangles privilégiés aux triangles. 3D : tétraèdres/hexaèdres.", "Maillage assez fin et régulier pour éviter les sauts de contraintes, sans créer de singularités par excès de finesse.", "Fusion systématique des nœuds coïncidents ; maillage lisible pour la présentation au client.", "Artifices : masses ponctuelles au centre de gravité, vis en poutres à matériau sans masse avec relâchements, effet de fond (F = P·S), épaisseur équivalente, régions de contact."]],
+  ["Appuis", "Conditions aux limites", "Trop bloquée, la structure subit des contraintes irréalistes ; pas assez, le calcul s'arrête.", ["Objectif : trouver le juste milieu qui stabilise le modèle sans brider les déformations naturelles.", "Conteneur : 4 coins ISO simplement posés (normal), ancrés en 3 translations (séisme), translation Y bloquée d'un seul côté (vent), élingues encastrées en tête (levage)."]],
+  ["Chargements", "Appliquer les sollicitations réelles", "Gravité, forces nodales, pressions et charges linéiques.", ["Poids propre par accélération (g = 9,81 m/s²) ; masse recalée à 11 327 kg à vide en ajustant la masse volumique.", "Surcharge plancher de 250 kg/m², soit 2 452 Pa.", "Vent selon l'Eurocode 1-1-4 (29 m/s en service, 34,7 m/s exceptionnel) : pressions nettes sur les coques, résultantes aux ouvertures redistribuées par éléments rigides.", "Séisme (NCSE-02), levage (Eurocode 1-3, HC2)."]],
+  ["Résolution", "Choisir la bonne analyse", "FEMAP pilote le solveur NX Nastran.", ["Statique linéaire : F = K·u, vérifications rapides.", "Modale : M·ü + K·u = 0, fréquences et masses participantes (préalable au sismique).", "Sismique spectrale, impact et non-linéaire (plasticité), flambement (facteur multiplicatif de charge critique)."]],
+  ["Résultats", "Post-traiter et rédiger la note", "Von Mises ou Tresca comparés à R<sub>e</sub> ou à l'admissible normatif, avec marge de sécurité.", ["Eurocode 3 : coefficients 1,35 / 1,5 et γ<sub>M0</sub> ; CODAP : admissible f selon type de contrainte (Pm, PL, Pm+Pb…) ; règles FEM pour le levage.", "Sous-dimensionnement : ajout de goussets ou augmentation d'épaisseur.", "Note de calcul compréhensible sans expertise EF : hypothèses, chargements, appuis, cartographies de contraintes."]]
+];
+let cur = 0;
+function showStep(i) {
+  cur = i; const s = STEPS[i];
+  $('step-tag').textContent = "Étape " + (i + 1) + " / " + STEPS.length;
+  $('step-title').textContent = s[1]; $('step-text').innerHTML = s[2];
+  $('step-list').innerHTML = s[3].map(t => "<li>" + t + "</li>").join("");
+  [...$('steps').children].forEach((b, j) => b.className = "w-full text-left px-4 py-3 rounded-lg border transition flex items-center gap-3 " + (j === i ? "bg-cyan-600 text-white border-cyan-600 shadow" : "bg-white border-slate-200 hover:bg-slate-100"));
+}
+$('steps').innerHTML = STEPS.map((s, i) => `<button onclick="showStep(${i})"><span class="code-font text-xs opacity-70">0${i + 1}</span><span class="font-semibold text-sm">${s[0]}</span></button>`).join("");
+showStep(0);
+
+/* ---------- 2. Séisme : NCSE-02 + Newmark ---------- */
+const G = 9.81, M = 15947;
+let ac_h = 1.97, ac_v = 1.31;
+function seismic() {
+  const ab = +$('s-ab').value, S = +$('s-S').value;
+  $('v-ab').textContent = ab.toFixed(2) + " g"; $('v-S').textContent = S.toFixed(1);
+  const ac = S * 1 * ab * G; ac_h = 2.5 * ac; ac_v = ac_h * 2 / 3;
+  $('o-ac').textContent = ac.toFixed(3) + " m/s²"; $('o-ah').textContent = ac_h.toFixed(2) + " m/s²"; $('o-av').textContent = ac_v.toFixed(2) + " m/s²";
+  $('o-fh').textContent = (M * ac_h / 1000).toFixed(1) + " kN"; $('o-fv').textContent = (M * ac_v / 1000).toFixed(1) + " kN";
+  drawNewmark();
+}
+let pri = 0, sg = [1, 1], psg = 1, timer = null;
+function others() { return [0, 1, 2].filter(a => a !== pri); }
+function drawNewmark() {
+  const mag = [ac_h, ac_h, ac_v], col = ["#f87171", "#4ade80", "#60a5fa"], nm = ["X", "Y", "Z"];
+  const a = [0, 0, 0]; a[pri] = mag[pri] * psg;
+  others().forEach((ax, k) => a[ax] = 0.3 * mag[ax] * sg[k]);
+  const cx = 200, cy = 170, k = 28;
+  const P = v => [cx + (v[0] - v[1]) * 0.87 * k, cy + (v[0] + v[1]) * 0.5 * k - v[2] * k];
+  let s = '<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#fbbf24"/></marker></defs>';
+  for (let i = 0; i < 3; i++) {
+    const e = [0, 0, 0]; e[i] = 4.2; const q = P(e);
+    s += `<line x1="${cx}" y1="${cy}" x2="${q[0]}" y2="${q[1]}" stroke="${col[i]}" stroke-width="1" stroke-dasharray="4 3" opacity=".6"/><text x="${q[0] + 4}" y="${q[1] - 4}" fill="${col[i]}" font-size="11" font-family="monospace">${nm[i]}</text>`;
+  }
+  [0, 1, 2].forEach(i => { if (i === pri) return; const e = [0, 0, 0]; e[i] = a[i]; const q = P(e); s += `<line x1="${cx}" y1="${cy}" x2="${q[0]}" y2="${q[1]}" stroke="${col[i]}" stroke-width="3"/>`; });
+  const e = [0, 0, 0]; e[pri] = a[pri]; const q0 = P(e); s += `<line x1="${cx}" y1="${cy}" x2="${q0[0]}" y2="${q0[1]}" stroke="${col[pri]}" stroke-width="4"/>`;
+  const q = P(a); s += `<line x1="${cx}" y1="${cy}" x2="${q[0]}" y2="${q[1]}" stroke="#fbbf24" stroke-width="2.5" marker-end="url(#ar)"/><circle cx="${cx}" cy="${cy}" r="4" fill="#e2e8f0"/>`;
+  $('newmark').innerHTML = s;
+  const sgn = v => v >= 0 ? "+" : "−", o = others();
+  $('h-combo').textContent = (psg < 0 ? "−" : "") + "S" + nm[pri].toLowerCase() + " " + sgn(sg[0]) + " 0,3S" + nm[o[0]].toLowerCase() + " " + sgn(sg[1]) + " 0,3S" + nm[o[1]].toLowerCase();
+  $('h-acc').textContent = "a = (" + a.map(v => v.toFixed(2)).join(" ; ") + ") m/s²";
+  const n = Math.hypot(...a); $('h-f').textContent = "|a| = " + n.toFixed(2) + " m/s² → F = " + (M * n / 1000).toFixed(1) + " kN";
+  if (!timer) $('h-n').textContent = "3 axes × 2 × 2 × 2 = 24 cas";
+  document.querySelectorAll('.axb').forEach(b => b.className = "axb px-3 py-1 rounded border " + (+b.dataset.ax === pri ? "bg-cyan-600 text-white border-cyan-600" : "bg-white"));
+  $('sg1').textContent = (sg[0] > 0 ? "+" : "−") + "0,3 " + nm[o[0]]; $('sg2').textContent = (sg[1] > 0 ? "+" : "−") + "0,3 " + nm[o[1]];
+}
+document.querySelectorAll('.axb').forEach(b => b.onclick = () => { pri = +b.dataset.ax; drawNewmark(); });
+$('sg1').onclick = () => { sg[0] *= -1; drawNewmark(); }; $('sg2').onclick = () => { sg[1] *= -1; drawNewmark(); };
+$('s-ab').oninput = $('s-S').oninput = seismic;
+$('play').onclick = () => {
+  if (timer) { clearInterval(timer); timer = null; psg = 1; $('play').textContent = "▶ Parcourir les 24"; return; }
+  let i = 0; $('play').textContent = "■ Arrêter";
+  timer = setInterval(() => { pri = Math.floor(i / 8) % 3; sg = [(i & 1) ? -1 : 1, (i & 2) ? -1 : 1]; psg = (i & 4) ? -1 : 1; drawNewmark(); $('h-n').textContent = "cas " + (i % 24 + 1) + " / 24"; i++; }, 650);
+};
+seismic();
+
+/* ---------- 3. Graphique résultats ---------- */
+const STUDIES = {
+  cont: { label: "Conteneur : enveloppes de situations", note: "Admissible : 275 MPa (S275JR). Marges : 23 % en service, 25 % en vent exceptionnel, 12 % en séisme (cas dimensionnant), 28 % en levage.", labels: ["Service normal", "Vent exceptionnel", "Séisme", "Levage"], calc: [211, 205, 242, 198], adm: [275, 275, 275, 275] },
+  seis: { label: "Conteneur : séisme par zone", note: "Enveloppe sismique (situation 10). Semelle : pic brut de 279 MPa écarté après analyse locale (singularité).", labels: ["Semelle", "Parois", "Intérieur", "Toit", "Ouverture"], calc: [242, 39, 241, 84, 29], adm: [275, 275, 275, 275, 275], raw: [279, null, null, null, null] },
+  pan: { label: "Panier — situation 1", note: "Zones locales. Admissible 236 MPa (fond S355) et 156 MPa (profilés S235). Les pics bruts dépassaient la limite sur 3 jonctions : singularités numériques écartées.", labels: ["Plaque de fond", "Cornières de bord", "U 80", "U 50 (goussets)"], calc: [166, 109, 126, 125], adm: [236, 156, 156, 156], raw: [null, 246, 285, 256] },
+  c2: { label: "Caisson — situation 2 (sans mortier)", note: "Zones locales. Marge minimale : 53 % (parois).", labels: ["Plaque de fond", "Tôles pliées", "Tôles parois"], calc: [107, 70, 74], adm: [236, 236, 156] },
+  c3: { label: "Caisson — situation 3 (avec mortier)", note: "Zones locales, cas le plus sévère : marge minimale de 19 % sur les parois latérales.", labels: ["Plaque de fond", "Tôles pliées", "Tôles parois"], calc: [148, 85, 126], adm: [236, 236, 156] }
+};
+let sel = "cont", chart;
+function drawChart() {
+  const d = STUDIES[sel], showRaw = $('peak').checked && d.raw;
+  $('peakbox').className = (d.raw ? "flex" : "hidden") + " items-start gap-2 text-xs bg-amber-50 border border-amber-200 rounded-lg p-3 text-amber-900 cursor-pointer";
+  $('study-note').textContent = d.note;
+  const ds = [{ label: "Contrainte de Von Mises retenue (MPa)", data: d.calc, backgroundColor: "#0891b2" }];
+  if (showRaw) ds.push({ label: "Pic brut du solveur (singularité)", data: d.raw, backgroundColor: "#f59e0b" });
+  ds.push({ label: "Contrainte admissible (MPa)", data: d.adm, backgroundColor: "#cbd5e1" });
+  if (chart) chart.destroy();
+  chart = new Chart($('chart'), { type: "bar", data: { labels: d.labels, datasets: ds }, options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true, title: { display: true, text: "MPa" } } }, plugins: { legend: { position: "bottom" } } } });
+  $('margins').innerHTML = d.labels.map((l, i) => { const m = Math.round((d.adm[i] - d.calc[i]) / d.adm[i] * 100); return `<span class="px-3 py-1 rounded-full border ${m < 15 ? "bg-amber-50 border-amber-200 text-amber-800" : "bg-emerald-50 border-emerald-200 text-emerald-800"}">${l} : marge ${m} %</span>`; }).join("");
+  document.querySelectorAll('#studies button').forEach(b => b.className = "w-full text-left px-4 py-2.5 rounded-lg border transition text-xs font-semibold " + (b.dataset.k === sel ? "bg-cyan-600 text-white border-cyan-600" : "bg-white border-slate-200 hover:bg-slate-100"));
+}
+$('studies').innerHTML = Object.entries(STUDIES).map(([k, v]) => `<button data-k="${k}">${v.label}</button>`).join("");
+document.querySelectorAll('#studies button').forEach(b => b.onclick = () => { sel = b.dataset.k; drawChart(); });
+$('peak').onchange = drawChart; drawChart();
+
+/* ---------- 4. Levage ---------- */
+function lift() {
+  const vh = +$('s-vh').value, phi = 1.1 + 0.34 * vh, P = M * G;
+  $('v-vh').textContent = vh.toFixed(2) + " m/s"; $('o-phi').textContent = phi.toFixed(3);
+  $('o-load').textContent = (1.5 * phi * P / 1000).toFixed(0) + " kN";
+  const dy = (phi - 1) * 90; // amplification visuelle
+  let s = '<line x1="0" y1="215" x2="400" y2="215" stroke="#334155" stroke-width="2"/>';
+  const top = [200, 20], y = 150 - dy, c = [[120, y + 40], [280, y + 40]];
+  s += `<rect x="110" y="${y + 40}" width="180" height="55" rx="3" fill="#0e7490" stroke="#22d3ee" stroke-width="2"/><text x="200" y="${y + 73}" fill="#e2e8f0" font-size="12" text-anchor="middle" font-family="monospace">CONTENEUR</text>`;
+  c.forEach(p => s += `<line x1="${top[0]}" y1="${top[1]}" x2="${p[0]}" y2="${p[1]}" stroke="#fbbf24" stroke-width="2"/>`);
+  s += `<rect x="150" y="12" width="100" height="8" fill="#94a3b8"/><text x="200" y="${y - 6}" fill="#fbbf24" font-size="11" text-anchor="middle" font-family="monospace">φ₂ = ${phi.toFixed(3)}</text>`;
+  s += `<line x1="330" y1="${y + 95}" x2="330" y2="${y + 95 + 18 + dy}" stroke="#f87171" stroke-width="3"/><text x="338" y="${y + 125}" fill="#f87171" font-size="10" font-family="monospace">P·φ₂</text>`;
+  $('lift').innerHTML = s;
+}
+$('s-vh').oninput = lift;
+document.querySelectorAll('.vhb').forEach(b => b.onclick = () => { $('s-vh').value = b.dataset.vh; lift(); });
+lift();
+</script>
+</body>
+</html>
